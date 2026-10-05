@@ -1,5 +1,9 @@
 """真实原生短片、字幕、音画与单镜头替换验收。"""
 import importlib.util
+import sys
+
+# 宿主技能快照必须保持不可变；动态导入也不写字节码。
+sys.dont_write_bytecode = True
 import json
 import math
 import os
@@ -12,7 +16,7 @@ import unittest
 import wave
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL = ROOT / 'skills/filmcraft-use'
+SKILL = Path(os.environ['CRAFT_INSTALLED_SKILL_ROOT']).resolve() if os.environ.get('CRAFT_INSTALLED_SKILL_ROOT') else ROOT / 'skills/filmcraft-use'
 spec = importlib.util.spec_from_file_location('workflow', SKILL / 'scripts/workflow.py')
 workflow = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(workflow)
