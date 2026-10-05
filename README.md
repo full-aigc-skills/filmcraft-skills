@@ -35,3 +35,13 @@ Development version dev.2 includes hash-bound exchange-loss.json with every nati
 | `filmcraft-cli-export` | cli export |
 
 `npx skills add full-aigc-skills/filmcraft-skills --skill <skill-name>`
+
+## Focused task skills: clean first use
+
+All eight FilmCraft task skills passed independent first-install operations on macOS arm64, with only that skill copied and a fresh runtime downloaded from its locked public URL. Assertions cover persisted native edits, actual audio samples and rendered pixels, original-project preservation, and rejected unknown commands. The full suite passed 31 tests with no skips. [Evidence](docs/evidence/task-skill-first-use.json). This verifies the listed operations, not every command, GUI or final creative acceptance.
+
+```bash
+CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unittest discover -s tests -v
+```
+
+Run this command in the independent `filmcraft-skills` repository; live tests require ffmpeg, ffprobe and Pillow.
