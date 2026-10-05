@@ -1,0 +1,134 @@
+{
+  "schema": "craft-skill-suite/v1",
+  "pluginId": "filmcraft",
+  "version": "0.1.0-dev.3",
+  "source": {
+    "repository": "https://github.com/storytold/filmcraft",
+    "commit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+    "analysis": "CodeGraph CLI/engine or Tauri scene/task flow; current installed runtime checked separately"
+  },
+  "skills": [
+    {
+      "name": "filmcraft-use",
+      "title": "完整任务路由",
+      "description": "组合多个本工具能力并保留可编辑原生交付",
+      "kind": "router",
+      "commandCount": 666,
+      "commandPrefixes": []
+    },
+    {
+      "name": "filmcraft-cli",
+      "title": "CLI 公共操作",
+      "description": "查询实际命令参数和能力，调用公开 CLI、MCP 与诊断",
+      "kind": "cli",
+      "commandCount": 666,
+      "commandPrefixes": []
+    },
+    {
+      "name": "filmcraft-cli-setup",
+      "title": "CLI 安装诊断",
+      "description": "首次安装、摘要校验、版本检查与缺失运行时排障",
+      "kind": "setup",
+      "commandCount": 666,
+      "commandPrefixes": []
+    },
+    {
+      "name": "filmcraft-cli-project",
+      "title": "工程与序列",
+      "description": "创建、打开、保存 fcproj 和组织序列、素材箱",
+      "kind": "scenario",
+      "commandCount": 131,
+      "commandPrefixes": [
+        "file.",
+        "project.",
+        "sequence."
+      ]
+    },
+    {
+      "name": "filmcraft-cli-media",
+      "title": "素材检查与导入",
+      "description": "检查已有音视频、图片和素材引用，导入并收集或重关联素材",
+      "kind": "scenario",
+      "commandCount": 31,
+      "commandPrefixes": [
+        "media.",
+        "mediaBrowser.",
+        "source."
+      ]
+    },
+    {
+      "name": "filmcraft-cli-timeline",
+      "title": "时间线剪辑",
+      "description": "排序、裁切、移动镜头，组织轨道与单镜头修改",
+      "kind": "scenario",
+      "commandCount": 135,
+      "commandPrefixes": [
+        "timeline.",
+        "clip.",
+        "trim."
+      ]
+    },
+    {
+      "name": "filmcraft-cli-audio",
+      "title": "音频与配音组织",
+      "description": "组织已有配音和音乐、增益、混音与音画同步",
+      "kind": "scenario",
+      "commandCount": 38,
+      "commandPrefixes": [
+        "mixer.",
+        "essentialSound.",
+        "clipMixer.",
+        "audio."
+      ]
+    },
+    {
+      "name": "filmcraft-cli-subtitles",
+      "title": "字幕编辑",
+      "description": "导入、创建、修改字幕文本、时间、样式并交付 SRT",
+      "kind": "scenario",
+      "commandCount": 22,
+      "commandPrefixes": [
+        "captions."
+      ]
+    },
+    {
+      "name": "filmcraft-cli-color",
+      "title": "调色与 LUT",
+      "description": "调整镜头色彩、使用许可明确的 LUT 与颜色预设",
+      "kind": "scenario",
+      "commandCount": 13,
+      "commandPrefixes": [
+        "lumetri.",
+        "lut.",
+        "color.",
+        "scopes."
+      ]
+    },
+    {
+      "name": "filmcraft-cli-motion",
+      "title": "图文与镜头动画",
+      "description": "创建文字图形、效果参数与镜头关键帧",
+      "kind": "scenario",
+      "commandCount": 105,
+      "commandPrefixes": [
+        "graphics.",
+        "effects.",
+        "masks."
+      ]
+    },
+    {
+      "name": "filmcraft-cli-export",
+      "title": "预览与成片输出",
+      "description": "导出预览帧、成片、交换文件与输出验证",
+      "kind": "scenario",
+      "commandCount": 33,
+      "commandPrefixes": [
+        "export.",
+        "file.export",
+        "jobs."
+      ]
+    }
+  ],
+  "resourceSource": "filmcraft-use",
+  "runtimeVersion": "0.2.0"
+}

@@ -15,3 +15,23 @@
 开发版本 `0.1.0-dev.1` 修复并行首次安装/复用时的安装锁竞争：等待最多 120 秒，再核验复用；超时不覆盖安装或重放编辑任务。
 
 开发版本 dev.2 的原生交付包含摘要绑定的 exchange-loss.json，区分格式损失、结构观察与未验证字体/效果保真；导出派生物不替代原生工程。
+
+## CLI 与场景技能体系
+
+[FilmCraft Skill Suite Architecture](docs/FilmCraft-Skill-Suite-Architecture.zh_CN.md)
+
+| 技能 | 用途 |
+| :--- | :--- |
+| `filmcraft-use` | 组合多个本工具能力并保留可编辑原生交付 |
+| `filmcraft-cli` | 查询实际命令参数和能力，调用公开 CLI、MCP 与诊断 |
+| `filmcraft-cli-setup` | 首次安装、摘要校验、版本检查与缺失运行时排障 |
+| `filmcraft-cli-project` | 创建、打开、保存 fcproj 和组织序列、素材箱 |
+| `filmcraft-cli-media` | 检查已有音视频、图片和素材引用，导入并收集或重关联素材 |
+| `filmcraft-cli-timeline` | 排序、裁切、移动镜头，组织轨道与单镜头修改 |
+| `filmcraft-cli-audio` | 组织已有配音和音乐、增益、混音与音画同步 |
+| `filmcraft-cli-subtitles` | 导入、创建、修改字幕文本、时间、样式并交付 SRT |
+| `filmcraft-cli-color` | 调整镜头色彩、使用许可明确的 LUT 与颜色预设 |
+| `filmcraft-cli-motion` | 创建文字图形、效果参数与镜头关键帧 |
+| `filmcraft-cli-export` | 导出预览帧、成片、交换文件与输出验证 |
+
+`npx skills add full-aigc-skills/filmcraft-skills --skill <skill-name>`

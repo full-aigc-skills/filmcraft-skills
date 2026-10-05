@@ -15,3 +15,23 @@ The native editing helper supports media import and collection, exact tick-based
 Development version `0.1.0-dev.1` fixes concurrent first-use/reuse install-lock contention: wait up to 120 seconds, then verify and reuse; timeout preserves installations and never replays editing tasks.
 
 Development version dev.2 includes hash-bound exchange-loss.json with every native delivery. Reports distinguish format losses, observed structure and unknown font/effect fidelity; exported derivatives never replace the retained native project.
+
+## CLI and task skill suite
+
+[FilmCraft Skill Suite Architecture](docs/FilmCraft-Skill-Suite-Architecture.md)
+
+| Skill | Purpose |
+| :--- | :--- |
+| `filmcraft-use` | use |
+| `filmcraft-cli` | cli |
+| `filmcraft-cli-setup` | cli setup |
+| `filmcraft-cli-project` | cli project |
+| `filmcraft-cli-media` | cli media |
+| `filmcraft-cli-timeline` | cli timeline |
+| `filmcraft-cli-audio` | cli audio |
+| `filmcraft-cli-subtitles` | cli subtitles |
+| `filmcraft-cli-color` | cli color |
+| `filmcraft-cli-motion` | cli motion |
+| `filmcraft-cli-export` | cli export |
+
+`npx skills add full-aigc-skills/filmcraft-skills --skill <skill-name>`
