@@ -15,6 +15,7 @@ import wave
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
+SKILLS = Path(os.environ.get('CRAFT_INSTALLED_TASK_SKILLS_ROOT', ROOT / 'skills')).resolve()
 TICKS = 254016000000
 
 
@@ -28,9 +29,10 @@ class TaskSkillFirstUseTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # 基础工程是用户已有工程的测试替身。场景执行时只安装当前一个技能。
+        cls.evidence = []
         cls.fixture_directory = tempfile.TemporaryDirectory(prefix='filmcraft-task-fixture-')
         cls.fixture = Path(cls.fixture_directory.name)
-        source = ROOT / 'skills/filmcraft-use'
+        source = SKILLS / 'filmcraft-use'
         cls.runtime_version=json.loads((source/'scripts/runtime.lock.json').read_text())['resolvedVersion']
         spec = importlib.util.spec_from_file_location('first_use_fixture', source / 'scripts/workflow.py')
         workflow = importlib.util.module_from_spec(spec)
@@ -60,7 +62,14 @@ class TaskSkillFirstUseTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.fixture_directory.cleanup()
+        try:
+            if os.environ.get('CRAFT_TASK_EVIDENCE_FILE'):
+                path = Path(os.environ['CRAFT_TASK_EVIDENCE_FILE'])
+                with path.open('x', encoding='utf-8') as output:
+                    json.dump({'schema': 'craft-native-task-observations/v1', 'runtimeVersion': cls.runtime_version, 'observations': cls.evidence}, output, ensure_ascii=False, indent=2)
+                    output.write('\n')
+        finally:
+            cls.fixture_directory.cleanup()
 
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix='filmcraft-task-single-')
@@ -71,10 +80,25 @@ class TaskSkillFirstUseTests(unittest.TestCase):
         self.environment = dict(os.environ, PATH='/usr/bin:/bin')
         self.addCleanup(lambda: self.assertEqual(digest(self.project), self.project_sha))
 
+    def tearDown(self):
+        # 只记录合成 fixture 和派生产物摘要；成功状态由 unittest 的真实结果提供。
+        if os.environ.get('CRAFT_TASK_EVIDENCE_FILE') and hasattr(self, 'skill'):
+            executable = self.runtime / 'filmcraft' / self.runtime_version / 'filmcraft-cli'
+            self.evidence.append({
+                'test': self._testMethodName,
+                'skill': self.skill_name,
+                'sourceProjectSha256': self.project_sha,
+                'inputSha256': {name: digest(self.fixture / name) for name in ['red.mp4', 'voice.wav']},
+                'nativeBinarySha256': digest(executable) if executable.is_file() else None,
+                'outputSha256': {str(p.relative_to(self.root)): digest(p) for p in sorted(self.root.rglob('*'))
+                                 if p.is_file() and not any(p.is_relative_to(directory) for directory in
+                                     [self.runtime, self.data, self.skill])},
+            })
+
     def install_only(self, task):
         self.skill_name = 'filmcraft-cli-' + task
         self.skill = self.root / 'single-skill'
-        shutil.copytree(ROOT / 'skills' / self.skill_name, self.skill,
+        shutil.copytree(SKILLS / self.skill_name, self.skill,
                         ignore=shutil.ignore_patterns('__pycache__'))
         self.assertFalse(self.runtime.exists())
 

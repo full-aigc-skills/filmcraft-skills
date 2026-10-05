@@ -55,3 +55,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 开发版 dev.5 锁定维护版 `0.2.0-craft.1`，由固定上游提交与字幕字体补丁构建。仅复制字幕技能、通过本地固定摘要发布归档完成全新安装后，Unicode/SRT、工程重开、成片烧录抽帧、中文字形区分、配音相关性与文字修订测试通过。公开 URL 全新首次安装已于 2026-10-06 通过。runtime/ 保留官方 0.2.0 锁作来源记录；新旧运行时分目录保存。
 
 维护运行时已公开发布，在线单字幕技能首次安装验收通过；当前源码完整回归 44 项全部通过，无跳过。[限定范围证据](docs/evidence/chinese-first-use.json)。该证据覆盖列出的原生首次使用操作，不代表 GUI、模型分发或五插件整体验收。
+
+当前实际安装的插件 dev.6／技能 dev.5 使用维护版 CLI 0.2.0-craft.1，八类独立场景冷启动全部通过（43.688 秒）。已记录输入、输出、测试驱动和原生摘要，全部 58 个安装摘要不变；补齐旧 0.2.0 场景证据的版本缺口，发行版字节不变。[证据](docs/evidence/maintained-runtime-task-first-use.json)。
