@@ -1,6 +1,6 @@
 # FilmCraft CLI 场景技能架构
 
-> 更新：2026-10-05。技能源/插件开发版本：0.1.0-dev.4；原生/编排运行时：0.2.0。目标行为以既有 OpenSpec 变更为事实源。
+> 更新：2026-10-05。技能源/插件开发版本：0.1.0-dev.5；原生/编排运行时：0.2.0。目标行为以既有 OpenSpec 变更为事实源。
 
 ## 1. 为什么拆分
 
@@ -60,3 +60,5 @@ CRAFT_LIVE_SUITE=1 python3 -B -m unittest discover -s tests -p test_skill_suite.
 ```
 
 单项安装：`npx skills add full-aigc-skills/filmcraft-skills --skill <skill-name>`，使用其实际绝对路径执行，不读取兄弟技能。插件固定完整技能清单的来源标签、提交和逐项摘要；旧发布标签不可变，原 use/workflow payload 保持兼容。
+
+dev.5 原生运行时为维护版 `0.2.0-craft.1`；字幕字体架构文档规定固定源码/补丁、许可证保留、新旧共存及公开安装门禁。

@@ -1,0 +1,43 @@
+"""运行时补丁和构建边界；不在单元测试中编译原生仓库。"""
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class RuntimeBuilderTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('builder', ROOT / 'scripts/build_caption_runtime.py')
+        self.module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.module)
+
+    def test_tampered_patch_is_refused_before_git_or_cargo(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'runtime').mkdir()
+            (root / 'change.patch').write_bytes(b'changed')
+            (root / 'runtime/caption-font-patch.json').write_text(json.dumps({'patch':'change.patch','patchSha256':hashlib.sha256(b'original').hexdigest()}))
+            with patch.object(self.module,'ROOT',root), patch.object(self.module.subprocess,'run',side_effect=AssertionError('executed')), patch.object(self.module.subprocess,'check_output',side_effect=AssertionError('executed')):
+                with self.assertRaisesRegex(ValueError,'patch_checksum_mismatch'):
+                    self.module.build(root,root/'output')
+            self.assertFalse((root/'output').exists())
+
+    def test_unsupported_platform_is_refused_before_source_export(self):
+        with patch.object(self.module.platform,'system',return_value='Linux'), patch.object(self.module.subprocess,'check_output',side_effect=AssertionError('executed')):
+            with self.assertRaisesRegex(ValueError,'unsupported_build_platform'):
+                self.module.build(ROOT,ROOT/'unused-output')
+
+    def test_existing_output_is_preserved(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output=Path(temporary)
+            marker=output/'user.txt'
+            marker.write_text('preserve')
+            with patch.object(self.module.platform,'system',return_value='Darwin'), patch.object(self.module.platform,'machine',return_value='arm64'), patch.object(self.module.subprocess,'check_output',side_effect=AssertionError('executed')):
+                with self.assertRaisesRegex(ValueError,'output_exists'):
+                    self.module.build(ROOT,output)
+            self.assertEqual(marker.read_text(),'preserve')

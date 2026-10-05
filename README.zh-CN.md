@@ -47,3 +47,9 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 在独立 `filmcraft-skills` 仓库执行；真实测试另需 ffmpeg、ffprobe 与 Pillow。
 
 命令统一使用 `SKILL_DIR`，其值为宿主实际加载的 `SKILL.md` 所在绝对目录。支持用户级、项目级 `.agents/skills` 及插件内部或缓存目录；CLI 运行时另外安装到用户数据目录。每个技能单独复制到三种含空格的布局后，文档中的脚本入口均可运行 `--help`。[路径验证](docs/evidence/installed-skill-paths.json)。既有宿主缓存需更新后才会收到修正文档。
+
+中文字幕验收发现官方 CLI 0.2.0 忽略字幕轨指定字体，实际输出相同缺字方框。`runtime/` 保存绑定上游提交的修复候选与回归测试；既有公开技能标签保持原样。原生/SRT Unicode 保存与音频相关性已通过，但中文视觉验收仍失败，须修复运行时公开发布后完成隔离安装和成片检查。
+
+有可见字幕轨时，工作流现在显式开启原生 `burnCaptions`；设置 `export.burnCaptions=false` 可仅保留工程字幕和侧车字幕。该修复解决成片字幕遗漏；官方 0.2.0 中文字幕缺字仍是独立阻塞项。
+
+开发版 dev.5 锁定维护版 `0.2.0-craft.1`，由固定上游提交与字幕字体补丁构建。仅复制字幕技能、通过本地固定摘要发布归档完成全新安装后，Unicode/SRT、工程重开、成片烧录抽帧、中文字形区分、配音相关性与文字修订测试通过。公开 URL 首次安装待发布后验证。runtime/ 保留官方 0.2.0 锁作来源记录；新旧运行时分目录保存。

@@ -11,6 +11,19 @@ class WorkflowTests(unittest.TestCase):
         self.module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.module)
 
+    def test_visible_captions_are_burned_unless_explicitly_disabled(self):
+        state={'tracks':[{'enabled':True}]}
+        self.assertEqual(self.module.export_settings({},state),{'burnCaptions':True})
+        self.assertEqual(self.module.export_settings({'export':{'burnCaptions':False}},state),{'burnCaptions':False})
+        self.assertEqual(self.module.export_settings({}, {'tracks':[]}),{'burnCaptions':False})
+        self.assertEqual(self.module.export_settings({}, {'tracks':[{'enabled':False}]}),{'burnCaptions':False})
+
+    def test_export_flags_require_real_booleans(self):
+        for value in ('false',0,None):
+            with self.assertRaisesRegex(ValueError,'invalid_export'):
+                self.module.validate({'operations':[],'export':{'burnCaptions':value}})
+        self.module.validate({'operations':[],'export':{'burnCaptions':True}})
+
     def test_ticks_are_decimal_strings(self):
         self.assertEqual(self.module.ticks('508032000000'), 508032000000)
         for value in (508032000000, 1.2, True, '-1', '1e3', '00', '1.2'):

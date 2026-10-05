@@ -2,7 +2,7 @@
 
 Independent FilmCraft skills. Implementation is in progress; this repository is not a completed plugin release.
 
-The `filmcraft-use` skill contains a self-contained Python 3.11+ bootstrap installer for the pinned official macOS arm64 CLI. It verifies the archive and executable, retains license files, atomically installs a new version, and reuses an intact installation without downloading again.
+The `filmcraft-use` skill contains a self-contained Python 3.11+ bootstrap installer for the pinned macOS arm64 CLI (upstream or explicitly identified maintained variant). It verifies the archive and executable, retains license files, atomically installs a new version, and reuses an intact installation without downloading again.
 
 Run tests with `python3 -m unittest discover -s tests -v`. Full creative workflow and host acceptance remain pending.
 
@@ -47,3 +47,9 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 Run this command in the independent `filmcraft-skills` repository; live tests require ffmpeg, ffprobe and Pillow.
 
 Commands use `SKILL_DIR`, the absolute directory of the `SKILL.md` actually loaded by the host. User/project `.agents/skills` and plugin-internal/cache layouts are supported; the CLI runtime is installed separately in the user data directory. Each skill was copied alone into all three layouts, including paths with spaces, and its documented script entry points ran `--help`. [Path verification](docs/evidence/installed-skill-paths.json). Existing host caches need an explicit update to receive the corrected documentation.
+
+The Chinese subtitle acceptance fixture exposed an official CLI 0.2.0 bug: caption burn-in ignores the stored font family and renders identical missing-glyph boxes. A source-bound candidate patch and native regression tests are under `runtime/`; the prior public skill release remains unchanged. Unicode native/SRT storage and audio correlation passed, but the Chinese visual acceptance gate remains failed until a fixed public runtime passes isolated installation and output review.
+
+Caption exports now explicitly enable native `burnCaptions` when caption tracks are enabled; `export.burnCaptions=false` retains sidecar/native captions without burning. This fixes missing subtitles in movie outputs, but official 0.2.0 Chinese glyph rendering remains a separate blocker.
+
+Development dev.5 pins maintained `0.2.0-craft.1`, built from a fixed upstream commit and the caption-font patch. A clean single subtitle skill installation from the local checksummed release archive passed Unicode/SRT, native reopening, actual burned export frames, distinct Chinese glyphs, speech correlation and local revision tests. Public-URL first-use verification is pending publication. The official 0.2.0 lock is retained under runtime/ for provenance; old versions are not overwritten.

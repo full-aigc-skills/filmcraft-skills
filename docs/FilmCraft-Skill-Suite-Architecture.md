@@ -1,6 +1,6 @@
 # FilmCraft Skill Suite Architecture
 
-> Updated: 2026-10-05. Skill/plugin development version: 0.1.0-dev.4; native/orchestration runtime: 0.2.0. Target behavior is owned by the existing OpenSpec change.
+> Updated: 2026-10-05. Skill/plugin development version: 0.1.0-dev.5; native/orchestration runtime: 0.2.0. Target behavior is owned by the existing OpenSpec change.
 
 ## 1. Why a suite
 
@@ -60,3 +60,5 @@ CRAFT_LIVE_SUITE=1 python3 -B -m unittest discover -s tests -p test_skill_suite.
 ```
 
 Install one skill with `npx skills add full-aigc-skills/filmcraft-skills --skill <skill-name>`; invoke its actual absolute directory, not a sibling path. Plugin packaging must bind the complete suite to a fixed source tag, commit and per-skill digest. Former tags remain immutable, and existing use/workflow payloads stay compatible.
+
+Native runtime dev.5: maintained `0.2.0-craft.1`; see the caption-font architecture for fixed source/patch, attribution, coexistence and pending public-install gates.

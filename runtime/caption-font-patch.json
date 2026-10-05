@@ -1,0 +1,23 @@
+{
+  "schema": "craft-runtime-patch/v1",
+  "upstreamRepository": "https://github.com/storytold/filmcraft",
+  "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+  "upstreamVersion": "0.2.0",
+  "patch": "runtime/patches/caption-font-family.patch",
+  "patchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
+  "status": "candidate-not-distributed",
+  "reason": "Native caption rasterizer ignored configured font family; Chinese captions rendered identical missing glyphs.",
+  "tests": {
+    "red": [
+      "caption_track_font_changes_rendered_pixels",
+      "chinese_caption_glyphs_are_distinct",
+      "isolated Chinese workflow distinct-glyph comparison"
+    ],
+    "green": "36 native caption component tests and 13 exchange tests passed; candidate CLI compiled and actual exported frame with burnCaptions=true reviewed"
+  },
+  "limits": [
+    "Official installer locks unchanged",
+    "Do not substitute a local candidate binary for first-install release evidence",
+    "No upstream code or media copied into skill resource directories"
+  ]
+}

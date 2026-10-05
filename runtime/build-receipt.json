@@ -1,0 +1,47 @@
+{
+  "schema": "craft-maintained-runtime-build/v1",
+  "runtimeVersion": "0.2.0-craft.1",
+  "platform": "darwin-arm64",
+  "archive": "filmcraft-cli-0.2.0-craft.1-macos-arm64.zip",
+  "archiveSha256": "99ad8fd7e926a1482793a3fadf737ef91fd1a168ba6c60284cff7dbe1089878f",
+  "binarySha256": "4bd79931912c591d1cb1b47690949512ffb4361c3ec4f57664024f9a4847ae38",
+  "versionOutput": "filmcraft-cli 0.2.0-craft.1",
+  "provenance": {
+    "schema": "craft-runtime-patch/v1",
+    "upstreamRepository": "https://github.com/storytold/filmcraft",
+    "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+    "upstreamVersion": "0.2.0",
+    "patch": "runtime/patches/caption-font-family.patch",
+    "patchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
+    "status": "built-maintained-runtime",
+    "reason": "Native caption rasterizer ignored configured font family; Chinese captions rendered identical missing glyphs.",
+    "tests": {
+      "red": [
+        "caption_track_font_changes_rendered_pixels",
+        "chinese_caption_glyphs_are_distinct",
+        "isolated Chinese workflow distinct-glyph comparison"
+      ],
+      "green": "36 native caption component tests and 13 exchange tests passed; candidate CLI compiled and actual exported frame with burnCaptions=true reviewed"
+    },
+    "limits": [
+      "Official installer locks unchanged",
+      "Do not substitute a local candidate binary for first-install release evidence",
+      "No upstream code or media copied into skill resource directories"
+    ],
+    "runtimeVersion": "0.2.0-craft.1",
+    "binarySha256": "4bd79931912c591d1cb1b47690949512ffb4361c3ec4f57664024f9a4847ae38",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "platform": "darwin-arm64",
+    "cargoLockSha256": "a91d9bb3b8b25b0f773a57fe1807c5c3af8096ea74a96dac390d0eb7e90b763a",
+    "sourceArchiveSha256": "2e6f9d6c3599cf3d1266016d1dcb740ed8a0f6613d1ebee958da97c3c3f69408"
+  },
+  "provenanceSha256": "5177af4af0eac07d47fdd7fbfb4b3ed39cf324182141cd0235ee8aef55278cf0",
+  "licenses": [
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+    "LICENSE-OFL-Inter.txt",
+    "LICENSE-OFL-JetBrainsMono.txt",
+    "LICENSE-OFL-NotoSerif.txt",
+    "LICENSE-ATTRIBUTION.md"
+  ]
+}

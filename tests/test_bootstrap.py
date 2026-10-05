@@ -85,6 +85,36 @@ class BootstrapTests(unittest.TestCase):
         self.lock['artifacts']['darwin-arm64']['versionOutput'] = 'filmcraft-cli 0.2.0 (build, date)'
         self.assertFalse(self.install()['reused'])
 
+    def test_distinct_patched_runtime_version_keeps_original_installation(self):
+        original=self.install()
+        self.binary=b'#!/bin/sh\nprintf "filmcraft-cli 0.2.0-craft.1\\n"\n'
+        self.make_archive()
+        self.lock['resolvedVersion']='0.2.0-craft.1'
+        self.lock['artifacts']['darwin-arm64']['versionOutput']='filmcraft-cli 0.2.0-craft.1'
+        candidate=self.install()
+        self.assertNotEqual(original['executable'],candidate['executable'])
+        self.assertTrue(Path(original['executable']).exists())
+
+    def test_release_url_allows_only_named_upstream_or_maintained_runtime(self):
+        for url in ('https://github.com/storytold/filmcraft/releases/download/v0.2.0/a.zip','https://github.com/full-aigc-skills/filmcraft-skills/releases/download/runtime-v0.2.0-craft.1/a.zip'):
+            self.assertTrue(self.module.trusted_release_url(url))
+        for url in ('https://github.com/full-aigc-skills/other/releases/download/v1/a.zip','https://github.com.evil/storytold/filmcraft/releases/download/v1/a.zip','https://github.com/storytold/filmcraft-evil/releases/download/v1/a.zip','http://github.com/storytold/filmcraft/releases/download/v1/a.zip'):
+            self.assertFalse(self.module.trusted_release_url(url))
+
+    def test_provenance_is_checked_before_execution_and_retained(self):
+        provenance=b'{"upstreamCommit":"fixed","variant":"caption-font"}'
+        self.make_archive(('PROVENANCE.json',provenance))
+        self.lock['artifacts']['darwin-arm64']['provenanceSha256']=hashlib.sha256(provenance).hexdigest()
+        installed=self.install()
+        self.assertEqual((Path(installed['executable']).parent/'PROVENANCE.json').read_bytes(),provenance)
+
+    def test_wrong_provenance_never_executes(self):
+        self.make_archive(('PROVENANCE.json',b'wrong'))
+        self.lock['artifacts']['darwin-arm64']['provenanceSha256']='0'*64
+        with patch.object(self.module.subprocess,'run',side_effect=AssertionError('executed')):
+            with self.assertRaisesRegex(ValueError,'provenance_checksum'):
+                self.install()
+
     def test_unknown_platform_fails_without_download(self):
         with patch.object(self.module, 'download', side_effect=AssertionError('downloaded')):
             with self.assertRaisesRegex(ValueError, 'unsupported_platform'):
