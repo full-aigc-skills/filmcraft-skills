@@ -11,3 +11,5 @@
 [English](README.md)
 
 原生剪辑入口支持素材导入与收集、整数 ticks 编排、独立音频、字幕样式、工程重开、H.264 导出，以及移动交付包后的摘要核对和局部修订。参见[工作流说明](skills/filmcraft-use/references/workflow.md)。入口只依赖 Python 标准库与自动安装的 CLI；真实验收测试额外需要 ffmpeg、ffprobe 和 Pillow。
+
+开发版本 `0.1.0-dev.1` 修复并行首次安装/复用时的安装锁竞争：等待最多 120 秒，再核验复用；超时不覆盖安装或重放编辑任务。
