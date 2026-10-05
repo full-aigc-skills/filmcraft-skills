@@ -31,6 +31,7 @@ class TaskSkillFirstUseTests(unittest.TestCase):
         cls.fixture_directory = tempfile.TemporaryDirectory(prefix='filmcraft-task-fixture-')
         cls.fixture = Path(cls.fixture_directory.name)
         source = ROOT / 'skills/filmcraft-use'
+        cls.runtime_version=json.loads((source/'scripts/runtime.lock.json').read_text())['resolvedVersion']
         spec = importlib.util.spec_from_file_location('first_use_fixture', source / 'scripts/workflow.py')
         workflow = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(workflow)
@@ -52,7 +53,7 @@ class TaskSkillFirstUseTests(unittest.TestCase):
         cls.project_sha = digest(cls.project)
         # 原生 CLI 返回整数时间；工作流交付 JSON 将其转成十进制字符串。
         # 保留原生基线比较原生结果，避免把表示差异误判为轨道被修改。
-        executable = cls.fixture / 'fixture-runtime/filmcraft/0.2.0/filmcraft-cli'
+        executable = cls.fixture / 'fixture-runtime/filmcraft' / cls.runtime_version / 'filmcraft-cli'
         cls.native = json.loads(subprocess.check_output([
             str(executable), 'inspect', '--project', str(cls.project),
             '--data-dir', str(cls.fixture / 'fixture-data')]))
@@ -84,7 +85,7 @@ class TaskSkillFirstUseTests(unittest.TestCase):
                                 capture_output=True, text=True, timeout=240)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            self.assertTrue((self.runtime / 'filmcraft/0.2.0/filmcraft-cli').is_file())
+            self.assertTrue((self.runtime / 'filmcraft' / self.runtime_version / 'filmcraft-cli').is_file())
         else:
             self.assertNotEqual(result.returncode, 0)
         return result
