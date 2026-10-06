@@ -1,0 +1,2 @@
+# 补丁的空白上下文行是统一差异格式的组成部分。
+runtime/patches/*.patch -whitespace

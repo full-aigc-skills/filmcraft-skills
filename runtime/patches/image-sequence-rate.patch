@@ -231,9 +231,63 @@ index 5c43e52..f50d540 100644
                  prog.done.fetch_add(1, Ordering::Relaxed);
              }
              Some(r) => {
+--- a/crates/engine/src/relink.rs
++++ b/crates/engine/src/relink.rs
+@@ -195,6 +195,19 @@
+     pub source: Option<filmcraft_media::SharedSource>,
+ }
+ 
++/// 按原生素材类型打开重关联候选，序列保持已保存的帧率并拒绝缺帧和截断。
++fn open_link_candidate(s: &Session, media: &filmcraft_project::MediaClip, path: &str) -> filmcraft_media::Result<filmcraft_media::SharedSource> {
++    if media.info.kind != filmcraft_media::MediaKind::ImageSequence {
++        return s.media.open_file(path, &*s.services);
++    }
++    let frames = crate::media_pool::image_sequence_frames(path, &*s.services)?;
++    if frames.iter().any(Option::is_none) || frames.len() > i64::MAX as usize
++        || media.frame_rate().tick_of(frames.len() as i64) != media.info.duration {
++        return Err(filmcraft_media::MediaError::Unsupported("image sequence missing frames or duration mismatch".into()));
++    }
++    crate::media_pool::open_image_sequence(path, &*s.services, media.frame_rate(), file_name(path))
++}
++
+ /// Check `path` as the new file of media item `item`. Opening the file (needed for duration,
+ /// timecode and metadata) is skipped when a cheap check already failed.
+ pub fn check_candidate(s: &Session, item: ItemId, path: &str, o: &MatchOptions) -> Result<Candidate> {
+@@ -236,7 +249,7 @@
+         }
+     }
+     if c.problems.is_empty() {
+-        match s.media.open_file(path, &*s.services) {
++        match open_link_candidate(s, m, path) {
+             Ok(src) => {
+                 let info = src.info().clone();
+                 let fd = m.info.frame_rate().frame_duration();
+@@ -400,12 +413,19 @@
+         Some(MediaRef::File { path }) => path,
+         _ => return Err(bad("media.relink", format!("item {} is not file media", item.0))),
+     };
+-    let c = check_candidate(s, item, &path, &o)?;
++    let mut c = check_candidate(s, item, &path, &o)?;
+     if !c.ok && !force {
+         return Err(EngineError::Other(format!("{} doesn't match {}: {}", file_name(&path), file_name(&old), c.problems.join("; "))));
+     }
+-    if c.source.is_none() && s.media.open_file(&path, &*s.services).is_err() {
+-        return Err(EngineError::Other(format!("{path} can't be opened")));
++    if c.source.is_none() {
++        let media = s.project.item(item).and_then(|i| i.as_media()).ok_or_else(|| bad("media.relink", "item is not media"))?;
++        if media.info.kind == filmcraft_media::MediaKind::ImageSequence {
++            let source = open_link_candidate(s, media, &path).map_err(|e| EngineError::Other(format!("{path} can't be opened: {e}")))?;
++            c.info = Some(source.info().clone());
++            c.source = Some(source);
++        } else if s.media.open_file(&path, &*s.services).is_err() {
++            return Err(EngineError::Other(format!("{path} can't be opened")));
++        }
+     }
+     let mut plans = vec![Plan { item, cand: c }];
+     if o.relink_others {
 --- a/crates/engine/src/image_sequence_tests.rs
 +++ b/crates/engine/src/image_sequence_tests.rs
-@@ -135,3 +135,106 @@
+@@ -135,3 +135,135 @@
      assert!(v.media.offline_status(id).is_some(), "missing first frame: offline");
      let _ = std::fs::remove_dir_all(&dir);
  }
@@ -338,5 +392,34 @@ index 5c43e52..f50d540 100644
 +            _ => panic!("expected rgba"),
 +        }
 +    }
++    let _ = std::fs::remove_dir_all(dir);
++}
++
++/// 移动目录后的序列重关联必须保持类型、帧率和真实帧；不得退化为首帧图片。
++#[test]
++fn relink_image_sequence_preserves_rate_duration_and_frames() {
++    let dir = tmp_dir("imgseq-relink");
++    let input = dir.join("input");
++    std::fs::create_dir_all(&input).unwrap();
++    let paths = write_frames(&input, "frame_", &(0..12).collect::<Vec<u32>>(), "png");
++    let mut s = demo();
++    let r = s.execute("file.importImageSequence", json!({"path": paths[0], "frameRate": {"num": 12, "den": 1}})).unwrap();
++    let item = item_of(&r);
++    let moved = dir.join("moved");
++    std::fs::rename(&input, &moved).unwrap();
++    let first = moved.join("frame_0000.png");
++    s.execute("media.relink", json!({"item": item.0, "path": first.to_string_lossy(), "relinkOthers": false})).unwrap();
++    let media = s.project.item(item).unwrap().as_media().unwrap();
++    assert_eq!(media.info.kind, MediaKind::ImageSequence);
++    assert_eq!(media.info.frame_rate(), FrameRate::new(12, 1));
++    assert_eq!(media.info.duration, FrameRate::new(12, 1).tick_of(12));
++    assert_eq!(red_at(&s, item, 6), 60);
++    let incomplete = dir.join("incomplete");
++    std::fs::create_dir_all(&incomplete).unwrap();
++    for n in 0..12 { if n != 6 { std::fs::copy(moved.join(format!("frame_{n:04}.png")), incomplete.join(format!("frame_{n:04}.png"))).unwrap(); } }
++    for force in [false, true] {
++        assert!(s.execute("media.relink", json!({"item": item.0, "path": incomplete.join("frame_0000.png").to_string_lossy(), "relinkOthers": false, "force": force})).is_err());
++    }
++    assert_eq!(red_at(&s, item, 6), 60);
 +    let _ = std::fs::remove_dir_all(dir);
 +}

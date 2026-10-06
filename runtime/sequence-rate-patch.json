@@ -4,10 +4,10 @@
   "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
   "upstreamVersion": "0.2.0",
   "patch": "runtime/patches/image-sequence-rate.patch",
-  "patchSha256": "a6aafec196f2cda86eae9940b9688bedec9c32b2cd86b084ee705054ec2eb9b2",
+  "patchSha256": "b73f97f8e69a66435725cd8c4aa5bf3eecefa1da417c02da8d6bbdbd87e2c793",
   "runtimeVersion": "0.2.0-craft.2",
   "status": "candidate-not-distributed",
-  "reason": "Image sequences require explicit rational rates and collection of all numbered frames into isolated per-item directories; the original importer changes timing and Project Manager copies only the first frame.",
+  "reason": "Image sequences require explicit rational rates, complete per-item collection and relinking as sequences at their stored rate; the original workflow changes timing, collects only one frame and relinks the first frame as a still.",
   "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
   "limits": [
     "Immutable existing runtime and installer locks unchanged",
