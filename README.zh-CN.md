@@ -77,3 +77,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 候选运动／LUT 工作流已通过公开运行时首次使用测试：明确关键帧、登记 LUT、原生重开及移动返工；当前不可变插件 dev.10 与 Art 联调尚未包含此映射。 See [architecture](docs/FilmCraft-Motion-LUT-Workflow-Architecture.md) and [evidence](docs/evidence/motion-lut-workflow-candidate-20261006.json).
 
 技能源 dev.10 将运动／LUT 工作流纳入十一项独立技能，原生 CLI 保持 0.2.0-craft.2。固定插件安装验收单独记录。
+
+固定 Film dev.11／技能源 dev.10 安装后验收通过：隔离 Codex 发现 58 项技能零错误，Film 十一项分别空运行时冷启动通过；安装后的运动／LUT、音轨增益和序列场景三项通过、零跳过。全部 58 安装摘要保全。新 Art LUT 运行时发行与完整首版仍开放。 [Evidence](docs/evidence/codex-filmcraft11-motion-lut-first-use-20261006.json).
