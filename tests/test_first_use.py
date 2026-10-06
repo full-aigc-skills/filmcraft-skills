@@ -46,6 +46,22 @@ class FirstUseTests(unittest.TestCase):
             reused = json.loads(run(setup))
             self.assertTrue(reused['reused'])
             self.assertEqual(installed['executable'], reused['executable'])
+            # 真实下载后污染回执，拒绝复用且保留原生工程及整套安装。
+            receipt_path = Path(cli).parent / 'installation.json'
+            original_receipt = receipt_path.read_bytes()
+            changed = json.loads(original_receipt)
+            changed['platform'] = 'wrong-platform'
+            receipt_path.write_text(json.dumps(changed))
+            snapshot = {p.name: p.read_bytes() for p in receipt_path.parent.iterdir() if p.is_file()}
+            project_bytes = project.read_bytes()
+            refused = subprocess.run(setup, cwd=root, capture_output=True, text=True, timeout=20)
+            self.assertEqual(refused.returncode, 1, refused.stdout + refused.stderr)
+            self.assertIn('installation_receipt_mismatch', json.loads(refused.stdout)['error'])
+            self.assertEqual(snapshot, {p.name: p.read_bytes() for p in receipt_path.parent.iterdir() if p.is_file()})
+            self.assertEqual(project.read_bytes(), project_bytes)
+            receipt_path.write_bytes(original_receipt)
+            self.assertTrue(json.loads(run(setup))['reused'])
+            self.assertIn('First use verified', run([cli, '--project', str(project), 'exec', 'captions.list']))
 
 
 if __name__ == '__main__':

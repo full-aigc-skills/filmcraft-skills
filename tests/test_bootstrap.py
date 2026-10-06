@@ -79,6 +79,43 @@ class BootstrapTests(unittest.TestCase):
             self.install()
         self.assertEqual(path.read_bytes(), b'tampered')
 
+    def test_receipt_identity_drift_refuses_reuse_and_preserves_files(self):
+        installed = self.install()
+        directory = Path(installed['executable']).parent
+        receipt = directory / 'installation.json'
+        original = json.loads(receipt.read_text())
+        for key in ('name', 'version', 'platform', 'source', 'url', 'archiveSha256', 'binarySha256', 'versionOutput'):
+            with self.subTest(field=key):
+                changed = dict(original, **{key: 'changed'})
+                receipt.write_text(json.dumps(changed))
+                snapshot = {p.name: p.read_bytes() for p in directory.iterdir()}
+                with patch.object(self.module, 'download', side_effect=AssertionError('downloaded')), patch.object(self.module.subprocess, 'run', side_effect=AssertionError('executed')):
+                    with self.assertRaisesRegex(ValueError, 'installation_receipt_mismatch'):
+                        self.install()
+                self.assertEqual(snapshot, {p.name: p.read_bytes() for p in directory.iterdir()})
+        receipt.write_text(json.dumps(original))
+        self.assertTrue(self.install()['reused'])
+
+    def test_malformed_receipt_is_refused_without_native_execution(self):
+        installed = self.install()
+        receipt = Path(installed['executable']).parent / 'installation.json'
+        for content in ('broken JSON', 'null', '[]', '{"version":"0.2.0"}', '{"version":"0.2.0","version":"wrong"}'):
+            with self.subTest(content=content):
+                receipt.write_text(content)
+                with patch.object(self.module, 'download', side_effect=AssertionError('downloaded')), patch.object(self.module.subprocess, 'run', side_effect=AssertionError('executed')):
+                    with self.assertRaisesRegex(ValueError, 'installation_receipt'):
+                        self.install()
+                self.assertEqual(receipt.read_text(), content)
+                self.assertEqual(Path(installed['executable']).read_bytes(), self.binary)
+
+    def test_receipt_evidence_description_is_not_runtime_identity(self):
+        installed = self.install()
+        receipt = Path(installed['executable']).parent / 'installation.json'
+        content = json.loads(receipt.read_text())
+        content['evidenceScope'] = 'historical description'
+        receipt.write_text(json.dumps(content))
+        self.assertTrue(self.install()['reused'])
+
     def test_pinned_build_metadata_is_accepted(self):
         self.binary = b'#!/bin/sh\nprintf "filmcraft-cli 0.2.0 (build, date)\\n"\n'
         self.make_archive()

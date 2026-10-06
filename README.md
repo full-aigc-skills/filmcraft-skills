@@ -57,3 +57,5 @@ Development dev.5 pins maintained `0.2.0-craft.1`, built from a fixed upstream c
 The maintained runtime is published and cold online subtitle acceptance passed; the full current source regression passed 44 tests with no skips. [Bounded evidence](docs/evidence/chinese-first-use.json). This completes the listed native first-use operations, not GUI/model dispatch or all five-plugin acceptance.
 
 Current installed plugin dev.6 / skills dev.5 pass all eight independent task cold starts with maintained CLI 0.2.0-craft.1 (43.688 seconds). Input, output, test-driver and native fingerprints are recorded; all 58 installed hashes remain unchanged. This supplements the older 0.2.0 scene proof without changing release bytes. [Evidence](docs/evidence/maintained-runtime-task-first-use.json).
+
+Candidate installation-receipt reuse validation is implemented and tested; fixed plugin and ArtCraft publication remain pending. [Architecture and evidence](docs/FilmCraft-Runtime-Receipt-Architecture.md).

@@ -57,3 +57,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 维护运行时已公开发布，在线单字幕技能首次安装验收通过；当前源码完整回归 44 项全部通过，无跳过。[限定范围证据](docs/evidence/chinese-first-use.json)。该证据覆盖列出的原生首次使用操作，不代表 GUI、模型分发或五插件整体验收。
 
 当前实际安装的插件 dev.6／技能 dev.5 使用维护版 CLI 0.2.0-craft.1，八类独立场景冷启动全部通过（43.688 秒）。已记录输入、输出、测试驱动和原生摘要，全部 58 个安装摘要不变；补齐旧 0.2.0 场景证据的版本缺口，发行版字节不变。[证据](docs/evidence/maintained-runtime-task-first-use.json)。
+
+候选安装回执复用校验已实现并验证，固定插件发布与 ArtCraft 同步仍待完成。[架构与证据](docs/FilmCraft-Runtime-Receipt-Architecture.zh_CN.md)。
