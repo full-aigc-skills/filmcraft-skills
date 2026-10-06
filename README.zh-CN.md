@@ -61,3 +61,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 候选安装回执复用校验已实现并验证，固定插件发布与 ArtCraft 同步仍待完成。[架构与证据](docs/FilmCraft-Runtime-Receipt-Architecture.zh_CN.md)。
 
 固定 FilmCraft 插件 dev.7／技能源 dev.6 已通过 Codex 0.153.4 实际安装与四项安装快照测试：公开地址冷安装、保存重开、回执异常拒绝／恢复，以及 11 个独立 CLI 入口。执行后全部 58 个安装摘要保持不变。[固定发布证据](docs/evidence/codex-filmcraft7-receipt-first-use-20261006.json)。ArtCraft dev.42 仍锁定技能源 dev.5，其更新待完成。
+
+[时间变化素材的裁切与移动验收](docs/FilmCraft-Temporal-Timeline-Acceptance.zh_CN.md)：实际安装的独立时间线技能空运行时测试 1 项通过；保存重开及原生导出均核对源入点，保留其他镜头、音轨、字幕和原交付。完整时间线／创作验收仍开放。
