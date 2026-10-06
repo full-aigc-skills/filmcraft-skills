@@ -69,3 +69,5 @@ Published source dev.7 adds static audio-track gain through mixer.setStrip in th
 Installed plugin dev.8 verifies three independent voice/music/original-audio tracks, staggered starts and a music-only gain revision through real decoded frequency amplitudes. All 58 installed hashes remain unchanged. [Scope and evidence](docs/FilmCraft-Multitrack-Audio-Architecture.md).
 
 Published source dev.8 rejects generated silent AAC when required native source audio is absent, retains diagnostic outputs and still accepts explicit video-only or intentional silent WAV delivery. [Architecture and scope](docs/FilmCraft-Required-Audio-Architecture.md). Fixed plugin dev.9 installed verification passed: three real tests and all 58 hashes preserved. [Evidence](docs/evidence/codex-filmcraft9-required-audio-first-use-20261006.json).
+
+Public runtime craft.2 adds explicit-rate sequence import, complete collection and moved-project relinking. Source-skill cold installation and actual Effect→Film handoff passed; immutable plugin and Art acceptance remain pending. [Evidence and architecture](docs/FilmCraft-Public-Sequence-First-Use-Architecture.md).

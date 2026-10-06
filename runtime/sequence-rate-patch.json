@@ -6,12 +6,12 @@
   "patch": "runtime/patches/image-sequence-rate.patch",
   "patchSha256": "b73f97f8e69a66435725cd8c4aa5bf3eecefa1da417c02da8d6bbdbd87e2c793",
   "runtimeVersion": "0.2.0-craft.2",
-  "status": "candidate-not-distributed",
+  "status": "published-maintained-runtime",
   "reason": "Image sequences require explicit rational rates, complete per-item collection and relinking as sequences at their stored rate; the original workflow changes timing, collects only one frame and relinks the first frame as a still.",
   "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
   "limits": [
-    "Immutable existing runtime and installer locks unchanged",
-    "Candidate native tests are not public installation evidence",
+    "Existing immutable releases retained; source installer now locks craft.2",
+    "Source-skill public installation is not immutable plugin or Art mixed acceptance",
     "Research source remains read-only"
   ]
 }

@@ -69,3 +69,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 固定插件 dev.8 已验证已有配音、音乐、视频原音三个独立音轨、错开起点和仅音乐增益返工，使用实际解码频率幅度核验；全部 58 项安装摘要保持不变。[范围与证据](docs/FilmCraft-Multitrack-Audio-Architecture.zh_CN.md)。
 
 已发布技能源 dev.8 修复必需源音轨缺失却因自动静音 AAC 误成功的问题，保留失败诊断，明确无声视频与有意静音 WAV 仍可交付。[架构与范围](docs/FilmCraft-Required-Audio-Architecture.zh_CN.md)。固定插件 dev.9 安装后 3 项真实验收通过，全部 58 项摘要保留。[证据](docs/evidence/codex-filmcraft9-required-audio-first-use-20261006.json)。
+
+公开维护版 craft.2 支持显式帧率序列、全帧收集与移动工程重关联。源码独立技能冷安装及实际 Effect→Film 交接已通过，固定插件与 Art 验收仍待完成。[证据与架构](docs/FilmCraft-Public-Sequence-First-Use-Architecture.zh_CN.md)。
