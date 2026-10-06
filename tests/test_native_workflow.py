@@ -106,7 +106,16 @@ class NativeWorkflowTests(unittest.TestCase):
                 target = root / error
                 with self.assertRaisesRegex(ValueError, error):
                     workflow.execute(broken, target, runtime_home=runtime, source=moved)
-                self.assertFalse(target.exists())
+                if error == 'revision_conflict':
+                    self.assertFalse(target.exists())
+                else:
+                    failure = json.loads((target / 'failure.json').read_text())
+                    self.assertEqual(failure['status'], 'failed')
+                    self.assertFalse(failure['replayAllowed'])
+                    self.assertIn(error, failure['error'])
+                    self.assertTrue((target / failure['stage']).is_dir())
+                    self.assertFalse((target / 'manifest.json').exists())
+                self.assertEqual(workflow.sha(moved / 'project.fcproj'), delivered['files']['project.fcproj'])
 
 if __name__ == '__main__':
     unittest.main()
