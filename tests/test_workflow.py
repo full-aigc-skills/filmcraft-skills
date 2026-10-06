@@ -38,6 +38,17 @@ class WorkflowTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'unsupported_command'):
             self.module.validate({'operations': [{'command': 'media.makeOffline'}]})
 
+    def test_static_track_gain_is_supported_and_rejects_invalid_values(self):
+        def plan(params):
+            return {'operations': [{'command': 'mixer.setStrip', 'params': params}]}
+        self.module.validate(plan({'strip': 'A1', 'volumeDb': -6.0}))
+        for value in (True, '6', float('nan'), float('inf'), 10**1000):
+            with self.assertRaisesRegex(ValueError, 'invalid_track_gain'):
+                self.module.validate(plan({'strip': 'A1', 'volumeDb': value}))
+        for params in ({'strip': 'Mix', 'volumeDb': 0}, {'strip': 'A1', 'volumeDb': 0, 'recordArm': True}, {'strip': 'A1'}):
+            with self.assertRaisesRegex(ValueError, 'invalid_track_gain'):
+                self.module.validate(plan(params))
+
     def test_duplicate_alias_rejected(self):
         with self.assertRaisesRegex(ValueError, 'duplicate_alias'):
             self.module.validate({'operations': [{'command': 'asset.import', 'as': 'shot'}, {'command': 'asset.import', 'as': 'shot'}]})

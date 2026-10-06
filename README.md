@@ -63,3 +63,5 @@ Candidate installation-receipt reuse validation is implemented and tested; fixed
 Fixed FilmCraft plugin dev.7 / source dev.6 passed actual Codex 0.153.4 installation and four installed-snapshot tests: public cold native install, save/reopen, receipt refusal/restoration, and 11 isolated CLI entries. All 58 installed digests remain unchanged. [Fixed-release evidence](docs/evidence/codex-filmcraft7-receipt-first-use-20261006.json). ArtCraft dev.42 still locks source dev.5; its update remains pending.
 
 [Temporal-source trim and move acceptance](docs/FilmCraft-Temporal-Timeline-Acceptance.md): one installed single-skill empty-runtime case passes, checking source in-points in reopened projects and native exports while preserving other clips, audio, captions and original deliveries. Complete timeline/creative acceptance remains open.
+
+Candidate source dev.7 adds static audio-track gain through mixer.setStrip in the native workflow, with finite-value checks and decoded -6 dB acceptance. See [architecture and scope](docs/FilmCraft-Audio-Gain-Architecture.md). Fixed installed-plugin verification is tracked separately.
