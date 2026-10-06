@@ -83,3 +83,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 工作区分段素材消费候选可校验 Effect 检查点、收集连续帧并保留来源摘要。固定发布、完整 1080p 长片头和 Art 集成仍待完成。[架构](docs/FilmCraft-Segmented-Assets-Architecture.zh_CN.md)。
 
 当前源码 HD 分段候选通过 1080p／24 fps／五秒及动态标题核验；固定安装版与 Art HD 仍待完成。[架构与证据](docs/FilmCraft-HD-Sequence-Architecture.zh_CN.md)。
+
+技能源 0.1.0-dev.11 包含有界分段工作流与 HD RGBA 校验优化。原生 CLI 不变；对应固定插件及 Art 安装版验收另行记录。
