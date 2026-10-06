@@ -22,9 +22,11 @@ ROOT=Path(__file__).resolve().parents[1]
 class SequenceWorkflowTests(unittest.TestCase):
     def test_sequence_import_collection_and_moved_project_revision(self):
         from PIL import Image
+        original=Path(os.environ.get('CRAFT_FILM_SEQUENCE_SKILL_ROOT',ROOT/'skills/filmcraft-cli-media')).resolve()
+        original_hashes={str(p.relative_to(original)):hashlib.sha256(p.read_bytes()).hexdigest() for p in original.rglob('*') if p.is_file()}
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary);skill=root/'.agents/skills/filmcraft-cli-media'
-            shutil.copytree(ROOT/'skills/filmcraft-cli-media',skill,ignore=shutil.ignore_patterns('__pycache__'))
+            shutil.copytree(original,skill,ignore=shutil.ignore_patterns('__pycache__'))
             spec=importlib.util.spec_from_file_location('isolated_sequence_workflow',skill/'scripts/workflow.py');workflow=importlib.util.module_from_spec(spec);spec.loader.exec_module(workflow)
             skill_hashes={str(p.relative_to(skill)):workflow.sha(p) for p in skill.rglob('*') if p.is_file()}
             public=os.environ.get('CRAFT_FILM_SEQUENCE_FIRST_USE')=='1'
@@ -91,6 +93,11 @@ class SequenceWorkflowTests(unittest.TestCase):
                     workflow.execute(change,root/'bad-output',runtime_home=runtime,source=bad)
                 self.assertFalse((root/'bad-output').exists());self.assertEqual(workflow.sha(frame),bad_hash)
                 self.assertEqual(skill_hashes,{str(p.relative_to(skill)):workflow.sha(p) for p in skill.rglob('*') if p.is_file()})
+                self.assertEqual(original_hashes,{str(p.relative_to(original)):workflow.sha(p) for p in original.rglob('*') if p.is_file()})
                 if os.environ.get('CRAFT_FILM_SEQUENCE_WORKFLOW_EVIDENCE'):
                     value={'schema':'craft-sequence-workflow-first-use/v1' if public else 'craft-sequence-workflow-candidate/v1','result':'passed','runtimeSha256':receipt['binarySha256'],'patchSha256':patch_sha,'sequenceManifestSha256':delivery['assets']['overlay']['sha256'],'collectedFrames':12,'independentlyDecodedExportFrames':export_frames,'sourceDirectoryRemoved':True,'corruptDependencyRejected':True,'isolatedSkillBytesUnchanged':True,'movedRevisionPassed':True,'originalDeliveryPreserved':True,'nativeProbe':delivery['assets']['overlay']['probe'],'sourceProjectSha256':delivery['files']['project.fcproj'],'revisedProjectSha256':revision['files']['project.fcproj'],'runtimeLockSha256':workflow.sha(skill/'scripts/runtime.lock.json'),'scope':'single copied source skill; empty runtime; unchanged installer; public fixed native download; not immutable plugin or Art mixed acceptance' if public else 'isolated skill workflow and actual native CLI; installer overridden to verified candidate; not public cold installation or Art mixed acceptance'}
+                    value['copiedSkillHashes']=skill_hashes
+                    value['originalSkillBytesUnchanged']=True
+                    if os.environ.get('CRAFT_FILM_SEQUENCE_SKILL_ROOT'):
+                        value['scope']='single copied externally supplied skill snapshot; empty runtime; unchanged installer; public fixed native download; snapshot identity bound separately by host receipt; not Art mixed acceptance'
                     with Path(os.environ['CRAFT_FILM_SEQUENCE_WORKFLOW_EVIDENCE']).open('x') as stream:json.dump(value,stream,indent=2)
