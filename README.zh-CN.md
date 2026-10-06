@@ -73,3 +73,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 公开维护版 craft.2 支持显式帧率序列、全帧收集与移动工程重关联。源码独立技能冷安装及实际 Effect→Film 交接已通过，固定插件与 Art 验收仍待完成。[证据与架构](docs/FilmCraft-Public-Sequence-First-Use-Architecture.zh_CN.md)。
 
 固定 Film 插件 dev.10 已通过 Codex 0.153.4 隔离安装后的序列首次使用验收。58 项技能发现且零加载错误，Film 执行后全部摘要保持不变。[有界证据](docs/evidence/codex-filmcraft10-sequence-first-use-20261006.json)；Effect／Art 动态发行联调仍待完成。
+
+候选运动／LUT 工作流已通过公开运行时首次使用测试：明确关键帧、登记 LUT、原生重开及移动返工；当前不可变插件 dev.10 与 Art 联调尚未包含此映射。 See [architecture](docs/FilmCraft-Motion-LUT-Workflow-Architecture.md) and [evidence](docs/evidence/motion-lut-workflow-candidate-20261006.json).

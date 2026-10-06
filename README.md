@@ -73,3 +73,5 @@ Published source dev.8 rejects generated silent AAC when required native source 
 Public runtime craft.2 adds explicit-rate sequence import, complete collection and moved-project relinking. Source-skill cold installation and actual Effect→Film handoff passed; immutable plugin and Art acceptance remain pending. [Evidence and architecture](docs/FilmCraft-Public-Sequence-First-Use-Architecture.md).
 
 Fixed Film plugin dev.10 installed-first-use sequence acceptance now passes in isolated Codex 0.153.4. All 58 skills are discovered without loading errors and retain their hashes after Film execution. [Bounded evidence](docs/evidence/codex-filmcraft10-sequence-first-use-20261006.json); Effect/Art dynamic release integration remains pending.
+
+Candidate motion/LUT workflow: explicit keyframes, registered LUTs, native reopening and moved revisions passed a public-runtime first-use test. Immutable plugin dev.10 and Art integration do not yet include this mapping. See [architecture](docs/FilmCraft-Motion-LUT-Workflow-Architecture.md) and [evidence](docs/evidence/motion-lut-workflow-candidate-20261006.json).
