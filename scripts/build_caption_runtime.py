@@ -19,8 +19,8 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def build(repository, output):
-    manifest = json.loads((ROOT / 'runtime/caption-font-patch.json').read_text())
+def build(repository, output, manifest_name="caption-font-patch.json", version=VERSION):
+    manifest = json.loads((ROOT / 'runtime' / manifest_name).read_text())
     patch = ROOT / manifest['patch']
     if sha(patch) != manifest['patchSha256']:
         raise ValueError('patch_checksum_mismatch')
@@ -46,19 +46,21 @@ def build(repository, output):
         original = 'version = "0.2.0"'
         if text.count(original) != 1:
             raise ValueError('workspace_version_mismatch')
-        cargo.write_text(text.replace(original, 'version = "' + VERSION + '"'))
+        cargo.write_text(text.replace(original, 'version = "' + version + '"'))
         env = dict(os.environ, RUSTFLAGS='--remap-path-prefix=' + str(source) + '=/craft-source')
         subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-captions'], cwd=source, env=env, check=True)
+        if manifest_name == 'sequence-rate-patch.json':
+            subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-engine', 'image_sequence_tests'], cwd=source, env=env, check=True)
         subprocess.run(['cargo', 'build', '--offline', '--release', '-p', 'filmcraft-cli'], cwd=source, env=env, check=True)
         binary = source / 'target/release/filmcraft-cli'
         version_output = subprocess.check_output([str(binary), '--version'], text=True).strip()
-        if version_output != 'filmcraft-cli ' + VERSION:
+        if version_output != 'filmcraft-cli ' + version:
             raise ValueError('candidate_version_mismatch')
-        provenance = dict(manifest, runtimeVersion=VERSION, status='built-maintained-runtime', binarySha256=sha(binary), rustc=subprocess.check_output(['rustc', '--version'], text=True).strip(), platform='darwin-arm64', cargoLockSha256=sha(source / 'Cargo.lock'), sourceArchiveSha256=sha(archive))
+        provenance = dict(manifest, runtimeVersion=version, status='built-maintained-runtime', binarySha256=sha(binary), rustc=subprocess.check_output(['rustc', '--version'], text=True).strip(), platform='darwin-arm64', cargoLockSha256=sha(source / 'Cargo.lock'), sourceArchiveSha256=sha(archive))
         output.mkdir(parents=True)
-        package = output / ('filmcraft-cli-' + VERSION + '-macos-arm64.zip')
+        package = output / ('filmcraft-cli-' + version + '-macos-arm64.zip')
         with zipfile.ZipFile(package, 'w', compression=zipfile.ZIP_DEFLATED) as target:
-            entries = {'filmcraft-cli': binary.read_bytes(), 'LICENSE-MIT': (source / 'LICENSE-MIT').read_bytes(), 'LICENSE-APACHE': (source / 'LICENSE-APACHE').read_bytes(), 'PROVENANCE.json': (json.dumps(provenance, ensure_ascii=False, indent=2) + '\n').encode(), 'caption-font-family.patch': patch.read_bytes()}
+            entries = {'filmcraft-cli': binary.read_bytes(), 'LICENSE-MIT': (source / 'LICENSE-MIT').read_bytes(), 'LICENSE-APACHE': (source / 'LICENSE-APACHE').read_bytes(), 'PROVENANCE.json': (json.dumps(provenance, ensure_ascii=False, indent=2) + '\n').encode(), patch.name: patch.read_bytes()}
             for license_file in sorted((source / 'assets/fonts').glob('OFL-*.txt')):
                 entries['LICENSE-' + license_file.name] = license_file.read_bytes()
             entries['LICENSE-ATTRIBUTION.md'] = (source / 'ATTRIBUTION.md').read_bytes()
@@ -67,7 +69,7 @@ def build(repository, output):
                 info.external_attr = (0o100755 if name == 'filmcraft-cli' else 0o100644) << 16
                 info.compress_type = zipfile.ZIP_DEFLATED
                 target.writestr(info, content)
-        receipt = {'schema': 'craft-maintained-runtime-build/v1', 'runtimeVersion': VERSION, 'platform': 'darwin-arm64', 'archive': package.name, 'archiveSha256': sha(package), 'binarySha256': sha(binary), 'versionOutput': version_output, 'provenance': provenance, 'provenanceSha256': hashlib.sha256(entries['PROVENANCE.json']).hexdigest()}
+        receipt = {'schema': 'craft-maintained-runtime-build/v1', 'runtimeVersion': version, 'platform': 'darwin-arm64', 'archive': package.name, 'archiveSha256': sha(package), 'binarySha256': sha(binary), 'versionOutput': version_output, 'provenance': provenance, 'provenanceSha256': hashlib.sha256(entries['PROVENANCE.json']).hexdigest()}
         (output / 'build-receipt.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
         return receipt
 

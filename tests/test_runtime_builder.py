@@ -27,6 +27,15 @@ class RuntimeBuilderTests(unittest.TestCase):
                     self.module.build(root,root/'output')
             self.assertFalse((root/'output').exists())
 
+    def test_sequence_patch_checksum_rejected_before_native_tools(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary); (root/'runtime').mkdir(); (root/'change.patch').write_bytes(b'changed')
+            (root/'runtime/sequence-rate-patch.json').write_text(json.dumps({'patch': 'change.patch', 'patchSha256': hashlib.sha256(b'original').hexdigest()}))
+            with patch.object(self.module, 'ROOT', root), patch.object(self.module.subprocess, 'run', side_effect=AssertionError('executed')), patch.object(self.module.subprocess, 'check_output', side_effect=AssertionError('executed')):
+                with self.assertRaisesRegex(ValueError, 'patch_checksum_mismatch'):
+                    self.module.build(root, root/'output', manifest_name='sequence-rate-patch.json', version='0.2.0-craft.2')
+            self.assertFalse((root/'output').exists())
+
     def test_unsupported_platform_is_refused_before_source_export(self):
         with patch.object(self.module.platform,'system',return_value='Linux'), patch.object(self.module.subprocess,'check_output',side_effect=AssertionError('executed')):
             with self.assertRaisesRegex(ValueError,'unsupported_build_platform'):
