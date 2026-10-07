@@ -11,6 +11,27 @@ class WorkflowTests(unittest.TestCase):
         self.module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.module)
 
+    def test_audio_tail_accepts_only_exact_native_frame_padding(self):
+        clip = {'sourceIn': 0, 'duration': 571536000000, 'speed': 1}
+        probe = {'duration': '561714048000', 'kind': 'AudioOnly', 'audio': {'channels': 1}, 'video': None}
+        rate = {'num': 12, 'den': 1}
+        self.assertTrue(self.module.source_range_valid(clip, probe, rate))
+        for changed in [dict(clip, duration=clip['duration'] + 1), dict(clip, speed=2),
+                        dict(clip, sourceIn=561714048000), dict(clip, sourceIn=-1), dict(clip, duration=0)]:
+            self.assertFalse(self.module.source_range_valid(changed, probe, rate))
+        for changed in [dict(probe, kind='Video'), dict(probe, audio=None), dict(probe, video={'width': 320})]:
+            self.assertFalse(self.module.source_range_valid(clip, changed, rate))
+        self.assertTrue(self.module.source_range_valid(dict(clip, duration=508032000000), probe, rate))
+
+    def test_short_audio_native_minimum_frame_and_invalid_speed(self):
+        rate = {'num': 12, 'den': 1}
+        clip = {'sourceIn': 0, 'duration': 21168000000, 'speed': 1}
+        probe = {'duration': '254016000', 'kind': 'AudioOnly', 'audio': {'channels': 1}}
+        self.assertTrue(self.module.source_range_valid(clip, probe, rate))
+        for speed in (0, True, float('nan'), float('inf')):
+            with self.assertRaisesRegex(ValueError, 'invalid_clip_speed'):
+                self.module.source_range_valid(dict(clip, speed=speed), probe, rate)
+
     def test_visible_captions_are_burned_unless_explicitly_disabled(self):
         state={'tracks':[{'enabled':True}]}
         self.assertEqual(self.module.export_settings({},state),{'burnCaptions':True})
