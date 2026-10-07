@@ -1,0 +1,25 @@
+{
+  "scope": "source candidate version guidance; not fixed-release acceptance",
+  "result": "PASS",
+  "skillCount": 12,
+  "versionSource": "each skill scripts/runtime.lock.json; skill package release tag",
+  "skills": {
+    "skills/filmcraft-cli/SKILL.md": "9984331fc3df6d7e3a8408e5b0438602dd91361499a9efa4102b50f6b9c5df38",
+    "skills/filmcraft-cli-audio/SKILL.md": "98ed8c1bf8c1ce7fee13173a45367f3e40268421e8750c7f31ba6d5b1fd6b7ad",
+    "skills/filmcraft-cli-color/SKILL.md": "5905f1427c1282a757538f31bc4367591d17575d0905b84a2a654bb42d27f450",
+    "skills/filmcraft-cli-export/SKILL.md": "90346c38426d5526bb4955fb87ceb78c97192f88b4d1c94380b3dcbbaa5f5a1f",
+    "skills/filmcraft-cli-media/SKILL.md": "85c3904a744fa7e726da669c6724dd1a0bab06ceb463bcfa4f2200779c14cb4f",
+    "skills/filmcraft-cli-motion/SKILL.md": "8f44777262001e9221bd4304aef629d574b3f91ce129ae28e4600d5054da9577",
+    "skills/filmcraft-cli-multicam/SKILL.md": "a630dcf3477f7b2fbd6b9b6c88b922b396c200d7c17c41c1ebb06674adefeb4e",
+    "skills/filmcraft-cli-project/SKILL.md": "f2f788d608a02517cb5eeffe954b3f80a53c5574cf24c4774f89404909b94b9a",
+    "skills/filmcraft-cli-setup/SKILL.md": "b9bc44e9b745b9f84df0873fa53ea546a5a69ff5c746d1215ac295b0ccbffc09",
+    "skills/filmcraft-cli-subtitles/SKILL.md": "e3bb384e8a98b8e96cc76f631e8ca7d617e713974d6f6a33ef21a118bf847fa1",
+    "skills/filmcraft-cli-timeline/SKILL.md": "13ebce5dfbf1eda793a181fd0c5af947c90bae280cdf1593c86541ca8ef0c480",
+    "skills/filmcraft-use/SKILL.md": "655632326e02d1039f87ca3c605ce5c51c80ab0be606fdacd8c116d4174aa8bf"
+  },
+  "regression": {
+    "tests": 138,
+    "skipped": 29,
+    "exitCode": 0
+  }
+}

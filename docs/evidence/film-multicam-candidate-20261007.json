@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "scope": "source candidate multicam: two real cameras, in-point sync, video-only cut at1s, camera1 audio retained; native save/reopen and decoded video/audio; not full multicam acceptance",
+  "runtimeSha256": "cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433",
+  "frameCenterPixels": [
+    [
+      254,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      255
+    ]
+  ],
+  "masterAudioPeakHz": [
+    440.0,
+    440.0
+  ],
+  "videoClips": 2,
+  "audioClips": 1,
+  "filmSha256": "f9300eab098b75c0ecd0d0f6214ebf56348597cf8ec4d23382eaf8b6ad2a7b9d"
+}
