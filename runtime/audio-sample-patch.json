@@ -1,0 +1,18 @@
+{
+  "schema": "craft-runtime-patch/v1",
+  "upstreamRepository": "https://github.com/storytold/filmcraft",
+  "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+  "upstreamVersion": "0.2.0",
+  "patch": "runtime/patches/audio-sample-duration.patch",
+  "patchSha256": "97214d5069be48ed8377a752ecaa25bddef80d8df8015101fbeb79fa968d70c3",
+  "runtimeVersion": "0.2.0-craft.3",
+  "status": "source-candidate",
+  "reason": "Audio track source durations were quantized to nearest video frames, truncating off-grid tails. Audio duration now retains integer sample ticks; video quantization and caption/image-sequence fixes remain.",
+  "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
+  "limits": [
+    "Existing immutable releases retained; source installer now locks craft.2",
+    "Source-skill public installation is not immutable plugin or Art mixed acceptance",
+    "Research source remains read-only"
+  ],
+  "includedSequencePatchSha256": "b73f97f8e69a66435725cd8c4aa5bf3eecefa1da417c02da8d6bbdbd87e2c793"
+}

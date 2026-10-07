@@ -1,0 +1,104 @@
+{
+  "schema": "filmcraft-audio-sample-runtime-candidate/v1",
+  "result": "SOURCE_CANDIDATE_PASS",
+  "runtimeBuild": {
+    "schema": "craft-maintained-runtime-build/v1",
+    "runtimeVersion": "0.2.0-craft.3",
+    "platform": "darwin-arm64",
+    "archive": "filmcraft-cli-0.2.0-craft.3-macos-arm64.zip",
+    "archiveSha256": "27583a492d180510defb78aec6e9884c72a906e3ed00fe6c1c806017adb26c01",
+    "binarySha256": "d74aa4639e7f012e2273cea346037a15a02a245a516020c86bf6fb2200a6bb3b",
+    "versionOutput": "filmcraft-cli 0.2.0-craft.3",
+    "provenance": {
+      "schema": "craft-runtime-patch/v1",
+      "upstreamRepository": "https://github.com/storytold/filmcraft",
+      "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+      "upstreamVersion": "0.2.0",
+      "patch": "runtime/patches/audio-sample-duration.patch",
+      "patchSha256": "97214d5069be48ed8377a752ecaa25bddef80d8df8015101fbeb79fa968d70c3",
+      "runtimeVersion": "0.2.0-craft.3",
+      "status": "built-maintained-runtime",
+      "reason": "Audio track source durations were quantized to nearest video frames, truncating off-grid tails. Audio duration now retains integer sample ticks; video quantization and caption/image-sequence fixes remain.",
+      "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
+      "limits": [
+        "Existing immutable releases retained; source installer now locks craft.2",
+        "Source-skill public installation is not immutable plugin or Art mixed acceptance",
+        "Research source remains read-only"
+      ],
+      "includedSequencePatchSha256": "b73f97f8e69a66435725cd8c4aa5bf3eecefa1da417c02da8d6bbdbd87e2c793",
+      "binarySha256": "d74aa4639e7f012e2273cea346037a15a02a245a516020c86bf6fb2200a6bb3b",
+      "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+      "platform": "darwin-arm64",
+      "cargoLockSha256": "622e11e931d012456879d1f6327c75e6e9c9000661845d5bdac1eb25d10e91da",
+      "sourceArchiveSha256": "2e6f9d6c3599cf3d1266016d1dcb740ed8a0f6613d1ebee958da97c3c3f69408"
+    },
+    "provenanceSha256": "eb9180e26fa0b37229e597dc0a40a0fa9942bb536f0e7e7d6a6087fb9f08fb14"
+  },
+  "decodedAudioNative": {
+    "schema": "filmcraft-audio-downframe-first-use/v1",
+    "scope": "single copied audio skill; empty public runtime installation; synthetic existing audio; static A1 gain only; no creative or GUI acceptance",
+    "sourceDurationSeconds": 2.2,
+    "publicRuntimeDownload": false,
+    "decodedTailWindowSeconds": [
+      2.17,
+      2.2
+    ],
+    "decodedTailRms": 0.12478658344569013,
+    "oversizedExplicitRangeRejected": true,
+    "gainDb": -6,
+    "decodedRmsRatio": 0.5011941759283628,
+    "expectedRatio": 0.5011872336272722,
+    "runtimeSha256": "d74aa4639e7f012e2273cea346037a15a02a245a516020c86bf6fb2200a6bb3b",
+    "sourcePreserved": true,
+    "videoAudioClipIdentityPreserved": true,
+    "captionsPreserved": true,
+    "skillFilesPreserved": true,
+    "initialProjectSha256": "421cc066cc33da7a7f0e2e441244fd99208584853f8602d1edfa0dc6c72098e5",
+    "revisedFiles": {
+      "audio-check.json": "34c3ecca733e7e1dc4e19ffbdb7cfad1ec81575a4663afb0c9f359c2c265d316",
+      "plan.json": "baa1434247d8080a995603d59ec35701da56cfc006127239d97eee15d0d7fc86",
+      "decode.txt": "0e5c4b7141dbceaf7e5d5da81d25eca62202bf68706ba32909f42b2a87e5a8cd",
+      "export-probe.json": "61a547f31957faeede3609786e52bdbe667b7e46ebb59f305a545d04d562c6fb",
+      "captions.json": "978d129f800a09619902375647f1894fad2d66939056220204fa20ab5a2cca35",
+      "exchange-loss.json": "7d7977e5343d8f6eeba794b0f70f195d6ab00cf2bec277050ff86537193b07d4",
+      "film.mp4": "bf4ee3aa0baae8f70d261a1a3bd16135044dfb7f01a587dff7f9bd6fea7c0b59",
+      "captions.srt": "9343764ccf00bdeabe065ee73d914273f6e8ef29d041d11eb6fd1a5e39c23bc5",
+      "native.json": "1dfb722ee52cbf2c7cf89b13723b31f09d2eecf1b9df7395855818293875e9b0",
+      "voice.wav": "1b9e0969bfaeabe7587d02b644d072d4ec389835e4c5676991a94d77a02e894f",
+      "shot.mp4": "53e8909dfffc9dccb6241cd25e0bf61f1750c7b33cbb815c860667c8af69a7a8",
+      "frame-0000.png": "294453bc6e0c9e6cbfb99260c6706b0d45b5bbcab8612e186b797b76f07ce0d7",
+      "project.fcproj": "1cbbd1612fedca730b55104a72691d5c9a84539083a362f4c400a70ef54e5249",
+      "operations.json": "86ac53064985e2c562923ffd8938f24c32db1cc13891d3a3647bbc61f5254cc8"
+    }
+  },
+  "nativeTests": {
+    "captions": 36,
+    "captionExchange": 13,
+    "imageSequences": 8,
+    "project": 49,
+    "total": 106
+  },
+  "sourceRegression": {
+    "tests": 160,
+    "skipped": 33,
+    "passed": 127
+  },
+  "red": {
+    "decodedTailRms": 0.0003924050535696926,
+    "threshold": 0.02,
+    "nativeError": "audio source tail must not be frame-quantized"
+  },
+  "logs": {
+    "filmcraft-downframe-red-20261007": "47ea69b22cccf20bedaf09afd75dbb0d1b4b32cbffff4cc061ef9586355fe66d",
+    "filmcraft-audio-native-red-20261007": "13209b99f62c0de8106c03977e1a65e9444169cb256863600252f5329c254b5e",
+    "filmcraft-audio-sample-craft3-build-final-20261007": "0aec56327bcfe8107398d6232d47c38d0899325fd72b6dea38ba386121a641cb",
+    "filmcraft-audio-sample-craft3-candidate-green-20261007": "bb698d5f57e5c5ef2959c1164fc3c055994b2fb4c31fecc2e78dcd89cf3b91a8",
+    "filmcraft-craft3-source-regression-20261007": "87895d672fdab084b440ff25936745a421b56372404e2825d65efd831be3b8c4"
+  },
+  "publicAndFixedInstalledAcceptance": "NOT_RUN",
+  "excluded": [
+    "Generic Skills CLI",
+    "Human creative review",
+    "Full V1"
+  ]
+}

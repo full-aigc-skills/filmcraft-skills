@@ -19,7 +19,7 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def build(repository, output, manifest_name="caption-font-patch.json", version=VERSION):
+def build(repository, output, manifest_name="caption-font-patch.json", version=VERSION, target_directory=None):
     manifest = json.loads((ROOT / 'runtime' / manifest_name).read_text())
     patch = ROOT / manifest['patch']
     if sha(patch) != manifest['patchSha256']:
@@ -48,11 +48,15 @@ def build(repository, output, manifest_name="caption-font-patch.json", version=V
             raise ValueError('workspace_version_mismatch')
         cargo.write_text(text.replace(original, 'version = "' + version + '"'))
         env = dict(os.environ, RUSTFLAGS='--remap-path-prefix=' + str(source) + '=/craft-source')
+        if target_directory is not None:
+            env['CARGO_TARGET_DIR'] = str(Path(target_directory).absolute())
         subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-captions'], cwd=source, env=env, check=True)
-        if manifest_name == 'sequence-rate-patch.json':
+        if manifest_name in {'sequence-rate-patch.json', 'audio-sample-patch.json'}:
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-engine', 'image_sequence_tests'], cwd=source, env=env, check=True)
+        if manifest_name == 'audio-sample-patch.json':
+            subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-project'], cwd=source, env=env, check=True)
         subprocess.run(['cargo', 'build', '--offline', '--release', '-p', 'filmcraft-cli'], cwd=source, env=env, check=True)
-        binary = source / 'target/release/filmcraft-cli'
+        binary = (Path(target_directory).absolute() if target_directory is not None else source / 'target') / 'release/filmcraft-cli'
         version_output = subprocess.check_output([str(binary), '--version'], text=True).strip()
         if version_output != 'filmcraft-cli ' + version:
             raise ValueError('candidate_version_mismatch')

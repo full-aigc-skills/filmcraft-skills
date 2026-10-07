@@ -1,0 +1,463 @@
+diff --git a/crates/captions/src/burn.rs b/crates/captions/src/burn.rs
+index 5c43e52..f50d540 100644
+--- a/crates/captions/src/burn.rs
++++ b/crates/captions/src/burn.rs
+@@ -49,13 +49,13 @@ impl Overlay {
+     }
+ }
+ 
+-/// The caption face: Inter SemiBold at `px`.
+-fn caption_style(px: f32) -> TextStyle {
+-    TextStyle { style: "SemiBold".into(), size: px, ..Default::default() }
++/// 按字幕轨指定的字体建立样式，测量、换行和绘制使用相同字体。
++fn caption_style(px: f32, family: &str) -> TextStyle {
++    TextStyle { family: family.into(), style: "SemiBold".into(), size: px, ..Default::default() }
+ }
+ 
+-fn measure(text: &str, px: f32) -> f32 {
+-    filmcraft_text::measure(text, &caption_style(px))
++fn measure(text: &str, px: f32, family: &str) -> f32 {
++    filmcraft_text::measure(text, &caption_style(px, family))
+ }
+ 
+ fn lin(c: [u8; 4]) -> [f32; 4] {
+@@ -64,12 +64,12 @@ fn lin(c: [u8; 4]) -> [f32; 4] {
+ }
+ 
+ /// Word-wrap one line to `max_w` pixels.
+-fn wrap(line: &str, px: f32, max_w: f32) -> Vec<String> {
++fn wrap(line: &str, px: f32, max_w: f32, family: &str) -> Vec<String> {
+     let mut out = Vec::new();
+     let mut cur = String::new();
+     for word in line.split(' ') {
+         let cand = if cur.is_empty() { word.to_string() } else { format!("{cur} {word}") };
+-        if !cur.is_empty() && measure(&cand, px) > max_w {
++        if !cur.is_empty() && measure(&cand, px, family) > max_w {
+             out.push(std::mem::take(&mut cur));
+             cur = word.to_string();
+         } else {
+@@ -118,13 +118,13 @@ pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) ->
+     let mut lines: Vec<String> = Vec::new();
+     // (speaker names are metadata; like Premiere, they are not burned in)
+     for l in c.plain_lines() {
+-        lines.extend(wrap(l.trim(), px, max_w));
++        lines.extend(wrap(l.trim(), px, max_w, &style.font));
+     }
+     lines.retain(|l| !l.is_empty());
+     if lines.is_empty() {
+         return None;
+     }
+-    let vm = filmcraft_text::fonts::face(filmcraft_text::resolve("Inter", "SemiBold").face).metrics(px);
++    let vm = filmcraft_text::fonts::face(filmcraft_text::resolve(&style.font, "SemiBold").face).metrics(px);
+     let (asc, desc) = (vm.ascent, vm.descent);
+     let lh = px * style.line_spacing.max(0.8);
+     let pad_x = (px * 0.3).round();
+@@ -141,7 +141,7 @@ pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) ->
+     .max(0.0)
+     .round();
+     let side = w as f32 * 0.05;
+-    let widths: Vec<f32> = lines.iter().map(|l| measure(l, px)).collect();
++    let widths: Vec<f32> = lines.iter().map(|l| measure(l, px, &style.font)).collect();
+     let xs: Vec<f32> = widths
+         .iter()
+         .map(|&lw| match align {
+@@ -176,7 +176,7 @@ pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) ->
+             }
+         }
+         let baseline = lt + (lh - (asc + desc)) / 2.0 + asc;
+-        let l = layout(line, &caption_style(px), &ParagraphStyle::default());
++        let l = layout(line, &caption_style(px, &style.font), &ParagraphStyle::default());
+         let mut m = filmcraft_text::Mask { w: ow, h: oh, a: std::mem::take(&mut cover) };
+         render::draw(&l, &render::at(xs[i], baseline.round()), &mut m, (ox, oy));
+         cover = m.a;
+@@ -254,6 +254,24 @@ mod tests {
+         Caption { id: ClipId(1), start: Tick(0), duration: Tick(100), text: text.into(), speaker: None, cue_id: None, settings: String::new() }
+     }
+ 
++    #[test]
++    fn caption_track_font_changes_rendered_pixels() {
++        let inter = CaptionStyle { font: "Inter".into(), ..Default::default() };
++        let mono = CaptionStyle { font: "JetBrains Mono".into(), ..Default::default() };
++        let a = render_caption(&cap("MWiiii"), &inter, 1920, 1080).unwrap();
++        let b = render_caption(&cap("MWiiii"), &mono, 1920, 1080).unwrap();
++        assert!(a.w != b.w || a.px != b.px, "configured font must affect actual caption pixels");
++    }
++
++    #[cfg(target_os = "macos")]
++    #[test]
++    fn chinese_caption_glyphs_are_distinct() {
++        let style = CaptionStyle { font: "Heiti SC".into(), size: 96.0, ..Default::default() };
++        let a = render_caption(&cap("新"), &style, 1920, 1080).unwrap();
++        let b = render_caption(&cap("品"), &style, 1920, 1080).unwrap();
++        assert!(a.w != b.w || a.px != b.px, "different Chinese characters must not become identical replacement glyphs");
++    }
++
+     #[test]
+     fn bottom_centre_with_box() {
+         let st = CaptionStyle::default();
+--- a/crates/engine/src/commands.rs
++++ b/crates/engine/src/commands.rs
+@@ -256,8 +256,13 @@
+ /// Sequence): one movie item at Settings ▸ Media ▸ Indeterminate Media Timebase. Returns the item,
+ /// the frame count and the missing frame numbers (relative to the first).
+ pub fn import_image_sequence(s: &mut Session, path: &str, bin: Option<filmcraft_project::BinId>) -> Result<(ItemId, usize, Vec<usize>)> {
++    let rate = crate::settings::timebase_rate(&s.prefs.media.indeterminate_timebase);
++    import_image_sequence_at_rate(s, path, bin, rate)
++}
++
++/// 按显式有理帧率导入完整图片序列；返回素材、帧数及缺帧编号，不修改用户媒体偏好。
++pub fn import_image_sequence_at_rate(s: &mut Session, path: &str, bin: Option<filmcraft_project::BinId>, rate: FrameRate) -> Result<(ItemId, usize, Vec<usize>)> {
+     let name = std::path::Path::new(path).file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| path.to_string());
+-    let rate = crate::settings::timebase_rate(&s.prefs.media.indeterminate_timebase);
+     let frames = crate::media_pool::image_sequence_frames(path, &*s.services)?;
+     let missing: Vec<usize> = frames.iter().enumerate().filter(|(_, f)| f.is_none()).map(|(i, _)| i).collect();
+     let src = crate::media_pool::open_image_sequence(path, &*s.services, rate, &name)?;
+--- a/crates/engine/src/project_tools.rs
++++ b/crates/engine/src/project_tools.rs
+@@ -25,7 +25,7 @@
+ use std::collections::BTreeSet;
+ 
+ use filmcraft_project::{BinEntry, FindOp, FindQuery, FindRow, ItemId, ItemKind, MarkerKind, MediaRef, Project, SearchBin, TrackKind};
+-use filmcraft_time::{Tick, TimeDisplay, TimeRange};
++use filmcraft_time::{FrameRate, Tick, TimeDisplay, TimeRange};
+ use serde::{Deserialize, Serialize};
+ use serde_json::{Value, json};
+ 
+@@ -113,8 +113,26 @@
+             },
+         ),
+         // File ▸ Import with "Image Sequence" checked (the UI asks for the first frame).
+-        spec("file.importImageSequence", "Import Image Sequence…", &["File"], None, r#"{"path":str,"bin":binId?}"#, always, |s, p| {
++        spec("file.importImageSequence", "Import Image Sequence…", &["File"], None, r#"{"path":str,"bin":binId?,"frameRate":{"num":i64,"den":i64}?}"#, always, |s, p| {
+             let path = p.get("path").and_then(Value::as_str).ok_or_else(|| bad("file.importImageSequence", "need `path` (the first numbered still)"))?;
++            // 未指定帧率时保持原有偏好逻辑；显式帧率不得通过修改偏好实现。
++            if let Some(value) = p.get("frameRate") {
++                let fields = value.as_object().ok_or_else(|| bad("file.importImageSequence", "frameRate: {num, den}"))?;
++                if fields.len() != 2 {
++                    return Err(bad("file.importImageSequence", "frameRate: {num, den}"));
++                }
++                let num = value.get("num").and_then(Value::as_i64).ok_or_else(|| bad("file.importImageSequence", "frameRate.num: positive integer"))?;
++                let den = value.get("den").and_then(Value::as_i64).ok_or_else(|| bad("file.importImageSequence", "frameRate.den: positive integer"))?;
++                if num <= 0 || den <= 0 || num < den || i128::from(num) > 240 * i128::from(den) {
++                    return Err(bad("file.importImageSequence", "frameRate: 1..240 fps"));
++                }
++                let bin = match p.get("bin") {
++                    None => None,
++                    Some(value) => Some(filmcraft_project::BinId(value.as_u64().ok_or_else(|| bad("file.importImageSequence", "bin: item id"))?)),
++                };
++                let (item, frames, missing) = crate::commands::import_image_sequence_at_rate(s, path, bin, FrameRate::new(num, den))?;
++                return Ok(json!({"items": [item.0], "errors": [], "imageSequences": [{"item": item.0, "frames": frames, "missing": missing}], "frameRate": {"num": num, "den": den}}));
++            }
+             let mut q = json!({"paths": [path], "imageSequence": true});
+             if let Some(b) = p.get("bin") {
+                 q["bin"] = b.clone();
+--- a/crates/engine/src/project_manager.rs
++++ b/crates/engine/src/project_manager.rs
+@@ -68,6 +68,8 @@
+     /// Consolidate: the media range to write; None = copy the file.
+     range: Option<TimeRange>,
+     proxy: Option<(String, String)>,
++    /// 图片序列逐帧复制映射；首帧路径仍作为原生媒体入口。
++    sequence_files: Vec<(String, String)>,
+ }
+ 
+ /// Plan, estimate and (unless `dryRun`) run the Project Manager.
+@@ -128,6 +130,28 @@
+     for id in ids {
+         let Some(m) = proj.item(id).and_then(|i| i.as_media()).cloned() else { continue };
+         let MediaRef::File { path } = &m.media else { continue };
++        if m.info.kind == MediaKind::ImageSequence {
++            let frames = crate::media_pool::image_sequence_frames(path, &*s.services)
++                .map_err(|e| EngineError::Other(e.to_string()))?;
++            if frames.len() > i64::MAX as usize || m.frame_rate().tick_of(frames.len() as i64) != m.info.duration {
++                return Err(EngineError::Other(format!("{path}: sequence frame count differs from imported duration")));
++            }
++            let folder = dest_dir.join("ImageSequences").join(format!("item-{}", id.0));
++            let mut sequence_files = Vec::new();
++            for (index, frame) in frames.into_iter().enumerate() {
++                let from = frame.ok_or_else(|| EngineError::Other(format!("{path}: missing sequence frame {index}")))?;
++                let file_name = Path::new(&from).file_name().ok_or_else(|| EngineError::Other("sequence frame has no file name".into()))?;
++                let to = folder.join(file_name).to_string_lossy().into_owned();
++                let size = s.services.file_size(&from).map_err(|e| EngineError::Other(format!("{from}: {e}")))?;
++                original_bytes += size;
++                result_bytes += size;
++                sequence_files.push((from, to));
++            }
++            let out = sequence_files.first().ok_or_else(|| EngineError::Other("empty image sequence".into()))?.1.clone();
++            taken.push(out.clone());
++            work.push(Work { item: id, src_path: path.clone(), out, range: None, proxy: None, sequence_files });
++            continue;
++        }
+         let size = s.services.file_size(path).unwrap_or(0);
+         original_bytes += size;
+         let file = Path::new(path);
+@@ -162,7 +186,7 @@
+             }
+             _ => None,
+         };
+-        work.push(Work { item: id, src_path: path.clone(), out, range, proxy });
++        work.push(Work { item: id, src_path: path.clone(), out, range, proxy, sequence_files: Vec::new() });
+     }
+     let previews = s.path.as_deref().map(crate::previews::dir_for_project).filter(|d| include_previews && d.is_dir());
+     if let Some(d) = &previews {
+@@ -172,7 +196,13 @@
+     }
+     let files: Vec<Value> = work
+         .iter()
+-        .map(|w| json!({"item": w.item.0, "from": w.src_path, "to": w.out, "trim": w.range.map(|r| json!({"start": r.start.0, "end": r.end().0}))}))
++        .map(|w| {
++            let mut entry = json!({"item": w.item.0, "from": w.src_path, "to": w.out, "trim": w.range.map(|r| json!({"start": r.start.0, "end": r.end().0}))});
++            if !w.sequence_files.is_empty() {
++                entry["sequenceFiles"] = json!(w.sequence_files.iter().map(|(from, to)| json!({"from": from, "to": to})).collect::<Vec<_>>());
++            }
++            entry
++        })
+         .collect();
+     let summary = json!({
+         "project": project_path,
+@@ -264,7 +294,14 @@
+         }
+         match w.range {
+             None => {
+-                bytes += std::fs::copy(&w.src_path, &w.out).map_err(|e| format!("copying {}: {e}", w.src_path))?;
++                if w.sequence_files.is_empty() {
++                    bytes += std::fs::copy(&w.src_path, &w.out).map_err(|e| format!("copying {}: {e}", w.src_path))?;
++                } else {
++                    for (from, to) in &w.sequence_files {
++                        if prog.cancel.load(Ordering::Relaxed) { return Err("cancelled".into()); }
++                        bytes += std::fs::copy(from, to).map_err(|e| format!("copying {from}: {e}"))?;
++                    }
++                }
+                 prog.done.fetch_add(1, Ordering::Relaxed);
+             }
+             Some(r) => {
+--- a/crates/engine/src/relink.rs
++++ b/crates/engine/src/relink.rs
+@@ -195,6 +195,19 @@
+     pub source: Option<filmcraft_media::SharedSource>,
+ }
+ 
++/// 按原生素材类型打开重关联候选，序列保持已保存的帧率并拒绝缺帧和截断。
++fn open_link_candidate(s: &Session, media: &filmcraft_project::MediaClip, path: &str) -> filmcraft_media::Result<filmcraft_media::SharedSource> {
++    if media.info.kind != filmcraft_media::MediaKind::ImageSequence {
++        return s.media.open_file(path, &*s.services);
++    }
++    let frames = crate::media_pool::image_sequence_frames(path, &*s.services)?;
++    if frames.iter().any(Option::is_none) || frames.len() > i64::MAX as usize
++        || media.frame_rate().tick_of(frames.len() as i64) != media.info.duration {
++        return Err(filmcraft_media::MediaError::Unsupported("image sequence missing frames or duration mismatch".into()));
++    }
++    crate::media_pool::open_image_sequence(path, &*s.services, media.frame_rate(), file_name(path))
++}
++
+ /// Check `path` as the new file of media item `item`. Opening the file (needed for duration,
+ /// timecode and metadata) is skipped when a cheap check already failed.
+ pub fn check_candidate(s: &Session, item: ItemId, path: &str, o: &MatchOptions) -> Result<Candidate> {
+@@ -236,7 +249,7 @@
+         }
+     }
+     if c.problems.is_empty() {
+-        match s.media.open_file(path, &*s.services) {
++        match open_link_candidate(s, m, path) {
+             Ok(src) => {
+                 let info = src.info().clone();
+                 let fd = m.info.frame_rate().frame_duration();
+@@ -400,12 +413,19 @@
+         Some(MediaRef::File { path }) => path,
+         _ => return Err(bad("media.relink", format!("item {} is not file media", item.0))),
+     };
+-    let c = check_candidate(s, item, &path, &o)?;
++    let mut c = check_candidate(s, item, &path, &o)?;
+     if !c.ok && !force {
+         return Err(EngineError::Other(format!("{} doesn't match {}: {}", file_name(&path), file_name(&old), c.problems.join("; "))));
+     }
+-    if c.source.is_none() && s.media.open_file(&path, &*s.services).is_err() {
+-        return Err(EngineError::Other(format!("{path} can't be opened")));
++    if c.source.is_none() {
++        let media = s.project.item(item).and_then(|i| i.as_media()).ok_or_else(|| bad("media.relink", "item is not media"))?;
++        if media.info.kind == filmcraft_media::MediaKind::ImageSequence {
++            let source = open_link_candidate(s, media, &path).map_err(|e| EngineError::Other(format!("{path} can't be opened: {e}")))?;
++            c.info = Some(source.info().clone());
++            c.source = Some(source);
++        } else if s.media.open_file(&path, &*s.services).is_err() {
++            return Err(EngineError::Other(format!("{path} can't be opened")));
++        }
+     }
+     let mut plans = vec![Plan { item, cand: c }];
+     if o.relink_others {
+--- a/crates/engine/src/image_sequence_tests.rs
++++ b/crates/engine/src/image_sequence_tests.rs
+@@ -135,3 +135,135 @@
+     assert!(v.media.offline_status(id).is_some(), "missing first frame: offline");
+     let _ = std::fs::remove_dir_all(&dir);
+ }
++
++/// 显式帧率必须控制原生媒体时长，不能使用会话默认 29.97 fps。
++#[test]
++fn explicit_image_sequence_rate_preserves_twelve_frame_second() {
++    let dir = tmp_dir("imgseq-explicit-rate");
++    let mut s = demo();
++    let paths = write_frames(&dir, "explicit_", &(0..12).collect::<Vec<u32>>(), "png");
++    let original = s.prefs.media.indeterminate_timebase.clone();
++    let r = s.execute("file.importImageSequence", json!({"path": paths[0], "frameRate": {"num": 12, "den": 1}})).unwrap();
++    let id = item_of(&r);
++    let media = s.project.item(id).unwrap().as_media().unwrap();
++    assert_eq!(media.info.frame_rate(), FrameRate::new(12, 1));
++    assert_eq!(media.info.duration, FrameRate::new(12, 1).tick_of(12));
++    assert_eq!(s.prefs.media.indeterminate_timebase, original);
++    assert_eq!(red_at(&s, id, 6), 60);
++    for rate in [json!({"num": 0, "den": 1}), json!({"num": 12, "den": 0}), json!({"num": 241, "den": 1}), json!({"num": 12, "den": 1, "extra": true})] {
++        assert!(s.execute("file.importImageSequence", json!({"path": paths[0], "frameRate": rate})).is_err());
++    }
++    let project = dir.join("explicit.fcproj");
++    s.execute("file.saveAs", json!({"path": project.to_string_lossy()})).unwrap();
++    let mut reopened = Session::default();
++    reopened.execute("file.open", json!({"path": project.to_string_lossy()})).unwrap();
++    let media = reopened.project.item(id).unwrap().as_media().unwrap();
++    assert_eq!(media.info.frame_rate(), FrameRate::new(12, 1));
++    assert_eq!(media.info.duration, FrameRate::new(12, 1).tick_of(12));
++    assert_eq!(red_at(&reopened, id, 6), 60);
++    assert_eq!(reopened.prefs.media.indeterminate_timebase, original);
++    let _ = std::fs::remove_dir_all(dir);
++}
++
++/// 收集必须保留整段图片序列；移走原素材后仍解码第六帧。
++#[test]
++fn collect_image_sequence_preserves_all_frames_and_reopens() {
++    let dir = tmp_dir("imgseq-collect-all");
++    let input = dir.join("input");
++    std::fs::create_dir_all(&input).unwrap();
++    let paths = write_frames(&input, "frame_", &(0..12).collect::<Vec<u32>>(), "png");
++    let mut s = demo();
++    let r = s.execute("file.importImageSequence", json!({"path": paths[0], "frameRate": {"num": 12, "den": 1}})).unwrap();
++    let id = item_of(&r);
++    let dest = dir.join("delivery");
++    let r = s.execute("file.projectManager", json!({"destination": dest.to_string_lossy(), "excludeUnused": false, "includeProxies": false, "wait": true})).unwrap();
++    let entry = r["files"].as_array().unwrap().iter().find(|x| x["item"] == id.0).unwrap();
++    assert_eq!(entry["sequenceFiles"].as_array().map(Vec::len), Some(12), "collection must include all numbered frames: {entry}");
++    for frame in entry["sequenceFiles"].as_array().unwrap() {
++        assert_eq!(std::fs::read(frame["from"].as_str().unwrap()).unwrap(), std::fs::read(frame["to"].as_str().unwrap()).unwrap());
++    }
++    std::fs::rename(&input, dir.join("input-gone")).unwrap();
++    let mut reopened = Session::default();
++    reopened.execute("file.open", json!({"path": r["project"].as_str().unwrap()})).unwrap();
++    assert_eq!(red_at(&reopened, id, 6), 60);
++    assert_eq!(reopened.project.item(id).unwrap().as_media().unwrap().info.duration, FrameRate::new(12, 1).tick_of(12));
++    let _ = std::fs::remove_dir_all(dir);
++}
++
++/// 缺失中间帧或尾帧必须在创建收集目录前失败，不能默默截断。
++#[test]
++fn collect_image_sequence_rejects_missing_or_truncated_frames() {
++    for missing in [6usize, 11] {
++        let dir = tmp_dir("imgseq-collect-missing");
++        let paths = write_frames(&dir, "missing_", &(0..12).collect::<Vec<u32>>(), "png");
++        let mut s = demo();
++        s.execute("file.importImageSequence", json!({"path": paths[0], "frameRate": {"num": 12, "den": 1}})).unwrap();
++        std::fs::remove_file(&paths[missing]).unwrap();
++        let dest = dir.join("delivery");
++        assert!(s.execute("file.projectManager", json!({"destination": dest.to_string_lossy(), "excludeUnused": false, "wait": true})).is_err());
++        assert!(!dest.exists());
++        let _ = std::fs::remove_dir_all(dir);
++    }
++}
++
++/// 同名帧序列隔离在不同素材目录，不得相互覆盖。
++#[test]
++fn collect_same_named_sequences_keep_distinct_frames_and_alpha() {
++    let dir = tmp_dir("imgseq-collect-collision");
++    let mut s = demo();
++    let mut items = Vec::new();
++    for (name, colour) in [("first", [60, 99, 7, 128]), ("second", [90, 99, 7, 64])] {
++        let input = dir.join(name);
++        std::fs::create_dir_all(&input).unwrap();
++        let paths = write_frames(&input, "frame_", &(0..12).collect::<Vec<u32>>(), "png");
++        image::RgbaImage::from_pixel(32, 18, image::Rgba(colour)).save(&paths[6]).unwrap();
++        let r = s.execute("file.importImageSequence", json!({"path": paths[0], "frameRate": {"num": 12, "den": 1}})).unwrap();
++        items.push((item_of(&r), colour));
++    }
++    let dest = dir.join("delivery");
++    let r = s.execute("file.projectManager", json!({"destination": dest.to_string_lossy(), "excludeUnused": false, "wait": true})).unwrap();
++    let jobs = s.execute("jobs.list", json!({})).unwrap();
++    assert!(jobs.as_array().unwrap().last().unwrap()["result"].get("error").is_none(), "{jobs}");
++    std::fs::rename(dir.join("first"), dir.join("first-gone")).unwrap();
++    std::fs::rename(dir.join("second"), dir.join("second-gone")).unwrap();
++    let mut reopened = Session::default();
++    reopened.execute("file.open", json!({"path": r["project"].as_str().unwrap()})).unwrap();
++    for (item, colour) in items {
++        let src = reopened.media.source_for(&reopened.project, item, &*reopened.services).unwrap();
++        let frame = src.video_frame(FrameRequest::full(FrameRate::new(12, 1).tick_of(6))).unwrap();
++        match &frame.data {
++            filmcraft_frame::PixelData::Rgba8(p) => assert_eq!(&p[..4], &colour),
++            _ => panic!("expected rgba"),
++        }
++    }
++    let _ = std::fs::remove_dir_all(dir);
++}
++
++/// 移动目录后的序列重关联必须保持类型、帧率和真实帧；不得退化为首帧图片。
++#[test]
++fn relink_image_sequence_preserves_rate_duration_and_frames() {
++    let dir = tmp_dir("imgseq-relink");
++    let input = dir.join("input");
++    std::fs::create_dir_all(&input).unwrap();
++    let paths = write_frames(&input, "frame_", &(0..12).collect::<Vec<u32>>(), "png");
++    let mut s = demo();
++    let r = s.execute("file.importImageSequence", json!({"path": paths[0], "frameRate": {"num": 12, "den": 1}})).unwrap();
++    let item = item_of(&r);
++    let moved = dir.join("moved");
++    std::fs::rename(&input, &moved).unwrap();
++    let first = moved.join("frame_0000.png");
++    s.execute("media.relink", json!({"item": item.0, "path": first.to_string_lossy(), "relinkOthers": false})).unwrap();
++    let media = s.project.item(item).unwrap().as_media().unwrap();
++    assert_eq!(media.info.kind, MediaKind::ImageSequence);
++    assert_eq!(media.info.frame_rate(), FrameRate::new(12, 1));
++    assert_eq!(media.info.duration, FrameRate::new(12, 1).tick_of(12));
++    assert_eq!(red_at(&s, item, 6), 60);
++    let incomplete = dir.join("incomplete");
++    std::fs::create_dir_all(&incomplete).unwrap();
++    for n in 0..12 { if n != 6 { std::fs::copy(moved.join(format!("frame_{n:04}.png")), incomplete.join(format!("frame_{n:04}.png"))).unwrap(); } }
++    for force in [false, true] {
++        assert!(s.execute("media.relink", json!({"item": item.0, "path": incomplete.join("frame_0000.png").to_string_lossy(), "relinkOthers": false, "force": force})).is_err());
++    }
++    assert_eq!(red_at(&s, item, 6), 60);
++    let _ = std::fs::remove_dir_all(dir);
++}
+
+--- a/crates/project/src/lib.rs
++++ b/crates/project/src/lib.rs
+@@ -1294,7 +1294,8 @@
+             _ => Vec::new(),
+         };
+         let id = ClipId(self.alloc_id());
+-        let dur = seq_rate.snap_nearest(source.duration).max(seq_rate.frame_duration());
++        // 音轨按采样时间保留源范围，避免最近视频帧截去尾部声音。
++        let dur = if kind == TrackKind::Audio { source.duration } else { seq_rate.snap_nearest(source.duration).max(seq_rate.frame_duration()) };
+         Some(TrackItem {
+             id,
+             item,
+@@ -1386,6 +1387,24 @@
+         (p, clip, seq)
+     }
+ 
++    /// 音频保留样本时间；视频继续按序列帧对齐，包含极短音频。
++    #[test]
++    fn audio_placement_preserves_subframe_source_range() {
++        let (mut project, item, _) = demo_project();
++        for rate in [FrameRate::new(12, 1), FrameRate::new(24000, 1001)] {
++            for samples in [1, 105600, 106144] {
++                let duration = Tick::from_units(samples, 48000);
++                let source_in = Tick::from_units(123, 48000);
++                let range = TimeRange::new(source_in, duration);
++                let audio = project.make_track_item(item, TrackKind::Audio, Tick::ZERO, range, rate).unwrap();
++                assert_eq!(audio.duration, duration, "audio source tail must not be frame-quantized");
++                assert_eq!(audio.source_in, source_in);
++                let video = project.make_track_item(item, TrackKind::Video, Tick::ZERO, range, rate).unwrap();
++                assert_eq!(video.duration, rate.snap_nearest(duration).max(rate.frame_duration()));
++            }
++        }
++    }
++
+     #[test]
+     fn json_roundtrip() {
+         let (mut p, clip, seq) = demo_project();

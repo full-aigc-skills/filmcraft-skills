@@ -4,6 +4,8 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -35,6 +37,22 @@ class RuntimeBuilderTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'patch_checksum_mismatch'):
                     self.module.build(root, root/'output', manifest_name='sequence-rate-patch.json', version='0.2.0-craft.2')
             self.assertFalse((root/'output').exists())
+
+    def test_audio_builder_isolated_python_entrypoint(self):
+        result = subprocess.run([sys.executable, '-I', '-B', str(ROOT / 'scripts/build_audio_runtime.py'), '--help'], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('--target-directory', result.stdout)
+
+    def test_audio_patch_checksum_rejected_before_native_tools(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'runtime').mkdir()
+            (root / 'change.patch').write_bytes(b'changed')
+            (root / 'runtime/audio-sample-patch.json').write_text(json.dumps({'patch': 'change.patch', 'patchSha256': hashlib.sha256(b'original').hexdigest()}))
+            with patch.object(self.module, 'ROOT', root), patch.object(self.module.subprocess, 'run', side_effect=AssertionError('executed')):
+                with self.assertRaisesRegex(ValueError, 'patch_checksum_mismatch'):
+                    self.module.build(root, root / 'output', manifest_name='audio-sample-patch.json', version='0.2.0-craft.3')
+            self.assertFalse((root / 'output').exists())
 
     def test_unsupported_platform_is_refused_before_source_export(self):
         with patch.object(self.module.platform,'system',return_value='Linux'), patch.object(self.module.subprocess,'check_output',side_effect=AssertionError('executed')):
