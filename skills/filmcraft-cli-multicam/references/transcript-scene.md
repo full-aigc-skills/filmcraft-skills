@@ -75,3 +75,7 @@ Source skills pin maintainedcraft.4 with real native CPU Whisper. Immutable olde
 源码工作流 `workflow.py --data-dir "$MODEL_DATA_DIR"`（Python：`execute(..., data_dir=...)`）将同一持久目录传给 MCP、重开、渲染及导出进程。显式参数优先于 `FILMCRAFT_DATA_DIR`；未配置时保持原生默认目录。Art 编排调用可继承此环境变量。预先下载与识别必须指向同一目录；模型位于该目录的 `models/`，不随成片打包。此源码变更尚未进入已发布的 dev.33 或固定 Film34／Art104。
 
 The source workflow forwards `--data-dir` (Python `data_dir`) to MCP and auxiliary native processes. It overrides `FILMCRAFT_DATA_DIR`, while an unconfigured invocation keeps the native default. Use the same persistent directory for model download and recognition. Models remain under `models/` outside the delivery package. This source change is not yet included in published dev.33 or fixed Film34/Art104.
+
+下载若因断网或 `unexpected end of file` 明确失败，可在同一数据目录重新调用 `transcript.downloadModel`，完成文件由原生下载器保留，未完成文件重新校验。不要自动重放已提交的识别／修改命令；先检查回复、工程状态与恢复记录。首次使用网络失败必须作为失败证据保留，不能用复用本地模型冒充首次下载通过。
+
+After an explicit network download failure, retry only `transcript.downloadModel` in the same directory. The native downloader retains completed files and validates new downloads. Do not automatically replay submitted recognition or editing commands; reconcile replies, project state and recovery records first. Retain first-download failures separately from cached-model acceptance.

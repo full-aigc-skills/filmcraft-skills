@@ -2,7 +2,7 @@
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source candidate: `0.1.0-dev.33`; current fixed plugin `0.1.0-dev.34` retains older source32. New plugin/Art snapshots remain pending;13 independent skills.
+Current source snapshot: `0.1.0-dev.34`; current fixed plugin `0.1.0-dev.34` retains older source32. New plugin/Art snapshots remain pending;13 independent skills.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 

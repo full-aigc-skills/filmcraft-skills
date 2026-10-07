@@ -54,3 +54,7 @@ Historical source-candidate note: Source candidate: complete native workflow gat
 
 
 源dev.33锁定公开维护craft.4，启用CPU Whisper和会话模型目录。13独立CLI冷安装、实际公开模型／ASR首用、十原生场景与高级命令网关通过；源码回归130项执行通过／34项跳过。固定Film／Art及完整V1仍待验收。[证据](docs/evidence/whisper-candidate-inference-20261008.json)。
+
+## 0.1.0-dev.34
+
+源 dev.34 将显式／环境模型目录贯通公共工作流。独立转录技能全新安装公开 craft.4、首次下载与校验模型、真实 CLI 及工作流识别、源工程和音画保全、工程重开与 SRT 通过（52.497秒）；常规回归134通过／34跳过。固定 Film／Art 分发仍待验收。 [Evidence](docs/evidence/workflow-model-directory-20261008.json).

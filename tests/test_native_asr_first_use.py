@@ -132,6 +132,34 @@ class NativeAsrFirstUseTests(unittest.TestCase):
         cli('exec', 'captions.export', json.dumps({'path': str(srt), 'format': 'srt'}), '--project', captioned)
         for word in ['studio', 'captions']:
             self.assertIn(word, srt.read_text().lower())
+        # 公共工作流从同一首次下载目录识别；验证显式目录优先于环境变量。
+        revision = {'expectedProjectSha256': before, 'operations': [
+            {'command': 'native.command', 'params': {'command': 'transcript.models', 'params': {}}, 'as': 'models'},
+            {'command': 'native.command', 'params': {'command': 'transcript.generate', 'params': {
+                'model': 'whisper-tiny', 'language': 'en', 'items': [delivered['bindings']['voice']['item']]}}, 'as': 'recognized'},
+            {'command': 'native.command', 'params': {'command': 'transcript.inspect', 'params': {}}, 'as': 'transcript'},
+            {'command': 'native.command', 'params': {'command': 'transcript.createCaptions', 'params': {
+                'name': 'Workflow speech', 'maxChars': 42}}}], 'frames': [str(TICKS // 2)], 'export': {'audioRequired': True}}
+        from unittest.mock import patch
+        wrong = output / 'unused-environment-data'
+        with patch.dict(os.environ, {'FILMCRAFT_DATA_DIR': str(wrong)}):
+            workflow_delivery = workflow.execute(revision, output / 'workflow-asr', runtime_home=runtime,
+                                                  source=output / 'base', data_dir=data)
+        self.assertEqual(Path(workflow_delivery['bindings']['models']['dir']), data / 'models')
+        self.assertFalse(wrong.exists())
+        self.assertGreaterEqual(len(workflow_delivery['bindings']['transcript']['words']), 15)
+        self.assertNotEqual(workflow_delivery['bindings']['recognized']['items'][0]['source'], 'fixed')
+        workflow_native = json.loads((output / 'workflow-asr/native.json').read_text())
+        for track in ['audio', 'video']:
+            self.assertEqual(workflow_native['sequence'][track], workflow.precise(baseline['sequence'][track]))
+        self.assertEqual(digest(project), before)
+        for word in ['studio', 'captions']:
+            self.assertIn(word, (output / 'workflow-asr/captions.srt').read_text().lower())
+        workflow_proof = {'modelsDirCorrect': True, 'environmentOverrideUnused': True,
+                          'wordCount': len(workflow_delivery['bindings']['transcript']['words']),
+                          'sourcePreserved': True, 'audioVideoPreserved': True,
+                          'files': {name: digest(output / 'workflow-asr' / name)
+                                    for name in ['project.fcproj', 'captions.srt', 'film.mp4']}}
         binary = runtime / 'filmcraft' / lock['resolvedVersion'] / 'filmcraft-cli'
         proof = {'schema': 'filmcraft-single-skill-real-asr-first-use/v1', 'result': 'PASS',
                  'installation': 'local candidate archive' if candidate else 'public fixed runtime',
@@ -139,7 +167,7 @@ class NativeAsrFirstUseTests(unittest.TestCase):
                  'skillFiles': {str(p.relative_to(skill)): digest(p) for p in sorted(skill.rglob('*'))
                                 if p.is_file()}, 'inputSpeechSha256': digest(voice),
                  'sourceProjectSha256': before, 'sourcePreserved': True, 'audioVideoPreserved': True,
-                 'wordCount': len(words), 'recognizedText': text, 'referenceWordCoverage': coverage,
+                 'workflowAsr': workflow_proof, 'wordCount': len(words), 'recognizedText': text, 'referenceWordCoverage': coverage,
                  'modelFiles': {name: checksum for name, (_, checksum) in MODEL_FILES.items()},
                  'outputSha256': {p.name: digest(p) for p in [target, captioned, srt]}, 'calls': calls,
                  'scope': 'Actual speech recognition, native reopening and SRT in one isolated skill; '

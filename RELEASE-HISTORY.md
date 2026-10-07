@@ -54,3 +54,7 @@ Historical source-candidate note: Source candidate: complete native workflow gat
 
 
 Source dev.33 pins public maintainedcraft.4 with CPU Whisper and session model directories. All13 independent CLI cold starts, one actual public model/ASR first use, ten native scenes and the advanced native gateway pass. Source regression130 executed passes/34 skips. Fixed Film/Art and full V1 remain pending. [Evidence](docs/evidence/whisper-candidate-inference-20261008.json).
+
+## 0.1.0-dev.34
+
+Source dev.34 forwards explicit/environment model directories through the public workflow. A fresh independently copied transcript skill installs public craft.4, downloads and verifies the model, performs real CLI and workflow inference, preserves source/audio/video and exports reopened project/SRT (52.497s). Regression:134 passes/34 skips. Fixed Film/Art distribution remains pending. [Evidence](docs/evidence/workflow-model-directory-20261008.json).
