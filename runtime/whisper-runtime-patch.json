@@ -6,7 +6,7 @@
   "patch": "runtime/patches/whisper-runtime.patch",
   "patchSha256": "7ee28f300778a9a58c9c5f332f1a1a4829742d632f144c8ed0c887ea04f540c4",
   "runtimeVersion": "0.2.0-craft.4",
-  "status": "candidate-verified-not-published",
+  "status": "published-public-source-first-use-verified",
   "reason": "Enable real native Whisper inference and verified model downloads while retaining caption, sequence and exact audio sample duration fixes. Speech commands respect the session data directory without mutating process environment.",
   "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
   "limits": [

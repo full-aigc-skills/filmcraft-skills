@@ -52,3 +52,5 @@ Fixed native gateway first use passes:48 independently installed domain skills a
 
 Historical source-candidate note: Source candidate: complete native workflow gateway; immutable installed acceptance and full DAG gate6.51 remain pending. [Architecture](docs/Craft-Native-Workflow-Gateway-Architecture.md).
 
+
+Source dev.33 pins public maintainedcraft.4 with CPU Whisper and session model directories. All13 independent CLI cold starts, one actual public model/ASR first use, ten native scenes and the advanced native gateway pass. Source regression130 executed passes/34 skips. Fixed Film/Art and full V1 remain pending. [Evidence](docs/evidence/whisper-candidate-inference-20261008.json).

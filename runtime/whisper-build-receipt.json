@@ -1,0 +1,39 @@
+{
+  "schema": "craft-maintained-runtime-build/v1",
+  "runtimeVersion": "0.2.0-craft.4",
+  "platform": "darwin-arm64",
+  "archive": "filmcraft-cli-0.2.0-craft.4-macos-arm64.zip",
+  "archiveSha256": "91992564d770828f3ab0a7ab1c0378e0f3e8f4ad308551979ed5606ee09fd1dc",
+  "binarySha256": "80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893",
+  "versionOutput": "filmcraft-cli 0.2.0-craft.4",
+  "provenance": {
+    "schema": "craft-runtime-patch/v1",
+    "upstreamRepository": "https://github.com/storytold/filmcraft",
+    "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+    "upstreamVersion": "0.2.0",
+    "patch": "runtime/patches/whisper-runtime.patch",
+    "patchSha256": "7ee28f300778a9a58c9c5f332f1a1a4829742d632f144c8ed0c887ea04f540c4",
+    "runtimeVersion": "0.2.0-craft.4",
+    "status": "built-maintained-runtime",
+    "reason": "Enable real native Whisper inference and verified model downloads while retaining caption, sequence and exact audio sample duration fixes. Speech commands respect the session data directory without mutating process environment.",
+    "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
+    "limits": [
+      "Existing immutable runtime releases retained; no installer upgrade until candidate acceptance",
+      "Whisper weights are downloaded into a declared data directory, never bundled or committed",
+      "Native fake-transcriber unit tests are not real speech recognition acceptance",
+      "Research remains read-only"
+    ],
+    "includedSequencePatchSha256": "b73f97f8e69a66435725cd8c4aa5bf3eecefa1da417c02da8d6bbdbd87e2c793",
+    "cargoFeatures": [
+      "whisper"
+    ],
+    "includedAudioPatchSha256": "97214d5069be48ed8377a752ecaa25bddef80d8df8015101fbeb79fa968d70c3",
+    "speechDirectoryPatchSha256": "c901854deaa79c0b204eb3fba21f0d685af147d7ed1309037b695424aa76c0b3",
+    "binarySha256": "80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "platform": "darwin-arm64",
+    "cargoLockSha256": "b40279769662f47a7b67be126bab85ff01d714c3158788ec49d9515e80000fd9",
+    "sourceArchiveSha256": "2e6f9d6c3599cf3d1266016d1dcb740ed8a0f6613d1ebee958da97c3c3f69408"
+  },
+  "provenanceSha256": "7f6f8ac4013daf546331706c091f48ce313378839b31c9d36644e0a71c975025"
+}

@@ -48,3 +48,24 @@ This guide documents all14 assigned commands. It does not prove automatic transc
 候选源码实例已核验重开后的两个词、Narrator说话人和原始/重开SRT字节一致。自动识别、词段删除、停顿处理及全部14条命令验收仍未完成。
 
 The bounded example imports supplied word timings; it is not an ASR benchmark. Reopen and SRT identity passed. Adapt the media duration, active sequence and caption track for real projects.
+
+## 固定 Whisper 首次安装与识别 / Fixed Whisper first use
+
+当前源技能锁定维护运行时 `0.2.0-craft.4`，启用真实CPU Whisper和模型下载。旧的不可变插件快照可能仍锁定craft.3，必须按自身锁和实际 `transcript.models.available` 判断，不能根据本指南推断旧安装已升级。
+
+设定 `MODEL_DATA_DIR` 为任务授权的持久数据目录（绝对路径）；模型不写入技能目录，也不纳入成片/工程交付包。以下调用只使用本技能资源；先检查原生模型目录、来源、许可和体积。tiny多语言模型约154MB，base默认模型更大；按语言、素材和任务选型，不能把一个样例识别率推广为通用准确率。
+
+```bash
+: "${SKILL_DIR:?当前技能实际目录}"
+: "${MODEL_DATA_DIR:?声明的持久模型数据目录}"
+python3 -I -B "$SKILL_DIR/scripts/cli.py" -- exec transcript.models --data-dir "$MODEL_DATA_DIR"
+python3 -I -B "$SKILL_DIR/scripts/cli.py" -- exec transcript.downloadModel '{"model":"whisper-tiny"}' --data-dir "$MODEL_DATA_DIR"
+python3 -I -B "$SKILL_DIR/scripts/cli.py" -- exec transcript.generate '{"model":"whisper-tiny","language":"en"}' --project /absolute/source.fcproj --save-as /absolute/recognized.fcproj --data-dir "$MODEL_DATA_DIR"
+python3 -I -B "$SKILL_DIR/scripts/cli.py" -- exec transcript.inspect --project /absolute/recognized.fcproj --data-dir "$MODEL_DATA_DIR"
+```
+
+下载依当前任务已授权的必要依赖范围执行；未授权且体积/来源会实质影响任务时只询问新增范围。原生下载按固定revision与SHA-256校验；模型查询的installed只反映文件体积，不能作为内容校验的替代。查询available=false时停止自动识别并报告该固定版本不支持，不用transcript.set伪装识别成功。此处省略items仅适用于活动序列已有音轨；明确媒体时传真实items，language按实际语言使用zh/en/auto。不得将参考文本输入识别器。
+
+另存工程重开后核对词句、媒体时间、音视频和原工程摘要，再使用本指南的createCaptions与captions.export流程。同步识别耗时或超时后先查实际进程及产物，不重放写操作。模型缺失、下载摘要不符、语言或音频不可用均按真实非零回执处理。
+
+Source skills pin maintainedcraft.4 with real native CPU Whisper. Immutable older plugin snapshots retain their own locks. Select a declared persistent model directory, inspect source/license/size, download the pinned model and recognize actual audio. Use the language and media IDs appropriate to the project. Preserve the source, reopen the new project, verify media-time words, then create/export captions. Installed state alone checks sizes; actual model checksums and inference are separate evidence. Public/fixed-host acceptance must be stated separately from a local candidate test.

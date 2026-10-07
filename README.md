@@ -2,11 +2,13 @@
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source: `0.1.0-dev.32`; target plugin: `0.1.0-dev.34`; 13 independent skills.
+Current source candidate: `0.1.0-dev.33`; current fixed plugin `0.1.0-dev.34` retains older source32. New plugin/Art snapshots remain pending;13 independent skills.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
-Maintained runtime `0.2.0-craft.3` is publicly available. Audio tracks retain exact source sample ticks while video frame alignment is preserved. Source cold-use tests pass both off-grid audio tails, gain revisions, sequence relocation and the original short-film task. Asset preflight rejects corrupt input before installation/recovery writes; failures after editing starts retain diagnostics. Fixed Film/Art distribution verification remains pending. [Bound evidence](docs/evidence/audio-sample-public-first-use-20261007.json).
+Historical craft.3 evidence: maintained runtime `0.2.0-craft.3` is publicly available. Audio tracks retain exact source sample ticks while video frame alignment is preserved. Source cold-use tests pass both off-grid audio tails, gain revisions, sequence relocation and the original short-film task. Asset preflight rejects corrupt input before installation/recovery writes; failures after editing starts retain diagnostics. Fixed Film/Art distribution verification remains pending. [Bound evidence](docs/evidence/audio-sample-public-first-use-20261007.json).
+
+Maintained `0.2.0-craft.4` is published and passes independent public CLI/model cold installation and real recognition (45.826s). Native `--data-dir`,28 words, reopening/SRT and audio/video/source preservation pass. All666 commands were recaptured from the public binary with unchanged parameter contracts; source regression passes130 executed tests,34 skips. Fixed plugin/Art acceptance remains pending. [ASR evidence](docs/evidence/whisper-candidate-inference-20261008.json).
 
 ## First use
 
@@ -174,3 +176,5 @@ Native Whisper recognition remains in candidate build and real-model acceptance;
 [Whisper candidate inference evidence](docs/evidence/whisper-candidate-inference-20261008.json): actual28-word recognition, reference-word coverage1.0 for this sample, native/SRT and source preservation passed using an explicit environment directory. Native `--data-dir`, public installation and fixed plugin/Art remain separate gates.
 
 Directory-corrected native candidate single-skill acceptance passed in39.339s: empty CLI/model caches, pinned model download via `--data-dir`, actual recognition, native reopening/SRT and audio/video preservation. Public and fixed plugin/Art installation remain pending; evidence above binds candidate hashes.
+
+Source33 final verification:13 separate empty runtime installations (67.272s), actual public ASR on the current skill bytes (50.350s),10 native scenes (89.158s) and actual advanced gateway creation/reopen/render pass. All666 parameter contracts remain unchanged. Fixed Film/Art publication/host acceptance remains open.

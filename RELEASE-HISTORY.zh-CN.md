@@ -52,3 +52,5 @@ Film独立工作流的同目标执行保护源码候选：原生启动前认领�
 
 Historical source-candidate note: Source candidate: complete native workflow gateway; immutable installed acceptance and full DAG gate6.51 remain pending. [Architecture](docs/Craft-Native-Workflow-Gateway-Architecture.md).
 
+
+源dev.33锁定公开维护craft.4，启用CPU Whisper和会话模型目录。13独立CLI冷安装、实际公开模型／ASR首用、十原生场景与高级命令网关通过；源码回归130项执行通过／34项跳过。固定Film／Art及完整V1仍待验收。[证据](docs/evidence/whisper-candidate-inference-20261008.json)。
