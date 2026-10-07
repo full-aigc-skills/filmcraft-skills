@@ -8,14 +8,21 @@ class NativeFirstUse(unittest.TestCase):
  def test_public_delivery_and_revision(self):
   from PIL import Image
   with tempfile.TemporaryDirectory() as temporary:
-   root=Path(temporary);skill=root/'single-skill';shutil.copytree(SOURCE,skill);runtime=root/'empty-runtime'
+   root=Path(temporary)
+   path_case=os.environ.get('CRAFT_UNICODE_PATH_FIRST_USE')=='1'
+   if path_case:root=root/'首次 使用 中文路径';root.mkdir()
+   skill=root/'single-skill';shutil.copytree(SOURCE,skill);runtime=root/'empty-runtime'
+   self.assertFalse(runtime.exists())
+   if path_case:self.assertIn(' ',str(skill));self.assertIn('中文',str(skill))
+   environment=dict(os.environ,PATH='/usr/bin:/bin')
+   for key in ('CRAFT_NODE_ARCHIVE','CRAFT_BUNDLE_DIRECTORY','CRAFT_NATIVE_ARCHIVE_DIRECTORY','CRAFT_RUNTIME_HOME'):environment.pop(key,None)
    plan=json.loads((skill/'examples/native-workflow.json').read_text())
    if DOMAIN=='filmcraft':
     image=root/'still.png';Image.new('RGBA',(32,32),(239,91,54,255)).save(image);plan['assets']={'still':{'path':str(image),'sha256':hashlib.sha256(image.read_bytes()).hexdigest()}}
    def run(p,output,source=None):
     f=root/(output.name+'.json');f.write_text(json.dumps(p));argv=[sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(f),'--output',str(output),'--runtime-home',str(runtime)]
     if source:argv+=['--source',str(source)]
-    result=subprocess.run(argv,capture_output=True,text=True,timeout=300,env=dict(os.environ,PATH='/usr/bin:/bin'));self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+    result=subprocess.run(argv,capture_output=True,text=True,timeout=300,env=environment);self.assertEqual(result.returncode,0,result.stdout+result.stderr)
     manifest=json.loads((output/'manifest.json').read_text());self.assertEqual(manifest['schema'],DOMAIN+'-delivery/v1')
     self.assertTrue((output/'native.json').is_file());self.assertTrue((output/'exchange-loss.json').is_file());self.assertIn('nativeCommand',(output/'operations.json').read_text())
     for name,sha in manifest['files'].items():self.assertEqual(hashlib.sha256((output/name).read_bytes()).hexdigest(),sha)
@@ -33,4 +40,4 @@ class NativeFirstUse(unittest.TestCase):
    self.assertEqual(before,{str(p.relative_to(original)):hashlib.sha256(p.read_bytes()).hexdigest() for p in original.rglob('*') if p.is_file()})
    records=[json.loads(p.read_text()) for p in root.glob('.filmcraft-execution-*.json')]
    self.assertEqual(len(records),2);self.assertTrue(all(r['state']=='finished' and r['identity']['runtimeSha256']==manifest['runtimeSha256'] for r in records))
-   if os.environ.get('CRAFT_NATIVE_WORKFLOW_REPORT'):Path(os.environ['CRAFT_NATIVE_WORKFLOW_REPORT']).write_text(json.dumps({'domain':DOMAIN,'result':'PASS','guardRecords':records,'workflowSha256':hashlib.sha256((skill/'scripts/workflow.py').read_bytes()).hexdigest(),'guardSha256':hashlib.sha256((skill/'scripts/output_guard.py').read_bytes()).hexdigest(),'entrySha256':hashlib.sha256((skill/'scripts/native_workflow.py').read_bytes()).hexdigest(),'projectSha256':manifest['files'][project],'revisionSha256':revised['files'][project],'scope':('fixed installed' if os.environ.get('CRAFT_INSTALLED_NATIVE_WORKFLOW_SKILL') else 'source candidate')+' single-skill cold native workflow delivery/revision; no full DAG acceptance'},indent=2)+'\n')
+   if os.environ.get('CRAFT_NATIVE_WORKFLOW_REPORT'):Path(os.environ['CRAFT_NATIVE_WORKFLOW_REPORT']).write_text(json.dumps({'domain':DOMAIN,'result':'PASS','pathCase':{'unicodeAndSpaces':path_case,'skillName':skill.name,'parentName':root.name,'runtimeInitiallyAbsent':True,'offlineOverridesExcluded':True},'guardRecords':records,'workflowSha256':hashlib.sha256((skill/'scripts/workflow.py').read_bytes()).hexdigest(),'guardSha256':hashlib.sha256((skill/'scripts/output_guard.py').read_bytes()).hexdigest(),'entrySha256':hashlib.sha256((skill/'scripts/native_workflow.py').read_bytes()).hexdigest(),'projectSha256':manifest['files'][project],'revisionSha256':revised['files'][project],'scope':('fixed installed' if os.environ.get('CRAFT_INSTALLED_NATIVE_WORKFLOW_SKILL') else 'source candidate')+' single-skill cold native workflow delivery/revision; no full DAG acceptance'},indent=2)+'\n')
