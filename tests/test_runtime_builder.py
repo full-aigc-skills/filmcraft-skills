@@ -54,6 +54,16 @@ class RuntimeBuilderTests(unittest.TestCase):
                     self.module.build(root, root / 'output', manifest_name='audio-sample-patch.json', version='0.2.0-craft.3')
             self.assertFalse((root / 'output').exists())
 
+    def test_whisper_build_preserves_old_defaults_and_enables_real_feature(self):
+        base=['cargo','build','--offline','--release','-p','filmcraft-cli']
+        self.assertEqual(self.module.cargo_build_arguments({}),base)
+        self.assertEqual(self.module.cargo_build_arguments({'cargoFeatures':['whisper']}),base+['--features','whisper'])
+
+    def test_unknown_or_option_like_features_are_refused_before_build(self):
+        for value in ('whisper',['--all-features'],['other'],['whisper','whisper'],[None]):
+            with self.subTest(features=value),self.assertRaisesRegex(ValueError,'runtime_build_features_invalid'):
+                self.module.cargo_build_arguments({'cargoFeatures':value})
+
     def test_unsupported_platform_is_refused_before_source_export(self):
         with patch.object(self.module.platform,'system',return_value='Linux'), patch.object(self.module.subprocess,'check_output',side_effect=AssertionError('executed')):
             with self.assertRaisesRegex(ValueError,'unsupported_build_platform'):

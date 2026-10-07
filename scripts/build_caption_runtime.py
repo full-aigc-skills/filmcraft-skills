@@ -19,11 +19,24 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def cargo_build_arguments(manifest):
+    """返回固定运行时构建参数；旧配方保持默认，新配方只允许声明的语音特性。"""
+    features = manifest.get('cargoFeatures', [])
+    if (not isinstance(features, list) or any(feature != 'whisper' for feature in features)
+            or len(features) != len(set(features))):
+        raise ValueError('runtime_build_features_invalid')
+    arguments = ['cargo', 'build', '--offline', '--release', '-p', 'filmcraft-cli']
+    if features:
+        arguments += ['--features', ','.join(features)]
+    return arguments
+
+
 def build(repository, output, manifest_name="caption-font-patch.json", version=VERSION, target_directory=None):
     manifest = json.loads((ROOT / 'runtime' / manifest_name).read_text())
     patch = ROOT / manifest['patch']
     if sha(patch) != manifest['patchSha256']:
         raise ValueError('patch_checksum_mismatch')
+    build_arguments = cargo_build_arguments(manifest)
     if platform.system() != 'Darwin' or platform.machine() != 'arm64':
         raise ValueError('unsupported_build_platform')
     if output.exists():
@@ -51,11 +64,14 @@ def build(repository, output, manifest_name="caption-font-patch.json", version=V
         if target_directory is not None:
             env['CARGO_TARGET_DIR'] = str(Path(target_directory).absolute())
         subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-captions'], cwd=source, env=env, check=True)
-        if manifest_name in {'sequence-rate-patch.json', 'audio-sample-patch.json'}:
+        if manifest_name in {'sequence-rate-patch.json', 'audio-sample-patch.json', 'whisper-runtime-patch.json'}:
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-engine', 'image_sequence_tests'], cwd=source, env=env, check=True)
-        if manifest_name == 'audio-sample-patch.json':
+        if manifest_name in {'audio-sample-patch.json', 'whisper-runtime-patch.json'}:
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-project'], cwd=source, env=env, check=True)
-        subprocess.run(['cargo', 'build', '--offline', '--release', '-p', 'filmcraft-cli'], cwd=source, env=env, check=True)
+        if 'whisper' in manifest.get('cargoFeatures', []):
+            subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-speech', '--features', 'whisper,download', '--lib'], cwd=source, env=env, check=True)
+            subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-engine', '--features', 'whisper,speech-download', 'transcript'], cwd=source, env=env, check=True)
+        subprocess.run(build_arguments, cwd=source, env=env, check=True)
         binary = (Path(target_directory).absolute() if target_directory is not None else source / 'target') / 'release/filmcraft-cli'
         version_output = subprocess.check_output([str(binary), '--version'], text=True).strip()
         if version_output != 'filmcraft-cli ' + version:

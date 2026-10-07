@@ -162,3 +162,9 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 命令计划 JSON 源候选：重复键在安装和创建输出前被拒绝，全部 13 个领域技能的独立副本拒绝测试与有效计划校验通过，3 项专项测试通过。固定插件发布和安装后复验仍为 NOT_RUN。[证据](docs/evidence/command-plan-json-candidate-20261007.json)。
 
 严格计划解析的固定安装复验通过：64 个 CLI 探测、54 个独立安装领域技能的 324 次重复键拒绝、54 次有效计划结构检查，以及四领域空缓存原生保存／重开／渲染实例通过；执行后全部 64 个安装技能摘要不变。仅关闭本次修复的发布门禁；通用 Skills CLI、Art 领域包升级、全部命令上下文和完整首版仍开放。[证据](docs/evidence/command-plan-json-fixed-first-use-20261007.json)。
+
+原生 Whisper 自动识别仍在候选构建与真实模型验收阶段，固定安装锁保持原版本；目录隔离修复与发布门禁见 [原生语音识别架构](docs/FilmCraft-Native-ASR-Architecture.zh_CN.md)。
+
+[Whisper 候选识别证据](docs/evidence/whisper-candidate-inference-20261008.json)：真实识别28词，本次样例参考词覆盖率1.0；使用显式环境目录，原生工程/SRT与源工程保留通过。原生 `--data-dir`、公开安装和固定插件/Art 仍需分别验收。
+
+目录修复候选的独立技能首用39.339秒通过：空CLI/模型缓存、`--data-dir`固定模型下载、真实识别、原生重开/SRT及音视频保全。公开运行时和固定插件/Art安装仍待验收；上方证据绑定候选摘要。

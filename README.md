@@ -168,3 +168,9 @@ Source candidate now includes owned standalone desktop startup: 48/48 single-ski
 Command-plan JSON source candidate: duplicate keys are rejected before installation and output creation. All 13 domain skills pass standalone-copy rejection and valid-plan checks. Three focused tests pass; fixed-plugin publication and installed acceptance remain NOT_RUN. [Evidence](docs/evidence/command-plan-json-candidate-20261007.json).
 
 Fixed strict-plan installed verification passes: 64 CLI probes, 324 duplicate-key rejections across54 independently copied installed domain skills, 54 unique-plan structure checks and four cold native save/reopen/render samples. All64 installed skill hashes remain unchanged. Only the bounded strict-plan publication gate closes; generic Skills CLI, Art domain-bundle upgrade, exhaustive contexts and fullV1 remain open. [Evidence](docs/evidence/command-plan-json-fixed-first-use-20261007.json).
+
+Native Whisper recognition remains in candidate build and real-model acceptance; fixed installation locks retain the previous release. See [native ASR architecture](docs/FilmCraft-Native-ASR-Architecture.md) for directory isolation and release gates.
+
+[Whisper candidate inference evidence](docs/evidence/whisper-candidate-inference-20261008.json): actual28-word recognition, reference-word coverage1.0 for this sample, native/SRT and source preservation passed using an explicit environment directory. Native `--data-dir`, public installation and fixed plugin/Art remain separate gates.
+
+Directory-corrected native candidate single-skill acceptance passed in39.339s: empty CLI/model caches, pinned model download via `--data-dir`, actual recognition, native reopening/SRT and audio/video preservation. Public and fixed plugin/Art installation remain pending; evidence above binds candidate hashes.
