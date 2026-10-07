@@ -2,7 +2,7 @@
 
 已有素材与剪辑需求进入，交付可重开的 `.fcproj`、素材清单、预览和成片。
 
-当前技能源快照：`0.1.0-dev.35`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
+当前技能源快照：`0.1.0-dev.36`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
 
 已验证首次使用平台：macOS arm64、Python 3.11+。固定运行时安装在用户数据目录，技能文件保留在宿主加载目录。当前为开发版本；完整首版验收及通用 Skills CLI 实际安装仍未完成。
 
@@ -180,3 +180,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 独立安装依赖边界：当前摘要一致的冷安装记录与 128 项新固定副本安装器／CLI 失败检查验收四领域 SK-002。Art 与通用 Skills CLI 安装继续开放。[设计与证据](docs/Craft-Independent-Setup-Boundary-Architecture.zh_CN.md)。
 
 当前固定协议引用发行矩阵（Film／Effect dev.37、Photo dev.36、Vector dev.34、Art dev.107）已通过隔离 Codex 安装／发现 64 项技能、16 项实际安装所有者文件摘要核对，以及五个全新领域缓存下的 64 项独立公开 CLI 探测。原生场景证据仅对字节一致的技能复用，完整首版仍开放。[固定发行证据](docs/evidence/craft-protocol-authority-fixed-first-use-20261008.json)。
+
+小尺寸英文字幕模板按1080行归一修正字号；每项独立技能自含画面尺寸换算、预览及短配音源范围指引。源码原生验证与固定插件首用分别验收。[说明与证据](docs/Caption-Size-First-Use.zh_CN.md)。
