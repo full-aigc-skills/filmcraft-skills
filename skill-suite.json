@@ -1,7 +1,7 @@
 {
   "schema": "craft-skill-suite/v1",
   "pluginId": "filmcraft",
-  "version": "0.1.0-dev.34",
+  "version": "0.1.0-dev.35",
   "source": {
     "repository": "https://github.com/storytold/filmcraft",
     "commit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
@@ -153,5 +153,5 @@
     }
   ],
   "resourceSource": "filmcraft-use",
-  "runtimeVersion": "0.2.0-craft.3"
+  "runtimeVersion": "0.2.0-craft.4"
 }

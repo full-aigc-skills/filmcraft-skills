@@ -2,7 +2,7 @@
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.34`; current fixed plugin `0.1.0-dev.35` contains this source34 and passes isolated host real ASR. Art105/source79 also passes fixed-host mixed ASR;13 independent skills.
+Current source snapshot: `0.1.0-dev.35`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
@@ -178,3 +178,5 @@ Native Whisper recognition remains in candidate build and real-model acceptance;
 Directory-corrected native candidate single-skill acceptance passed in39.339s: empty CLI/model caches, pinned model download via `--data-dir`, actual recognition, native reopening/SRT and audio/video preservation. Public and fixed plugin/Art installation remain pending; evidence above binds candidate hashes.
 
 Source33 final verification:13 separate empty runtime installations (67.272s), actual public ASR on the current skill bytes (50.350s),10 native scenes (89.158s) and actual advanced gateway creation/reopen/render pass. All666 parameter contracts remain unchanged. Fixed Film/Art publication/host acceptance remains open.
+
+Six scenario directory examples were corrected across the four domains; this package’s runtime identity matches every bundled runtime lock. Native CLI archives are unchanged.
