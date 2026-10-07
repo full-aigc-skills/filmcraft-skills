@@ -20,6 +20,23 @@ class NativeTickValidationTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'invalid_tick_parameter'):
                 gateway.validate(self.plan(value))
 
+    def test_imported_word_ticks_are_checked_in_nested_transcript(self):
+        for field in ['start', 'end']:
+            for value in ['254016000000', 1.5, True, 2 ** 63]:
+                params = {'item': 1, 'transcript': {'words': [{'text': 'word', 'start': 0, 'end': 254016000000}]}}
+                params['transcript']['words'][0][field] = value
+                plan = {'schema': 'craft-command-plan/v1', 'operations': [{'command': 'transcript.set', 'params': params}]}
+                with self.subTest(field=field, value=value), self.assertRaisesRegex(ValueError, 'invalid_tick_parameter'):
+                    gateway.validate(plan)
+
+    def test_imported_word_reference_ticks_are_rechecked(self):
+        params = {'item': 1, 'transcript': {'words': [{'text': 'word', 'start': {'$ref': 'timing.start'}, 'end': 254016000000}]}}
+        plan = {'schema': 'craft-command-plan/v1', 'operations': [{'command': 'transcript.set', 'params': params}]}
+        gateway.validate(plan, input_names=['timing'])
+        resolved = gateway.resolve(params, {'timing': {'start': '0'}})
+        with self.assertRaisesRegex(ValueError, 'invalid_tick_parameter'):
+            gateway.validate_tick_parameters('transcript.set', resolved)
+
     def test_exact_large_integer_is_preserved(self):
         value = 2 ** 53 + 1
         self.assertEqual(gateway.validate(self.plan(value))['operations'][0]['params']['time'], value)

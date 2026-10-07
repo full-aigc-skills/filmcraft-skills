@@ -22,15 +22,27 @@
         "result": "PASS",
         "version": "filmcraft-cli 0.2.0-craft.2",
         "commands": 666,
-        "skillSha256": "735a6a43fdc651147195ca186005cb39109136a82312443545096c550536cd2e",
+        "skillSha256": "e6b648a00f287a2c56b4458196bf31a0cd70f95cefb377c1d9c998fc772d3abe",
         "scope": "single source candidate skill copy; initially absent runtime; public download/bootstrap/version/query; no native creative claim"
       }
     ]
   },
   "regression": {
-    "tests": 139,
-    "passed": 110,
+    "tests": 141,
+    "passed": 112,
     "skipped": 29,
     "exitCode": 0
+  },
+  "nestedTickGuard": {
+    "scope": "transcript.set words start/end signed64 JSON integer types, preflight and resolved-reference recheck",
+    "targetTests": 5,
+    "regression": {
+      "tests": 141,
+      "passed": 112,
+      "skipped": 29,
+      "exitCode": 0
+    },
+    "commandsHelperSha256": "a91f9a81d7b5dc174a2db1b84a095a46c7ee2feb5212071fd25ba631b8c0e0d6",
+    "positiveNativeSaveReopenSrt": "PASS"
   }
 }

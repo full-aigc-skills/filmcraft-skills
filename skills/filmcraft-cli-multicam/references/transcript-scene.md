@@ -10,7 +10,7 @@ Transcripts belong to media items. Sequence inspection maps words through the ac
 
 | 场景 | 命令 | 使用步骤和验收 |
 | --- | --- | --- |
-| 已有逐词转录 | `transcript.set` | 指定媒体 item，提供 language、speakers、words；start/end 为整数 tick，不能传秒或数字字符串。核对返回 words 数量，再 inspect 核对媒体与序列映射 |
+| 已有逐词转录 | `transcript.set` | 指定媒体 item，提供 language、speakers、words；start/end 为有符号64位JSON整数 tick，不能传秒或数字字符串；计划预检及引用解析后的执行前检查均覆盖 words 中的时间字段。核对返回 words 数量，再 inspect 核对媒体与序列映射 |
 | 自动语音识别 | `transcript.models`、`transcript.downloadModel`、`transcript.generate` | 先查询实际模型和安装状态；需要时下载指定模型，再对实际 items 识别。运行时若未编译语音能力或模型不存在，报告实际错误；已导入文本不能当作自动识别成功 |
 | 查找口播 | `transcript.inspect`、`transcript.search` | inspect 得到当前词的 i、item、clip、start/end；以 query 搜索，核对返回词范围和对应媒体，不猜测词序号 |
 | 标记词段 | `transcript.select` | 使用刚查询的 from/to 词索引；核对实际 mark 与播放头。词索引不是秒，也不是 tick |
