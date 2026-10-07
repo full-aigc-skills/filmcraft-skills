@@ -176,3 +176,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 四域共六个场景目录示例已修正；本包运行时身份与每个随附运行时锁一致。原生CLI制品保持原摘要。
 
 新场景自身目录已通过固定安装复验；64项宿主身份匹配。完整V1仍开放。 [Evidence / 证据](https://github.com/full-aigc-plugins/filmcraft-plugin/blob/main/docs/evidence/craft-scenario-paths-fixed-first-use-20261008.json).
+
+独立安装依赖边界：当前摘要一致的冷安装记录与 128 项新固定副本安装器／CLI 失败检查验收四领域 SK-002。Art 与通用 Skills CLI 安装继续开放。[设计与证据](docs/Craft-Independent-Setup-Boundary-Architecture.zh_CN.md)。

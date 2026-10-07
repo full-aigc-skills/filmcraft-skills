@@ -182,3 +182,5 @@ Source33 final verification:13 separate empty runtime installations (67.272s), a
 Six scenario directory examples were corrected across the four domains; this package’s runtime identity matches every bundled runtime lock. Native CLI archives are unchanged.
 
 Fixed installed own-directory acceptance passes for the updated scenario skills; 64 host identities match. Complete V1 remains open. [Evidence / 证据](https://github.com/full-aigc-plugins/filmcraft-plugin/blob/main/docs/evidence/craft-scenario-paths-fixed-first-use-20261008.json).
+
+Independent-install dependency boundary: current byte-identical cold-install records and 128 new fixed-copy bootstrap/CLI failure checks qualify four domain SK-002 requirements. Art and generic Skills CLI installation stay open. [Design and evidence](docs/Craft-Independent-Setup-Boundary-Architecture.md).
