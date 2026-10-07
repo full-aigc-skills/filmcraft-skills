@@ -240,6 +240,80 @@ class TaskSkillFirstUseTests(unittest.TestCase):
             self.assertIsNotNone(ImageChops.difference(first.convert('RGB'), second.convert('RGB')).getbbox())
         self.assertEqual(sequence['audio'], self.native['sequence']['audio'])
 
+    def test_transcript_import_reopens_and_generates_timed_captions(self):
+        self.install_only('transcript')
+        target = self.root / 'transcript.fcproj'
+        transcript = {'language': 'en', 'speakers': [{'name': 'Narrator'}],
+                      'words': [{'text': 'Hello', 'start': 0, 'end': TICKS // 2, 'speaker': 0},
+                                {'text': 'world.', 'start': TICKS // 2, 'end': TICKS, 'speaker': 0}]}
+        result = self.execute('transcript.set', {'item': self.bindings['voice']['item'],
+                             'transcript': transcript}, target)
+        self.assertEqual(result['words'], 2)
+        inspected = json.loads(self.cli('exec', 'transcript.inspect', '--project', target).stdout)
+        self.assertEqual([word['text'] for word in inspected['words']], ['Hello', 'world.'])
+        self.assertEqual(int(inspected['words'][0]['start']), 0)
+        self.assertEqual(int(inspected['words'][-1]['end']), TICKS)
+        captioned = self.root / 'transcript-captions.fcproj'
+        self.cli('exec', 'transcript.createCaptions',
+                 json.dumps({'name': 'Transcript captions', 'maxChars': 32}),
+                 '--project', target, '--save-as', captioned)
+        captions = json.loads(self.cli('exec', 'captions.list', '--project', captioned).stdout)
+        self.assertIn('Hello world.', [caption['text'] for track in captions['tracks']
+                                      for caption in track['captions']])
+        after = self.inspect(captioned)['sequence']
+        self.assertEqual(after['video'], self.native['sequence']['video'])
+        self.assertEqual(after['audio'], self.native['sequence']['audio'])
+        srt = self.root / 'transcript.srt'
+        self.cli('exec', 'captions.export', json.dumps({'path': str(srt), 'format': 'srt'}),
+                 '--project', captioned)
+        self.assertIn('Hello world.', srt.read_text())
+
+    def test_multicam_switch_reopens_renders_other_camera_and_preserves_existing_tracks(self):
+        from PIL import Image
+        self.install_only('multicam')
+        blue = self.root / 'camera-blue.mp4'
+        subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i',
+                        'color=c=blue:s=320x180:r=12:d=2', '-c:v', 'libx264',
+                        '-pix_fmt', 'yuv420p', str(blue)], check=True)
+        imported = self.root / 'cameras.fcproj'
+        self.cli('import', blue, '--project', self.project, '--save-as', imported)
+        camera = next(item['item'] for item in self.inspect(imported)['project']['root']['children']
+                      if item['name'] == 'camera-blue.mp4')
+        source = self.root / 'multicam-source.fcproj'
+        script = self.root / 'multicam-create.jsonl'
+        script.write_text('\n'.join(json.dumps(row) for row in [
+            {'id': 'project.select', 'params': {'items': [self.bindings['shot']['item'], camera]}},
+            {'id': 'clip.createMulticam', 'params': {'method': 'in', 'cameraNames': 'clip',
+                                                   'audio': 'camera1'}}]) + '\n')
+        result = self.cli('run', script, '--project', imported, '--save-as', source)
+        created = json.loads(result.stdout.splitlines()[-1])['result']
+        placed = self.root / 'multicam-placed.fcproj'
+        clip = json.loads(self.cli('exec', 'timeline.place',
+                         json.dumps({'item': created['sequence'], 'track': 'V1',
+                                     'time': 2 * TICKS, 'sourceIn': 0,
+                                     'duration': 2 * TICKS, 'insert': False}),
+                         '--project', source, '--save-as', placed).stdout)['clips'][0]
+        switched = self.root / 'multicam-switched.fcproj'
+        self.cli('exec', 'multicam.switchAngle',
+                 json.dumps({'clips': [clip], 'angle': 1, 'time': 5 * TICKS // 2,
+                             'videoOnly': True}), '--project', placed, '--save-as', switched)
+        after = self.inspect(switched)['sequence']
+        self.assertEqual(after['video'][0]['items'][0], self.native['sequence']['video'][0]['items'][0])
+        # 放置多机位源会附加其音轨；仅切换画面必须保全放置后的全部音频和原配音。
+        self.assertEqual(after['audio'], self.inspect(placed)['sequence']['audio'])
+        for original, current in zip(self.native['sequence']['audio'], after['audio']):
+            self.assertEqual(current['items'][:len(original['items'])], original['items'])
+            self.assertEqual({k: v for k, v in current.items() if k != 'items'},
+                             {k: v for k, v in original.items() if k != 'items'})
+        for project, name, channel in [(placed, 'camera-one.png', 0),
+                                       (switched, 'camera-two.png', 2)]:
+            image = self.root / name
+            self.cli('render', '--seconds', 2.5, '--out', image, '--project', project)
+            with Image.open(image) as frame:
+                pixel = frame.convert('RGB').getpixel((160, 90))
+                self.assertGreater(pixel[channel], 180)
+                self.assertLess(pixel[2 if channel == 0 else 0], 30)
+
     def test_export_video_preview_and_interchange_keep_native_project(self):
         from PIL import Image
         self.install_only('export')
