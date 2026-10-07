@@ -106,7 +106,8 @@ class NativeWorkflowTests(unittest.TestCase):
                 target = root / error
                 with self.assertRaisesRegex(ValueError, error):
                     workflow.execute(broken, target, runtime_home=runtime, source=moved)
-                if error == 'revision_conflict':
+                # FC-TX-004：素材摘要与版本前置校验不启动暂存；原生编辑失败仍保留诊断。
+                if error in {'revision_conflict', 'asset_digest_mismatch'}:
                     self.assertFalse(target.exists())
                 else:
                     failure = json.loads((target / 'failure.json').read_text())

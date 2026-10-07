@@ -6,6 +6,8 @@ Current source: `0.1.0-dev.31`; target plugin: `0.1.0-dev.33`; 13 independent sk
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
+Maintained runtime `0.2.0-craft.3` is publicly available. Audio tracks retain exact source sample ticks while video frame alignment is preserved. Source cold-use tests pass both off-grid audio tails, gain revisions, sequence relocation and the original short-film task. Asset preflight rejects corrupt input before installation/recovery writes; failures after editing starts retain diagnostics. Fixed Film/Art distribution verification remains pending. [Bound evidence](docs/evidence/audio-sample-public-first-use-20261007.json).
+
 ## First use
 
 Invoke **`filmcraft-use`** in your host. For direct CLI use, set `SKILL_DIR` to the absolute directory of the `SKILL.md` actually loaded by that host. It may be under user/project `.agents/skills`, the plugin, or a host cache; use the actual path. Each entry below installs/verifies its locked runtime before invoking it.

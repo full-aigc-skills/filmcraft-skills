@@ -2,6 +2,8 @@
 import importlib.util
 from pathlib import Path
 import unittest
+import tempfile
+from unittest.mock import patch
 
 SOURCE = Path(__file__).resolve().parents[1] / 'skills/filmcraft-use/scripts/workflow.py'
 
@@ -10,6 +12,20 @@ class WorkflowTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location('workflow', SOURCE)
         self.module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.module)
+
+    def test_invalid_source_asset_fails_before_install_or_recovery_directory(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            asset = root / 'voice.wav'
+            asset.write_bytes(b'invalid digest')
+            plan = {'document': {'name': 'Test', 'width': 320, 'height': 180, 'frameRate': {'num': 12, 'den': 1}},
+                    'assets': {'voice': {'path': str(asset), 'sha256': '0' * 64}}, 'operations': []}
+            with patch.object(self.module, 'load_module', side_effect=AssertionError('runtime or stage reached')):
+                with self.assertRaisesRegex(ValueError, 'asset_digest_mismatch'):
+                    self.module.execute(plan, root / 'output', runtime_home=root / 'runtime')
+            self.assertFalse((root / 'output').exists())
+            self.assertFalse((root / 'runtime').exists())
+            self.assertEqual(asset.read_bytes(), b'invalid digest')
 
     def test_audio_tail_accepts_only_exact_native_frame_padding(self):
         clip = {'sourceIn': 0, 'duration': 571536000000, 'speed': 1}

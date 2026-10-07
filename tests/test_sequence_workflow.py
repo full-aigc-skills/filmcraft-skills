@@ -36,7 +36,7 @@ class SequenceWorkflowTests(unittest.TestCase):
             patch_sha=json.loads((ROOT/'runtime/sequence-rate-patch.json').read_text())['patchSha256']
             if public:
                 receipt=lock['artifacts']['darwin-arm64']
-                self.assertEqual(lock['resolvedVersion'],'0.2.0-craft.2')
+                self.assertEqual(lock['resolvedVersion'],'0.2.0-craft.3')
             else:
                 archive=Path(os.environ['CRAFT_FILM_SEQUENCE_CANDIDATE']);receipt=json.loads(archive.with_name('build-receipt.json').read_text())
                 self.assertEqual(workflow.sha(archive),receipt['archiveSha256'])

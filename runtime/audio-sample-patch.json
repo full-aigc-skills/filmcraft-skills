@@ -6,11 +6,11 @@
   "patch": "runtime/patches/audio-sample-duration.patch",
   "patchSha256": "97214d5069be48ed8377a752ecaa25bddef80d8df8015101fbeb79fa968d70c3",
   "runtimeVersion": "0.2.0-craft.3",
-  "status": "source-candidate",
+  "status": "published-maintained-runtime",
   "reason": "Audio track source durations were quantized to nearest video frames, truncating off-grid tails. Audio duration now retains integer sample ticks; video quantization and caption/image-sequence fixes remain.",
   "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
   "limits": [
-    "Existing immutable releases retained; source installer now locks craft.2",
+    "Existing immutable releases retained; source installer now locks craft.3",
     "Source-skill public installation is not immutable plugin or Art mixed acceptance",
     "Research source remains read-only"
   ],
