@@ -174,3 +174,5 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 源33最终验证：13个分别空运行时安装67.272秒、当前技能字节的公开ASR50.350秒、10项原生场景89.158秒及实际高级命令网关创建／重开／渲染通过，666条参数合同保持。固定Film／Art发布及宿主验收仍开放。
 
 四域共六个场景目录示例已修正；本包运行时身份与每个随附运行时锁一致。原生CLI制品保持原摘要。
+
+新场景自身目录已通过固定安装复验；64项宿主身份匹配。完整V1仍开放。 [Evidence / 证据](https://github.com/full-aigc-plugins/filmcraft-plugin/blob/main/docs/evidence/craft-scenario-paths-fixed-first-use-20261008.json).

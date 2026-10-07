@@ -180,3 +180,5 @@ Directory-corrected native candidate single-skill acceptance passed in39.339s: e
 Source33 final verification:13 separate empty runtime installations (67.272s), actual public ASR on the current skill bytes (50.350s),10 native scenes (89.158s) and actual advanced gateway creation/reopen/render pass. All666 parameter contracts remain unchanged. Fixed Film/Art publication/host acceptance remains open.
 
 Six scenario directory examples were corrected across the four domains; this package’s runtime identity matches every bundled runtime lock. Native CLI archives are unchanged.
+
+Fixed installed own-directory acceptance passes for the updated scenario skills; 64 host identities match. Complete V1 remains open. [Evidence / 证据](https://github.com/full-aigc-plugins/filmcraft-plugin/blob/main/docs/evidence/craft-scenario-paths-fixed-first-use-20261008.json).
