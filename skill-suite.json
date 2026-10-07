@@ -140,6 +140,16 @@
         "clip.multicamEnable",
         "clip.multicamFlatten"
       ]
+    },
+    {
+      "name": "filmcraft-cli-transcript",
+      "title": "转录与按文字剪辑",
+      "description": "逐词转录、说话人、文本剪辑与字幕生成",
+      "kind": "scenario",
+      "commandCount": 14,
+      "commandPrefixes": [
+        "transcript."
+      ]
     }
   ],
   "resourceSource": "filmcraft-use",
