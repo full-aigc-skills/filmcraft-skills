@@ -1,13 +1,14 @@
 """同一目标只允许一个原生执行；中断身份不可自动重放。"""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
 
-SCRIPT = Path(__file__).resolve().parents[1] / 'skills/filmcraft-use/scripts/output_guard.py'
+SCRIPT = Path(os.environ.get('CRAFT_INSTALLED_OUTPUT_GUARD_SKILL', Path(__file__).resolve().parents[1] / 'skills/filmcraft-use')) / 'scripts/output_guard.py'
 
 
 class OutputGuardTests(unittest.TestCase):
@@ -24,8 +25,10 @@ class OutputGuardTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location('workflow', SCRIPT.with_name('workflow.py'))
         workflow = importlib.util.module_from_spec(spec); spec.loader.exec_module(workflow)
         original = workflow.load_module
+        claims = []
         @contextmanager
         def conflict(*args):
+            claims.append(Path(args[0]))
             raise ValueError('output_execution_conflict')
             yield
         def module(name):
@@ -39,6 +42,7 @@ class OutputGuardTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, patch.object(workflow, 'load_module', side_effect=module):
             with self.assertRaisesRegex(ValueError, 'output_execution_conflict'):
                 workflow.execute({'document': {'name':'test', 'width':16, 'height':16, 'frameRate':{'num':12, 'den':1}}, 'operations': []}, Path(directory)/'delivery')
+            self.assertEqual(claims, [(Path(directory)/'delivery').resolve()])
 
     def test_completed_owner_is_recorded_and_different_targets_are_independent(self):
         module = self.module()

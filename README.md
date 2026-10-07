@@ -1,3 +1,5 @@
+Source dev.29 adds output execution registration before native sessions, preserving interrupted identities and fixing canonical-path agreement. Runtime stays0.2.0-craft.2;13 independent skills are synchronized. Release and fixed plugin installation are verified separately; complete task contracts remain open.
+
 Film standalone output-guard source candidate now claims the canonical target before native sessions and retains running/reconciling identities after interruption. Seven target regressions and one actual cold native creation/export/reopen/revision pass;153 source tests:122 passed,31 skipped. All13 skills carry the candidate. Fixed publication/installation, other domain guards and full task contracts remain open. [Evidence / 证据](docs/evidence/filmcraft-output-execution-candidate-20261007.json).
 
 Domain scene acceptance now has **43 passed native tests / all 42 distinct domain scene skills**. The fixed-installed tracking case passed with supported H.264 High; the earlier lossless input is unsupported by the native decoder and its failed evidence remains historical. Art role-specific tasks, generic Skills CLI and complete V1 remain open. [Evidence / 证据](docs/evidence/craft-fixed-tracking-supported-input-20261007.json).
@@ -10,7 +12,7 @@ Current fixed V1 representative native baseline: four installed domain workflows
 
 Every-skill cold first use: **64/64 passed** on macOS arm64 / Python3.13.5 (620.155s). Each single skill used its own empty runtime and default public downloads; locked native version and command discovery passed, installed hashes unchanged. Generic Skills CLI installation and complete V1 remain open. [Evidence](docs/evidence/craft-fixed64-every-skill-cold-first-use-20261007.json).
 
-Current standalone source: `0.1.0-dev.28`. Strict command-plan JSON rejects duplicate keys before installation or edits. All standalone domain skills pass isolated-copy plan tests. Fixed domain-plugin installation, plan guards and representative native checks pass; complete native command and V1 acceptance remain open.
+Current standalone source: `0.1.0-dev.29`. Strict command-plan JSON rejects duplicate keys before installation or edits. All standalone domain skills pass isolated-copy plan tests. Fixed domain-plugin installation, plan guards and representative native checks pass; complete native command and V1 acceptance remain open.
 
 Pre-release candidate record: Unreleased source candidate adds `filmcraft-cli-transcript` for14 transcript commands. Single-skill cold installation and imported-transcript native save/reopen/SRT identity passed; ASR and all14 command acceptance remain open. Fixed plugin28/source26 still contains12 skills. [Candidate evidence](docs/evidence/film-transcript-candidate-20261007.json).
 

@@ -194,6 +194,7 @@ def run(cli, argv, cwd=None):
 def execute(plan, output, runtime_home=None, source=None):
     validate(plan)
     output = Path(output).absolute()
+    output = output.parent.resolve()/output.name
     if output.exists() or output.is_symlink():
         raise ValueError('output_exists')
     source_project, source_hash, prior = None, None, {}

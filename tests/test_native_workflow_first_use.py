@@ -2,12 +2,13 @@
 import hashlib,json,os,shutil,subprocess,sys,tempfile,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];DOMAIN=ROOT.name.removesuffix('-skills')
+SOURCE=Path(os.environ.get('CRAFT_INSTALLED_NATIVE_WORKFLOW_SKILL',ROOT/'skills'/(DOMAIN+'-use')))
 @unittest.skipUnless(os.environ.get('CRAFT_NATIVE_WORKFLOW_FIRST_USE')=='1','explicit native opt-in')
 class NativeFirstUse(unittest.TestCase):
  def test_public_delivery_and_revision(self):
   from PIL import Image
   with tempfile.TemporaryDirectory() as temporary:
-   root=Path(temporary);skill=root/'single-skill';shutil.copytree(ROOT/'skills'/(DOMAIN+'-use'),skill);runtime=root/'empty-runtime'
+   root=Path(temporary);skill=root/'single-skill';shutil.copytree(SOURCE,skill);runtime=root/'empty-runtime'
    plan=json.loads((skill/'examples/native-workflow.json').read_text())
    if DOMAIN=='filmcraft':
     image=root/'still.png';Image.new('RGBA',(32,32),(239,91,54,255)).save(image);plan['assets']={'still':{'path':str(image),'sha256':hashlib.sha256(image.read_bytes()).hexdigest()}}
@@ -30,4 +31,6 @@ class NativeFirstUse(unittest.TestCase):
    params=revision['operations'][-1]['params']['params'];params.update({'filmcraft':{'speed':200},'effectcraft':{'mode':'Normal'},'photocraft':{'opacity':.5},'vectorcraft':{'color':'#0000ff'}}[DOMAIN])
    revised=run(revision,root/'revised',original);self.assertNotEqual(manifest['files'][project],revised['files'][project])
    self.assertEqual(before,{str(p.relative_to(original)):hashlib.sha256(p.read_bytes()).hexdigest() for p in original.rglob('*') if p.is_file()})
-   if os.environ.get('CRAFT_NATIVE_WORKFLOW_REPORT'):Path(os.environ['CRAFT_NATIVE_WORKFLOW_REPORT']).write_text(json.dumps({'domain':DOMAIN,'result':'PASS','entrySha256':hashlib.sha256((skill/'scripts/native_workflow.py').read_bytes()).hexdigest(),'projectSha256':manifest['files'][project],'revisionSha256':revised['files'][project],'scope':'candidate single-skill cold native workflow delivery and revision; not fixed release or full DAG acceptance'},indent=2)+'\n')
+   records=[json.loads(p.read_text()) for p in root.glob('.filmcraft-execution-*.json')]
+   self.assertEqual(len(records),2);self.assertTrue(all(r['state']=='finished' and r['identity']['runtimeSha256']==manifest['runtimeSha256'] for r in records))
+   if os.environ.get('CRAFT_NATIVE_WORKFLOW_REPORT'):Path(os.environ['CRAFT_NATIVE_WORKFLOW_REPORT']).write_text(json.dumps({'domain':DOMAIN,'result':'PASS','guardRecords':records,'workflowSha256':hashlib.sha256((skill/'scripts/workflow.py').read_bytes()).hexdigest(),'guardSha256':hashlib.sha256((skill/'scripts/output_guard.py').read_bytes()).hexdigest(),'entrySha256':hashlib.sha256((skill/'scripts/native_workflow.py').read_bytes()).hexdigest(),'projectSha256':manifest['files'][project],'revisionSha256':revised['files'][project],'scope':('fixed installed' if os.environ.get('CRAFT_INSTALLED_NATIVE_WORKFLOW_SKILL') else 'source candidate')+' single-skill cold native workflow delivery/revision; no full DAG acceptance'},indent=2)+'\n')
