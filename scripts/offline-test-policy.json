@@ -139,6 +139,7 @@
     "test_runtime_builder.RuntimeBuilderTests.test_audio_builder_isolated_python_entrypoint",
     "test_runtime_builder.RuntimeBuilderTests.test_audio_patch_checksum_rejected_before_native_tools",
     "test_runtime_builder.RuntimeBuilderTests.test_existing_output_is_preserved",
+    "test_runtime_builder.RuntimeBuilderTests.test_pcm_builder_isolated_entrypoint_and_cumulative_regression",
     "test_runtime_builder.RuntimeBuilderTests.test_sequence_patch_checksum_rejected_before_native_tools",
     "test_runtime_builder.RuntimeBuilderTests.test_tampered_patch_is_refused_before_git_or_cargo",
     "test_runtime_builder.RuntimeBuilderTests.test_unknown_or_option_like_features_are_refused_before_build",
@@ -164,6 +165,13 @@
     "test_setup_diagnostics.SetupFailureTests.test_public_bootstrap_failure_identifies_own_setup_without_retry",
     "test_skill_suite.SkillSuiteTests.test_suite_contains_separate_cli_setup_and_task_skills",
     "test_skill_suite.SkillSuiteTests.test_unknown_command_is_refused_before_installation",
+    "test_timeline_bounds.TimelineBoundsTests.test_exact_trim_range_and_native_audio_padding_remain_distinct",
+    "test_timeline_bounds.TimelineBoundsTests.test_failed_stage_has_separate_safe_clip_diagnostic_without_protocol_expansion",
+    "test_timeline_bounds.TimelineBoundsTests.test_literal_invalid_trim_ticks_refuse_with_clip_identity",
+    "test_timeline_bounds.TimelineBoundsTests.test_literal_move_time_has_target_identity",
+    "test_timeline_bounds.TimelineBoundsTests.test_trim_in_uses_speed_and_refuses_non_integral_source_ticks",
+    "test_timeline_bounds.TimelineBoundsTests.test_valid_trim_and_move_and_deferred_reference_remain_accepted",
+    "test_timeline_bounds.TimelineBoundsTests.test_zero_trim_keeps_existing_audio_frame_padding",
     "test_transcript_skill.TranscriptSkillTests.test_transcript_commands_have_local_scene_resources",
     "test_workflow.WorkflowTests.test_audio_tail_accepts_only_exact_native_frame_padding",
     "test_workflow.WorkflowTests.test_duplicate_alias_rejected",
@@ -181,8 +189,7 @@
     "test_workflow_data_directory.WorkflowDataDirectoryTests.test_explicit_directory_overrides_environment_for_mcp",
     "test_workflow_data_directory.WorkflowDataDirectoryTests.test_unconfigured_auxiliary_process_preserves_original_arguments",
     "test_workflow_tool_reply.WorkflowToolReplyTests.test_bad_tool_results_are_unknown_without_python_type_errors",
-    "test_workflow_tool_reply.WorkflowToolReplyTests.test_valid_semantic_error_remains_a_known_reply",
-    "test_runtime_builder.RuntimeBuilderTests.test_pcm_builder_isolated_entrypoint_and_cumulative_regression"
+    "test_workflow_tool_reply.WorkflowToolReplyTests.test_valid_semantic_error_remains_a_known_reply"
   ],
   "environmentTests": [
     {

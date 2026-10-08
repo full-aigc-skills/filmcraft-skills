@@ -23,7 +23,7 @@
 
 已有素材与剪辑需求进入，交付可重开的 `.fcproj`、素材清单、预览和成片。
 
-当前技能源快照：`0.1.0-dev.48`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
+当前技能源快照：`0.1.0-dev.49`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
 
 已验证首次使用平台：macOS arm64、Python 3.11+。固定运行时安装在用户数据目录，技能文件保留在宿主加载目录。当前为开发版本；完整首版验收及通用 Skills CLI 实际安装仍未完成。
 
@@ -211,3 +211,7 @@ CRAFT_TASK_FIRST_USE=1 CRAFT_LIVE_TEST=1 CRAFT_LIVE_SUITE=1 python3 -B -m unitte
 源42验证：4项上下文测试通过；全量212项，176通过、36项明确环境跳过；13个独立技能资源同步通过。[证据](docs/evidence/filmcraft-source42-execution-context-20261008.json)。固定插件安装单独验收。
 
 Evidence: `docs/evidence/source48-asset-issues-candidate-20261009/acceptance.json`.
+
+当前dev.49候选在原生裁切前拒绝显式越界源范围，避免静默钳制被误判为交付成功；非法／溢出／非整数源ticks返回安全clipTiming及十进制字符串片段ID。失败暂存保留单独摘要诊断，不扩充公共失败回执schema。候选目标拒绝和真实裁切／移动保全通过；新固定安装及完整FC-DM-002仍待验收。
+
+[版本绑定候选检查](docs/evidence/source49-timeline-candidate-20261009/report.json)：195项通过、36项原生环境未运行；新固定宿主验收仍待完成。

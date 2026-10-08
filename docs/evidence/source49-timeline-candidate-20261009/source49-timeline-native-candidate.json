@@ -1,0 +1,42 @@
+{
+  "schema": "filmcraft-timeline-native-candidate/v1",
+  "result": "PASS",
+  "cases": [
+    {
+      "case": "invalid-ticks",
+      "result": "PASS",
+      "exitCode": 1,
+      "actual": {
+        "error": "ticks_require_decimal_string: clip=11",
+        "clipTiming": {
+          "reason": "ticks_require_decimal_string",
+          "clipIds": [
+            "11"
+          ]
+        }
+      },
+      "outputExists": false,
+      "successfulDelivery": false,
+      "separateClipDiagnostic": false
+    },
+    {
+      "case": "out-of-range",
+      "result": "PASS",
+      "exitCode": 1,
+      "actual": {
+        "error": "clip_out_of_range: clip=11",
+        "clipTiming": {
+          "reason": "clip_out_of_range",
+          "clipIds": [
+            "11"
+          ]
+        }
+      },
+      "outputExists": true,
+      "successfulDelivery": false,
+      "separateClipDiagnostic": true
+    }
+  ],
+  "originalSourceBytesPreserved": true,
+  "scope": "Current uncommitted independent skill candidate/public workflow CLI with actual owned fixed65 source project and unchanged public craft.5 native runtime;not new immutable source/plugin qualification."
+}
