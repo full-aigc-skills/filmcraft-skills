@@ -215,3 +215,5 @@ Evidence: `docs/evidence/source48-asset-issues-candidate-20261009/acceptance.jso
 当前dev.49候选在原生裁切前拒绝显式越界源范围，避免静默钳制被误判为交付成功；非法／溢出／非整数源ticks返回安全clipTiming及十进制字符串片段ID。失败暂存保留单独摘要诊断，不扩充公共失败回执schema。候选目标拒绝和真实裁切／移动保全通过；新固定安装及完整FC-DM-002仍待验收。
 
 [版本绑定候选检查](docs/evidence/source49-timeline-candidate-20261009/report.json)：195项通过、36项原生环境未运行；新固定宿主验收仍待完成。
+
+dev.49发布后仅修正测试：缺音轨首用核验现有craft-failed-stage/v1、原暂存工程文件摘要及重复不覆盖诊断。固定插件66/source49生产字节保持不变；修正后实际安装首用通过，源码回归195通过／36项原生环境未运行。[检查](docs/evidence/source49-postrelease-missing-audio-test-20261009/report.json)。

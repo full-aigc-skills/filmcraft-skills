@@ -37,7 +37,18 @@ class MissingAudioFirstUseTests(unittest.TestCase):
             self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
             self.assertEqual(json.loads(result.stdout), {'error': 'export_audio_missing'})
             failure = json.loads((output / 'failure.json').read_text())
-            self.assertEqual(failure, {'status': 'failed', 'error': 'export_audio_missing'})
+            self.assertEqual(failure['schema'], 'craft-failed-stage/v1')
+            self.assertEqual(failure['status'], 'failed')
+            self.assertEqual(failure['error'], 'export_audio_missing')
+            self.assertEqual(failure['outcome'], 'failed')
+            self.assertFalse(failure['replayAllowed'])
+            stage = (output / failure['stage']).resolve()
+            self.assertTrue(stage.is_relative_to(root.resolve()))
+            self.assertEqual(json.loads((stage / 'failure.json').read_text()), failure)
+            self.assertIn('checkpoint.fcproj', failure['files'])
+            for name, entry in failure['files'].items():
+                self.assertEqual(workflow.sha(stage / name), entry['sha256'])
+                self.assertEqual((stage / name).stat().st_size, entry['bytes'])
             self.assertFalse((output / 'manifest.json').exists())
             for filename in ('project.fcproj', 'film.mp4', 'frame-0000.png'): self.assertTrue((output / filename).is_file())
             probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-count_frames', '-show_streams', '-of', 'json', str(output / 'film.mp4')]))
@@ -56,6 +67,8 @@ class MissingAudioFirstUseTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'output_exists'):
                 workflow.execute(plan, output, runtime_home=runtime)
             for name, sha in diagnostics.items(): self.assertEqual(workflow.sha(output / name), sha)
+            for name, entry in failure['files'].items():
+                self.assertEqual(workflow.sha(stage / name), entry['sha256'])
             optional = json.loads(json.dumps(plan)); optional['export']['audioRequired'] = False
             delivered = workflow.execute(optional, root / 'optional', runtime_home=runtime)
             self.assertTrue((root / 'optional/manifest.json').is_file())

@@ -221,3 +221,5 @@ Evidence: `docs/evidence/source48-asset-issues-candidate-20261009/acceptance.jso
 Current dev.49 candidate rejects explicitly out-of-source trim requests before native editing instead of accepting native clamping. Invalid/overflow/non-integral ticks carry safe `clipTiming` with decimal-string clip IDs;failed stages retain a separate hashed diagnostic without changing the public failed-stage schema. Candidate behavior and real trim/move regression pass;new immutable installation and full FC-DM-002 remain pending.
 
 [Version-bound candidate checks](docs/evidence/source49-timeline-candidate-20261009/report.json): 195 PASS,36 declared native NOT_RUN; immutable host qualification remains pending.
+
+Post-dev.49 test-only correction: required-audio first-use now validates existing craft-failed-stage/v1,original checkpoint file hashes and refusal to overwrite diagnostics. Actual installed plugin66/source49 production bytes remain unchanged. Corrected native case passes; source regression195PASS/36declared nativeNOT_RUN. [Checks](docs/evidence/source49-postrelease-missing-audio-test-20261009/report.json).
