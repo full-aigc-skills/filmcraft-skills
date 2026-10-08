@@ -14,7 +14,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.41`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.42`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
@@ -202,3 +202,7 @@ Current fixed protocol-reference release matrix (Film/Effect dev.37, Photo dev.3
 Small-frame English caption examples now use the1080-line size conversion; every independent skill carries output-size and short-audio guidance. Source/native validation and fixed-plugin acceptance are separate. [Guidance and evidence](docs/Caption-Size-First-Use.md).
 
 Fixed Film41/source38 and Art118/source90 first use passes: all64 installation identities match; Film13 and Art10 independently cold-install, while41 unchanged skills reuse identity-matched historical cold evidence only. The new installed Art skill passes1080p/24fps/120-frame creation, Logo dependency revision, corrupt-frame recovery and moved five-child packaging. Film passes relocated text revision and animation-key preservation. FullV1 remains open. [Evidence](docs/evidence/craft-art118-segment-guide-fixed-first-use-20261008.json).
+
+A controlled Harness may supply internal FILMCRAFT_EXECUTION_CONTEXT with taskId, attemptId, source revision and content digest. Malformed context fails before installation or writes. Output-execution v1 adds optional context; standalone calls remain compatible and do not invent identity. Context is not authorization; fixed plugin acceptance is separate.
+
+Source42 validation: 4 context tests pass; full regression 212 total, 176 passed, 36 explicit environment skips. All 13 standalone resources synchronize. [Evidence](docs/evidence/filmcraft-source42-execution-context-20261008.json). Fixed plugin acceptance is separate.

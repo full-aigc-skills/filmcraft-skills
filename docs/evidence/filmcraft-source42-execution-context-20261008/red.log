@@ -1,0 +1,138 @@
+test_context_is_preserved_without_rewriting_plan_identity (test_execution_context.ExecutionContextTests.test_context_is_preserved_without_rewriting_plan_identity) ... ERROR
+test_invalid_context_fails_before_install_or_output (test_execution_context.ExecutionContextTests.test_invalid_context_fails_before_install_or_output) ... FAIL
+test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) ... 
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='null') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='[]') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{}') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId":"a","taskId":"b"}') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "", "attemptId": "attempt-1", "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": true, "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": "attempt-1", "sourceRevision": "x", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": "attempt-1", "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "x"}') ... ERROR
+  test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": "attempt-1", "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "forged": true}') ... ERROR
+test_legacy_call_does_not_invent_context (test_execution_context.ExecutionContextTests.test_legacy_call_does_not_invent_context) ... ERROR
+
+======================================================================
+ERROR: test_context_is_preserved_without_rewriting_plan_identity (test_execution_context.ExecutionContextTests.test_context_is_preserved_without_rewriting_plan_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 26, in test_context_is_preserved_without_rewriting_plan_identity
+    self.assertEqual(guard.execution_context(), context)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='null')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId":"a","taskId":"b"}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "", "attemptId": "attempt-1", "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": true, "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": "attempt-1", "sourceRevision": "x", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": "attempt-1", "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "x"}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) (raw='{"taskId": "\\u4efb\\u52a1\\u4e00", "attemptId": "attempt-1", "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "sourceTreeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "forged": true}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 51, in test_invalid_or_ambiguous_context_is_rejected
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): guard.execution_context()
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+ERROR: test_legacy_call_does_not_invent_context (test_execution_context.ExecutionContextTests.test_legacy_call_does_not_invent_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 36, in test_legacy_call_does_not_invent_context
+    with patch.dict(os.environ, {}, clear=True): self.assertIsNone(guard.execution_context())
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'context_output_guard' has no attribute 'execution_context'
+
+======================================================================
+FAIL: test_invalid_context_fails_before_install_or_output (test_execution_context.ExecutionContextTests.test_invalid_context_fails_before_install_or_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_execution_context.py", line 61, in test_invalid_context_fails_before_install_or_output
+    with self.assertRaisesRegex(ValueError, 'invalid_execution_context'): workflow.execute(plan, output)
+                                                                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/skills/filmcraft-use/scripts/workflow.py", line 280, in execute
+    installed = load_module('bootstrap').install(
+        json.loads(Path(__file__).with_name('runtime.lock.json').read_text()),
+        runtime_home or os.environ.get('CRAFT_RUNTIME_HOME', str(Path.home() / '.local/share/craft-runtimes')))
+  File "/opt/anaconda3/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/unittest/mock.py", line 1228, in _execute_mock_call
+    raise effect
+AssertionError: installed
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.019s
+
+FAILED (failures=1, errors=11)

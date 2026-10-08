@@ -35,7 +35,7 @@ class OutputGuardTests(unittest.TestCase):
             if name == 'bootstrap':
                 return SimpleNamespace(install=lambda *args: {'executable': 'fixture-cli', 'binarySha256': 'c'*64})
             if name == 'output_guard':
-                return SimpleNamespace(claim=conflict)
+                return SimpleNamespace(claim=conflict, execution_context=lambda: None)
             if name == 'mcp_session':
                 raise RuntimeError('native_started_without_claim')
             return original(name)

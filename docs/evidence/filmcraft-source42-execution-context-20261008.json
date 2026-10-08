@@ -1,0 +1,39 @@
+{
+  "schema": "filmcraft-source-execution-context/v1",
+  "sourceVersion": "0.1.0-dev.42",
+  "result": "PASS",
+  "platform": "darwin-arm64",
+  "python": "3.13.5",
+  "targetTests": 4,
+  "sourceRegression": {
+    "total": 212,
+    "passed": 176,
+    "skipped": 36,
+    "failed": 0
+  },
+  "skillCount": 13,
+  "changes": [
+    "optional controlled attempt context in output-execution/v1",
+    "reject malformed context after asset preflight and before installer/output writes",
+    "legacy standalone invocation remains compatible; no invented context"
+  ],
+  "authorization": "context is identity only; not authorization",
+  "regressionCorrections": [
+    "asset preflight still precedes module/runtime access",
+    "guard fixture explicitly provides context reader"
+  ],
+  "sourceFiles": {
+    "skills/filmcraft-use/scripts/output_guard.py": "7ebdea742931e6af14061a3c8b1349b18ca670bfd931d0943f7368bb4018687e",
+    "skills/filmcraft-use/scripts/workflow.py": "5b192f844e4698b348b0981fc06916c1163936b417a3fa6d8c9ffea6b68f298e",
+    "tests/test_execution_context.py": "dd776e3fad2eb0e01097e15eccf74cbe031af761bf67b6c2dbf7048d4b775a46",
+    "tests/test_output_execution_guard.py": "ef85daac6b21128cdcd8c055c11425dbfb8a4caea51c97cc334d78b291d4dcd0"
+  },
+  "evidenceFiles": {
+    "docs/evidence/filmcraft-source42-execution-context-20261008/red.log": "92b729db9d077ae81488aab03e581a11a2c79c534be7f7dac2cab3179fc8bd02",
+    "docs/evidence/filmcraft-source42-execution-context-20261008/green.log": "f77720fdedfa669e89dc7df2d113a67ed75821dfc1048dfa0420f78cdc88c6ba",
+    "docs/evidence/filmcraft-source42-execution-context-20261008/regression-final.log": "3e648779ecd8754f8979490c0dd13c17fa5666575f7f1771a4ea6239df0dfdea",
+    "docs/evidence/filmcraft-source42-execution-context-20261008/regression-initial.log": "35a5da9b24ec67096983d0e8c0240ef5f997bd73e34b3c7d50da4459460c3b68"
+  },
+  "fixedPluginAcceptance": "NOT_RUN; separately pinned immutable plugin required",
+  "completeV1": "INCOMPLETE"
+}

@@ -67,3 +67,9 @@ Historical source-candidate note: Source candidate: complete native workflow gat
 ## 0.1.0-dev.34
 
 源 dev.34 将显式／环境模型目录贯通公共工作流。独立转录技能全新安装公开 craft.4、首次下载与校验模型、真实 CLI 及工作流识别、源工程和音画保全、工程重开与 SRT 通过（52.497秒）；常规回归134通过／34跳过。固定 Film／Art 分发仍待验收。 [Evidence](docs/evidence/workflow-model-directory-20261008.json).
+
+## 0.1.0-dev.42
+
+受控工作流输出执行记录附加尝试上下文，畸形值在安装／写入前拒绝；既有独立调用、计划摘要和 v1 格式保持兼容，不把上下文当成授权。
+
+源42验证：4项上下文测试通过；全量212项，176通过、36项明确环境跳过；13个独立技能资源同步通过。[证据](docs/evidence/filmcraft-source42-execution-context-20261008.json)。固定插件安装单独验收。

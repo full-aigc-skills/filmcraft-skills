@@ -67,3 +67,9 @@ Source dev.33 pins public maintainedcraft.4 with CPU Whisper and session model d
 ## 0.1.0-dev.34
 
 Source dev.34 forwards explicit/environment model directories through the public workflow. A fresh independently copied transcript skill installs public craft.4, downloads and verifies the model, performs real CLI and workflow inference, preserves source/audio/video and exports reopened project/SRT (52.497s). Regression:134 passes/34 skips. Fixed Film/Art distribution remains pending. [Evidence](docs/evidence/workflow-model-directory-20261008.json).
+
+## 0.1.0-dev.42
+
+Controlled workflows preserve attempt context in output execution records and reject malformed context before installation/writes. Standalone calls, plan digests and v1 formats remain compatible; context does not grant authorization.
+
+Source42 validation: 4 context tests pass; full regression 212 total, 176 passed, 36 explicit environment skips. All 13 standalone resources synchronize. [Evidence](docs/evidence/filmcraft-source42-execution-context-20261008.json). Fixed plugin acceptance is separate.

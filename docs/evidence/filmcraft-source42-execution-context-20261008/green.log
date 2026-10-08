@@ -1,0 +1,9 @@
+test_context_is_preserved_without_rewriting_plan_identity (test_execution_context.ExecutionContextTests.test_context_is_preserved_without_rewriting_plan_identity) ... ok
+test_invalid_context_fails_before_install_or_output (test_execution_context.ExecutionContextTests.test_invalid_context_fails_before_install_or_output) ... ok
+test_invalid_or_ambiguous_context_is_rejected (test_execution_context.ExecutionContextTests.test_invalid_or_ambiguous_context_is_rejected) ... ok
+test_legacy_call_does_not_invent_context (test_execution_context.ExecutionContextTests.test_legacy_call_does_not_invent_context) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.016s
+
+OK
