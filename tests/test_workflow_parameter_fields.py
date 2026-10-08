@@ -52,6 +52,6 @@ class WorkflowParameterFieldTests(unittest.TestCase):
     def test_public_entry_refuses_canary_without_install_or_output(self):
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary);p=root/'plan.json';p.write_text(json.dumps({'document':{'name':'Owned','width':32,'height':32,'frameRate':{'num':12,'den':1}},'operations':[{'command':'captions.setText','params':{'caption':13,'text':'字幕',CANARY:CANARY}}]}))
-            r=subprocess.run([sys.executable,'-I','-B',str(SCRIPT),str(p),'--output',str(root/'out'),'--runtime-home',str(root/'runtime')],capture_output=True,text=True,timeout=20)
+            r=subprocess.run([sys.executable,'-I','-B',str(SCRIPT),str(p),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(root/'out'),'--runtime-home',str(root/'runtime')],capture_output=True,text=True,timeout=20)
             self.assertEqual(r.returncode,1);self.assertEqual(json.loads(r.stdout)['error'],'invalid_workflow_parameters')
             self.assertNotIn(CANARY,r.stdout+r.stderr);self.assertFalse((root/'out').exists());self.assertFalse((root/'runtime').exists())

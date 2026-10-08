@@ -45,7 +45,7 @@ class ChineseFirstUseTests(unittest.TestCase):
             plan=json.loads((skill/'examples/chinese-short-film.json').read_text())
             def run(plan,out,source=None):
                 path=root/(out.name+'.json');path.write_text(json.dumps(plan,ensure_ascii=False))
-                args=[sys.executable,'-I','-B',skill/'scripts/workflow.py',path,'--output',out,'--runtime-home',runtime]
+                args=[sys.executable,'-I','-B',skill/'scripts/workflow.py',path,'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',out,'--runtime-home',runtime]
                 if source:args+=['--source',source]
                 else:args+=['--asset','shot='+str(shot),'--asset','voice='+str(voice)]
                 result=subprocess.run(list(map(str,args)),capture_output=True,text=True,timeout=240,env=dict(os.environ,PATH='/usr/bin:/bin'))

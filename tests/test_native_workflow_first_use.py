@@ -20,7 +20,7 @@ class NativeFirstUse(unittest.TestCase):
    if DOMAIN=='filmcraft':
     image=root/'still.png';Image.new('RGBA',(32,32),(239,91,54,255)).save(image);plan['assets']={'still':{'path':str(image),'sha256':hashlib.sha256(image.read_bytes()).hexdigest()}}
    def run(p,output,source=None):
-    f=root/(output.name+'.json');f.write_text(json.dumps(p));argv=[sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(f),'--output',str(output),'--runtime-home',str(runtime)]
+    f=root/(output.name+'.json');f.write_text(json.dumps(p));argv=[sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(f),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(output),'--runtime-home',str(runtime)]
     if source:argv+=['--source',str(source)]
     result=subprocess.run(argv,capture_output=True,text=True,timeout=300,env=environment);self.assertEqual(result.returncode,0,result.stdout+result.stderr)
     manifest=json.loads((output/'manifest.json').read_text());self.assertEqual(manifest['schema'],DOMAIN+'-delivery/v1')

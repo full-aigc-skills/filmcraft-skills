@@ -32,7 +32,7 @@ class MissingAudioFirstUseTests(unittest.TestCase):
             runtime, output = root / 'empty-runtime', root / 'required'
             self.assertFalse(runtime.exists())
             planfile = root / 'required-plan.json'; planfile.write_text(json.dumps(plan))
-            arguments = [sys.executable, '-I', '-B', str(skill / 'scripts/workflow.py'), str(planfile), '--output', str(output), '--runtime-home', str(runtime)]
+            arguments = [sys.executable, '-I', '-B', str(skill / 'scripts/workflow.py'), str(planfile), '--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output', str(output), '--runtime-home', str(runtime)]
             result = subprocess.run(arguments, capture_output=True, text=True, timeout=180)
             self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
             self.assertEqual(json.loads(result.stdout), {'error': 'export_audio_missing'})

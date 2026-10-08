@@ -14,7 +14,7 @@ class CaptionReadabilityFirstUseTests(unittest.TestCase):
     stream.setnchannels(1);stream.setsampwidth(2);stream.setframerate(48000);stream.writeframes(b'\0\0'*96000)
    runtime=root/'empty-runtime';output=root/'delivery';env=dict(os.environ,PATH='/usr/bin:/bin')
    for key in ('CRAFT_RUNTIME_HOME','CRAFT_NODE_ARCHIVE','CRAFT_BUNDLE_DIRECTORY','CRAFT_NATIVE_ARCHIVE_DIRECTORY'):env.pop(key,None)
-   result=subprocess.run([sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(skill/'examples/short-film.json'),'--asset','shot='+str(shot),'--asset','voice='+str(voice),'--output',str(output),'--runtime-home',str(runtime)],env=env,text=True,capture_output=True,timeout=600)
+   result=subprocess.run([sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(skill/'examples/short-film.json'),'--asset','shot='+str(shot),'--asset','voice='+str(voice),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(output),'--runtime-home',str(runtime)],env=env,text=True,capture_output=True,timeout=600)
    self.assertEqual(result.returncode,0,result.stdout+result.stderr)
    with Image.open(output/'frame-0000.png') as im:
     im=im.convert('RGB');points=[(x,y) for y in range(150,180) for x in range(320) if min(im.getpixel((x,y)))>180]

@@ -49,7 +49,7 @@ class WorkflowTests(unittest.TestCase):
             plan.write_text(json.dumps({'document':{'name':'Test','width':32,'height':32,'frameRate':{'num':12,'den':1}},
                 'operations':[], 'assets':{'first':{'path':str(root/'first.png'),'sha256':'a'*64},
                                           'second':{'path':str(root/'second.wav'),'sha256':'b'*64}}}))
-            result=subprocess.run([sys.executable,'-I','-B',str(SOURCE),str(plan),'--output',str(root/'delivery'),
+            result=subprocess.run([sys.executable,'-I','-B',str(SOURCE),str(plan),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(root/'delivery'),
                                    '--runtime-home',str(root/'runtime')],capture_output=True,text=True,timeout=20)
             self.assertEqual(result.returncode,1)
             body=json.loads(result.stdout)

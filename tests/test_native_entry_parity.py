@@ -78,7 +78,7 @@ class NativeEntryParityTests(unittest.TestCase):
                     argv = [sys.executable, '-I', '-B', str(skill / 'scripts' / (script + '.py'))]
                     if script == 'commands':
                         argv.append('run')
-                    argv += [str(plan_path), '--output', str(output), '--runtime-home', str(runtime)]
+                    argv += [str(plan_path), '--read-root', str(root.resolve()), '--write-root', str(root.resolve()), '--output', str(output), '--runtime-home', str(runtime)]
                     result = subprocess.run(argv, capture_output=True, text=True, timeout=10)
                     self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
                     self.assertIn('invalid_tick_parameter', json.loads(result.stdout)['error'])

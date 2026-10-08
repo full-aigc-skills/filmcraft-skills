@@ -1,5 +1,9 @@
 # Version-bound release records
 
+## 0.1.0-dev.53
+
+Public workflow, full-command run and owned desktop execution require independently supplied canonical read/write roots. Native children run in the macOS system sandbox; inputs, skill code and runtime caches remain protected, and the owned desktop bridge has only its assigned loopback port. The desktop and MCP share an authorized temporary directory for rendered frames. Actual candidate native and signed-desktop checks pass; full FC-RL-002, fixed-host qualification and eight V1 tasks remain open.
+
 ## 0.1.0-dev.52
 
 Strip inherited secrets, proxies and interpreter injection from MCP/editor children, retaining explicit local model data. Add tested macOS sandbox primitives. Public workflow root-policy binding and full FC-RL-002 remain pending.

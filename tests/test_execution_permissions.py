@@ -91,3 +91,20 @@ print(json.dumps({'read':True,'write':True,'outsideReadDenied':True,'outsideWrit
             self.assertEqual(result.returncode,0,result.stdout+result.stderr)
             self.assertTrue(all(json.loads(result.stdout).values()));self.assertEqual((read/'asset.txt').read_text(),'owned media')
             self.assertFalse((outside/'escaped.fcproj').exists())
+
+    @unittest.skipUnless(sys.platform=='darwin' and Path('/usr/bin/sandbox-exec').is_file(),'requires actual macOS system sandbox')
+    def test_owned_bridge_control_port_does_not_grant_other_network_access(self):
+        import socket
+        with tempfile.TemporaryDirectory() as temporary, socket.socket() as forbidden:
+            root=Path(temporary).resolve();policy={'schema':self.module.SCHEMA,'readRoots':[str(root)],'writeRoots':[str(root)]}
+            forbidden.bind(('127.0.0.1',0));forbidden.listen();blocked_port=forbidden.getsockname()[1]
+            with socket.socket() as probe:probe.bind(('127.0.0.1',0));port=probe.getsockname()[1]
+            code="import socket,sys\nport,blocked=map(int,sys.argv[1:]);s=socket.socket();s.bind(('127.0.0.1',port));s.listen();print('READY',flush=True)\nc,a=s.accept();c.sendall(b'owned');c.close();s.close()\ntry:\n with socket.socket() as denied:denied.connect(('127.0.0.1',blocked))\nexcept PermissionError:print('OUTSIDE_DENIED',flush=True)\nelse:raise AssertionError('outside network allowed')\n"
+            argv=self.module.command([sys.executable,'-I','-B','-c',code,str(port),str(blocked_port)],policy,control_port=port,graphics=True)
+            child=subprocess.Popen(argv,env=self.module.child_environment(),stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+            try:
+                self.assertEqual(child.stdout.readline().strip(),'READY')
+                with socket.create_connection(('127.0.0.1',port),timeout=3) as client:self.assertEqual(client.recv(20),b'owned')
+                out,err=child.communicate(timeout=10);self.assertEqual(child.returncode,0,err);self.assertEqual(out.strip(),'OUTSIDE_DENIED')
+            finally:
+                if child.poll() is None:child.kill();child.wait(timeout=5)

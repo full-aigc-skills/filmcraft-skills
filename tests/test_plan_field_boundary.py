@@ -40,7 +40,7 @@ class PlanFieldBoundaryTests(unittest.TestCase):
             root = Path(temporary)
             plan = root/'plan.json';plan.write_text(json.dumps({'operations': [], 'metadata': {'apiKey': CANARY}}))
             marker = root/'untouched.fcproj';marker.write_bytes(b'owned existing project')
-            result = subprocess.run([sys.executable, '-I', '-B', str(SCRIPT), str(plan), '--output', str(root/'output'),
+            result = subprocess.run([sys.executable, '-I', '-B', str(SCRIPT), str(plan), '--read-root', str(root.resolve()), '--write-root', str(root.resolve()), '--output', str(root/'output'),
                                      '--runtime-home', str(root/'runtime')], capture_output=True, text=True, timeout=20)
             self.assertEqual(result.returncode, 1)
             self.assertEqual(json.loads(result.stdout)['error'], 'invalid_workflow_fields')

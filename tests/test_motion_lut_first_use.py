@@ -39,7 +39,7 @@ class MotionLutFirstUseTests(unittest.TestCase):
             runtime=root/'empty-runtime'; self.assertFalse(runtime.exists())
             first=root/'first'; plan_path=root/'plan.json'
             cli_plan=json.loads(json.dumps(plan));del cli_plan['assets']['grade'];plan_path.write_text(json.dumps(cli_plan))
-            completed=subprocess.run([sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(plan_path),'--output',str(first),'--runtime-home',str(runtime),'--lut-asset','grade='+str(cube)],capture_output=True,text=True,check=True)
+            completed=subprocess.run([sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(plan_path),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(first),'--runtime-home',str(runtime),'--lut-asset','grade='+str(cube)],capture_output=True,text=True,check=True)
             manifest=json.loads(completed.stdout)
             cube.unlink()
             cli=str(runtime/'filmcraft'/json.loads((skill/'scripts/runtime.lock.json').read_text())['resolvedVersion']/'filmcraft-cli')

@@ -64,7 +64,7 @@ class EffectFilmSegmentTests(unittest.TestCase):
                                    {'command': 'timeline.place', 'params': {'item': {'$ref': 'overlay.item'}, 'track': 'V2', 'duration': str(film.TICKS), 'insert': False}, 'as': 'overlayClip'}],
                     'frames': ['0', str(film.TICKS//2)], 'export': {'audioRequired': False}}
             first = root/'film';plan_file=root/'film-plan.json';plan_file.write_text(json.dumps(plan))
-            completed=subprocess.run([sys.executable,'-I','-B',str(film_skill/'scripts/workflow.py'),str(plan_file),'--output',str(first),'--runtime-home',str(runtime),'--segmented-sequence-asset','overlay='+sequence['path']],capture_output=True,text=True,timeout=180)
+            completed=subprocess.run([sys.executable,'-I','-B',str(film_skill/'scripts/workflow.py'),str(plan_file),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(first),'--runtime-home',str(runtime),'--segmented-sequence-asset','overlay='+sequence['path']],capture_output=True,text=True,timeout=180)
             self.assertEqual(completed.returncode,0,completed.stdout+completed.stderr);delivery=json.loads(completed.stdout)
             bad=root/'bad-segments';shutil.copytree(segmented,bad);bad_frame=bad/'segment_00001/frame_00000.png';bad_frame.write_bytes(b'corrupt');bad_hash=film.sha(bad_frame)
             bad_plan=json.loads(json.dumps(plan));bad_plan['assets']['overlay']['path']=str(bad/'segments.json')

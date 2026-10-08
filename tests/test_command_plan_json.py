@@ -28,7 +28,7 @@ class CommandPlanJsonTests(unittest.TestCase):
      for action in ('check','run'):
       output=Path(temporary)/'output';runtime=Path(temporary)/'runtime'
       argv=[sys.executable,'-I','-B',str(SCRIPT),action,str(plan)]
-      if action=='run':argv+=['--output',str(output),'--runtime-home',str(runtime)]
+      if action=='run':argv+=['--read-root',str(Path(temporary).resolve()),'--write-root',str(Path(temporary).resolve()),'--output',str(output),'--runtime-home',str(runtime)]
       result=subprocess.run(argv,capture_output=True,text=True)
       self.assertEqual(result.returncode,1,result.stdout+result.stderr)
       self.assertEqual(json.loads(result.stdout)['error'],'duplicate_json_key')
@@ -44,7 +44,7 @@ class CommandPlanJsonTests(unittest.TestCase):
     identifier=json.loads((skill/'references/command-coverage.json').read_text())['commands'][0]['id']
     plan=root/'plan.json';output=root/'output';runtime=root/'runtime'
     plan.write_text('{"schema":"craft-command-plan/v1","operations":[{"command":'+json.dumps(identifier)+',"params":{"value":1,"value":2}}]}')
-    rejected=subprocess.run([sys.executable,'-I','-B',str(script),'run',str(plan),'--output',str(output),'--runtime-home',str(runtime)],capture_output=True,text=True)
+    rejected=subprocess.run([sys.executable,'-I','-B',str(script),'run',str(plan),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(output),'--runtime-home',str(runtime)],capture_output=True,text=True)
     self.assertEqual(rejected.returncode,1,rejected.stdout+rejected.stderr)
     self.assertEqual(json.loads(rejected.stdout)['error'],'duplicate_json_key')
     self.assertFalse(output.exists());self.assertFalse(runtime.exists())

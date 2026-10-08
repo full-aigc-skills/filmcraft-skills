@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+Public workflow, full-command run and owned desktop execution require independently supplied canonical read/write roots. Native children run in the macOS system sandbox; inputs, skill code and runtime caches remain protected, and the owned desktop bridge has only its assigned loopback port. The desktop and MCP share an authorized temporary directory for rendered frames. Actual candidate native and signed-desktop checks pass; full FC-RL-002, fixed-host qualification and eight V1 tasks remain open.
+
 Development source52 strips host secrets, proxy credentials and interpreter injection from MCP/editor children while preserving the explicit model directory. Adds tested macOS directory-isolation primitives; public workflow root-policy enforcement is still pending. [Execution boundary](docs/FilmCraft-Execution-Permissions.md).
 
 Source dev.48 adds a safe aggregate asset issue list for registered ordinary media before installation/output. Public workflow failures retain compatible error prefixes and optionally return alias/origin/reason; no local paths or filename substitution. Full FC-DM-001 sequence/HD/relink acceptance remains separate.
@@ -25,7 +27,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.52`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.53`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
