@@ -75,3 +75,5 @@ Historical source-candidate note: Source candidate: complete native workflow gat
 源42验证：4项上下文测试通过；全量212项，176通过、36项明确环境跳过；13个独立技能资源同步通过。[证据](docs/evidence/filmcraft-source42-execution-context-20261008.json)。固定插件安装单独验收。
 
 v0.1.0-dev.43：强制离线源码CI、逐测试环境NOT_RUN清单、元数据／链接／资源／目录／入口门禁。179项单元通过，36项环境用例明确NOT_RUN；技能执行字节未改动，不推导原生或完整V1通过。
+
+v0.1.0-dev.44：修复dev.43 Linux CI暴露的锁损坏被不支持平台遮蔽问题，完整锁先核验，合法但不支持的平台仍无副作用拒绝；失败子测试保留父测试FAIL并单列事件数。181单元通过、36环境用例NOT_RUN，实际CI／固定安装待验收。

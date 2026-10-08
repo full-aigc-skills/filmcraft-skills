@@ -1,0 +1,24 @@
+test_malformed_lock_shapes_return_json_before_runtime_changes (test_setup_diagnostics.SetupFailureTests.test_malformed_lock_shapes_return_json_before_runtime_changes) ... ok
+test_malformed_other_platform_lock_precedes_unsupported_platform (test_setup_diagnostics.SetupFailureTests.test_malformed_other_platform_lock_precedes_unsupported_platform) ... FAIL
+test_missing_bootstrap_in_single_skill_preserves_original_failure (test_setup_diagnostics.SetupFailureTests.test_missing_bootstrap_in_single_skill_preserves_original_failure) ... ok
+test_missing_lock_in_single_skill_returns_local_diagnostic (test_setup_diagnostics.SetupFailureTests.test_missing_lock_in_single_skill_returns_local_diagnostic) ... ok
+test_native_failure_is_not_reported_as_missing_dependency (test_setup_diagnostics.SetupFailureTests.test_native_failure_is_not_reported_as_missing_dependency) ... ok
+test_public_bootstrap_failure_identifies_own_setup_without_retry (test_setup_diagnostics.SetupFailureTests.test_public_bootstrap_failure_identifies_own_setup_without_retry) ... ok
+
+======================================================================
+FAIL: test_malformed_other_platform_lock_precedes_unsupported_platform (test_setup_diagnostics.SetupFailureTests.test_malformed_other_platform_lock_precedes_unsupported_platform)
+----------------------------------------------------------------------
+ValueError: unsupported_platform: linux-x86_64
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_setup_diagnostics.py", line 110, in test_malformed_other_platform_lock_precedes_unsupported_platform
+    with self.assertRaisesRegex(ValueError,'runtime_lock_invalid'):module.install(bad,runtime,platform_key='linux-x86_64')
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "runtime_lock_invalid" does not match "unsupported_platform: linux-x86_64"
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.701s
+
+FAILED (failures=1)

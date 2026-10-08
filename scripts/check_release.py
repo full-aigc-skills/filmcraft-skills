@@ -64,6 +64,12 @@ class EvidenceResult(unittest.TextTestResult):
  def addSkip(self,test,reason):super().addSkip(test,reason);self.rows.append({'id':test.id(),'status':'NOT_RUN','reason':reason})
  def addFailure(self,test,err):super().addFailure(test,err);self.rows.append({'id':test.id(),'status':'FAIL'})
  def addError(self,test,err):super().addError(test,err);self.rows.append({'id':test.id(),'status':'FAIL'})
+ def addSubTest(self,test,subtest,err):
+  super().addSubTest(test,subtest,err)
+  if err is not None:
+   row=next((r for r in self.rows if r['id']==test.id()),None)
+   if row is None:row={'id':test.id(),'status':'FAIL','failedSubtests':0};self.rows.append(row)
+   row['failedSubtests']+=1
  def addExpectedFailure(self,test,err):super().addExpectedFailure(test,err);self.rows.append({'id':test.id(),'status':'FAIL','reason':'expected failure is not completed behavior'})
  def addUnexpectedSuccess(self,test):super().addUnexpectedSuccess(test);self.rows.append({'id':test.id(),'status':'FAIL'})
 
@@ -90,7 +96,7 @@ def verify(output):
   result=unittest.TextTestRunner(stream=stream,verbosity=2,resultclass=EvidenceResult).run(suite)
   text=stream.getvalue().replace(str(ROOT),'[SOURCE_ROOT]').replace(str(Path.home()),'[USER_HOME]')
   text=re.sub(r'(?:/private)?/var/folders/[^\s"\']+','[TEMP_PATH]',text);(output/'unittest.log').write_text(text)
-  report['tests']=result.rows;report['counts']={'tests':result.testsRun,'pass':sum(r['status']=='PASS' for r in result.rows),'fail':len(result.failures)+len(result.errors)+len(result.unexpectedSuccesses),'environmentNotRun':len(result.skipped)}
+  report['tests']=result.rows;report['counts']={'tests':result.testsRun,'pass':sum(r['status']=='PASS' for r in result.rows),'fail':sum(r['status']=='FAIL' for r in result.rows),'failureEvents':len(result.failures)+len(result.errors)+len(result.unexpectedSuccesses),'environmentNotRun':len(result.skipped)}
   validate_test_rows(result.rows,json.loads((ROOT/'scripts/offline-test-policy.json').read_text()))
   checks.append({'id':'offline-unit-scenario-contract-entry','status':'PASS','executor':'unittest.TextTestRunner discovery of tests/test_*.py','log':'unittest.log','logSha256':hashlib.sha256((output/'unittest.log').read_bytes()).hexdigest()})
   if not result.wasSuccessful():raise ValueError('unit_tests_failed')

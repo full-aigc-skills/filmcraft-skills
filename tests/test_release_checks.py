@@ -30,3 +30,14 @@ class ReleaseChecksTests(unittest.TestCase):
    root=Path(d);home=root/'skills/a';home.mkdir(parents=True);(root/'skills/b').mkdir();(root/'skills/b/SKILL.md').write_text('other')
    (home/'SKILL.md').write_text('[other](../b/SKILL.md)')
    with self.assertRaisesRegex(ValueError,'cross_skill'):validate_links(root)
+
+ def test_failed_subtests_have_explicit_parent_failure_and_separate_event_count(self):
+  import io
+  from check_release import EvidenceResult
+  class Example(unittest.TestCase):
+   def test_failure(self):
+    for item in range(2):
+     with self.subTest(item=item):self.fail('expected synthetic failure')
+  result=unittest.TextTestRunner(stream=io.StringIO(),resultclass=EvidenceResult).run(unittest.defaultTestLoader.loadTestsFromTestCase(Example))
+  self.assertEqual(result.rows,[{'id':Example('test_failure').id(),'status':'FAIL','failedSubtests':2}])
+  self.assertEqual(len(result.failures),2)

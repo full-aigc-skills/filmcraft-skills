@@ -100,4 +100,15 @@ class SetupFailureTests(unittest.TestCase):
      self.assertEqual(reply['dependencySetup']['bootstrapScript'],str((scripts/'bootstrap.py').resolve()))
      self.assertFalse(reply['dependencySetup']['automaticRetry']);self.assertFalse(runtime.exists())
 
+ def test_malformed_other_platform_lock_precedes_unsupported_platform(self):
+  import copy
+  path=ROOT/'skills/filmcraft-use/scripts/bootstrap.py'
+  spec=importlib.util.spec_from_file_location('setup_lock_platform_gate',path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  lock=json.loads((path.parent/'runtime.lock.json').read_text())
+  with tempfile.TemporaryDirectory() as d:
+   runtime=Path(d)/'not-created';bad=copy.deepcopy(lock);bad['artifacts']['darwin-arm64']=None
+   with self.assertRaisesRegex(ValueError,'runtime_lock_invalid'):module.install(bad,runtime,platform_key='linux-x86_64')
+   with self.assertRaisesRegex(ValueError,'unsupported_platform'):module.install(lock,runtime,platform_key='linux-x86_64')
+   self.assertFalse(runtime.exists())
+
 if __name__=='__main__':unittest.main()
