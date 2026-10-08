@@ -1,5 +1,9 @@
 # Version-bound release records
 
+## 0.1.0-dev.52
+
+Strip inherited secrets, proxies and interpreter injection from MCP/editor children, retaining explicit local model data. Add tested macOS sandbox primitives. Public workflow root-policy binding and full FC-RL-002 remain pending.
+
 ## 0.1.0-dev.51
 
 Reject undefined domain-wrapper parameter and nested timeline-move fields before asset reads, installation or output. Preserve creative text, documented examples and dedicated motion/LUT/gain errors. Full native registry parameter, trusted-root and host-secret acceptance remains open.
