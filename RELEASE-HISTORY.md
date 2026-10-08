@@ -1,5 +1,9 @@
 # Version-bound release records
 
+## 0.1.0-dev.57
+
+dev.57 makes complete-command, domain native.command and raw exec share fixed native top-level parameter validation. Undefined fields refuse before input reads, installation and output, with a fixed diagnostic and no echoed fields/values.666 contracts, aliases, unions, match options and whole-object references are covered; creative text remains data.241 source tests,39 public refusal cases,39 native root cases and thirteen real candidate business tasks pass. New fixed installation and full permissions/command/host-routing qualification remain open. [Evidence](docs/evidence/filmcraft-native-parameter-fields-20261009/report.json).
+
 ## 0.1.0-dev.56
 
 dev.56 applies trusted roots and native isolation to the legacy raw cli.py launcher. Only four exact metadata queries retain root-free compatibility; all children filter host environments. Model download requires a separate validated maintenance flag, an existing authorized data directory, writes limited to that directory and outbound-only network permission. Three target reds become six passes;39 actual raw entry cases, cached model maintenance and real sandbox write/symlink/listener refusals pass. Cold public model download, actual 28-word recognition/reopen/SRT and all thirteen candidate primary tasks pass. New fixed-host and full V1 qualification remain open. [Evidence](docs/evidence/filmcraft56-raw-launcher-candidate-20261009/report.json).

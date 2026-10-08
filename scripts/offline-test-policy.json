@@ -225,7 +225,14 @@
     "test_raw_cli_permissions.RawCliPermissionsTests.test_exact_version_discovery_filters_environment_without_requiring_edit_roots",
     "test_raw_cli_permissions.RawCliPermissionsTests.test_model_download_requires_separate_maintenance_before_installer",
     "test_raw_cli_permissions.RawCliPermissionsTests.test_model_maintenance_refuses_combined_editing_and_duplicate_model_fields",
-    "test_raw_cli_permissions.RawCliPermissionsTests.test_model_maintenance_refuses_runtime_cache_as_data_directory"
+    "test_raw_cli_permissions.RawCliPermissionsTests.test_model_maintenance_refuses_runtime_cache_as_data_directory",
+    "test_native_parameter_fields.NativeParameterFieldTests.test_all_666_commands_reject_unknown_fields_without_echo",
+    "test_native_parameter_fields.NativeParameterFieldTests.test_rejection_precedes_input_read_installer_and_output",
+    "test_native_parameter_fields.NativeParameterFieldTests.test_creative_text_and_native_alias_and_union_fields_remain_valid",
+    "test_native_parameter_fields.NativeParameterFieldTests.test_nested_fields_do_not_become_top_level_permissions",
+    "test_native_parameter_fields.NativeParameterFieldTests.test_parameter_object_reference_validates_again_after_resolution",
+    "test_native_parameter_fields.NativeParameterFieldTests.test_domain_native_wrapper_rejects_unknown_parameter_before_session",
+    "test_native_parameter_fields.NativeParameterFieldTests.test_raw_exec_rejects_unknown_parameter_before_installer_and_output"
   ],
   "environmentTests": [
     {
