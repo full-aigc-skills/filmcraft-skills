@@ -1,0 +1,33 @@
+test_required_skip_unknown_skip_or_missing_test_cannot_pass (test_release_checks.ReleaseChecksTests.test_required_skip_unknown_skip_or_missing_test_cannot_pass) ... ERROR
+test_required_workflow_is_unconditional (test_release_checks.ReleaseChecksTests.test_required_workflow_is_unconditional) ... FAIL
+test_sibling_skill_link_is_refused_even_when_it_exists (test_release_checks.ReleaseChecksTests.test_sibling_skill_link_is_refused_even_when_it_exists) ... ERROR
+
+======================================================================
+ERROR: test_required_skip_unknown_skip_or_missing_test_cannot_pass (test_release_checks.ReleaseChecksTests.test_required_skip_unknown_skip_or_missing_test_cannot_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_release_checks.py", line 16, in test_required_skip_unknown_skip_or_missing_test_cannot_pass
+    from check_release import validate_test_rows
+ModuleNotFoundError: No module named 'check_release'
+
+======================================================================
+ERROR: test_sibling_skill_link_is_refused_even_when_it_exists (test_release_checks.ReleaseChecksTests.test_sibling_skill_link_is_refused_even_when_it_exists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_release_checks.py", line 23, in test_sibling_skill_link_is_refused_even_when_it_exists
+    from check_release import validate_links
+ModuleNotFoundError: No module named 'check_release'
+
+======================================================================
+FAIL: test_required_workflow_is_unconditional (test_release_checks.ReleaseChecksTests.test_required_workflow_is_unconditional)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_release_checks.py", line 10, in test_required_workflow_is_unconditional
+    self.assertTrue(workflow.is_file(),"independent source CI must exist")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : independent source CI must exist
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=1, errors=2)

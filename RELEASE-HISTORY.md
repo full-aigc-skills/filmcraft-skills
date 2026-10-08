@@ -73,3 +73,5 @@ Source dev.34 forwards explicit/environment model directories through the public
 Controlled workflows preserve attempt context in output execution records and reject malformed context before installation/writes. Standalone calls, plan digests and v1 formats remain compatible; context does not grant authorization.
 
 Source42 validation: 4 context tests pass; full regression 212 total, 176 passed, 36 explicit environment skips. All 13 standalone resources synchronize. [Evidence](docs/evidence/filmcraft-source42-execution-context-20261008.json). Fixed plugin acceptance is separate.
+
+v0.1.0-dev.43: mandatory offline source CI, per-test environment NOT_RUN policy, metadata/link/resource/catalog/entry gates. 179 unit tests pass;36 environment tests explicitly NOT_RUN. No skill execution bytes changed and no native/full V1 qualification is implied.

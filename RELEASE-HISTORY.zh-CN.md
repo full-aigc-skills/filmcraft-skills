@@ -73,3 +73,5 @@ Historical source-candidate note: Source candidate: complete native workflow gat
 受控工作流输出执行记录附加尝试上下文，畸形值在安装／写入前拒绝；既有独立调用、计划摘要和 v1 格式保持兼容，不把上下文当成授权。
 
 源42验证：4项上下文测试通过；全量212项，176通过、36项明确环境跳过；13个独立技能资源同步通过。[证据](docs/evidence/filmcraft-source42-execution-context-20261008.json)。固定插件安装单独验收。
+
+v0.1.0-dev.43：强制离线源码CI、逐测试环境NOT_RUN清单、元数据／链接／资源／目录／入口门禁。179项单元通过，36项环境用例明确NOT_RUN；技能执行字节未改动，不推导原生或完整V1通过。
