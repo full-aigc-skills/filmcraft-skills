@@ -98,7 +98,7 @@ class NativeAsrFirstUseTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location('asr_fixture_workflow', skill / 'scripts/workflow.py')
         workflow = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(workflow)
-        plan = json.loads((skill / 'examples/short-film.json').read_text())
+        plan = json.loads((skill / 'examples/asr-short-film.json').read_text())
         plan['assets'] = {key: {'path': str(path), 'sha256': digest(path)}
                           for key, path in [('voice', voice), ('shot', shot)]}
         for operation in plan['operations']:
@@ -133,13 +133,8 @@ class NativeAsrFirstUseTests(unittest.TestCase):
         for word in ['studio', 'captions']:
             self.assertIn(word, srt.read_text().lower())
         # 公共工作流从同一首次下载目录识别；验证显式目录优先于环境变量。
-        revision = {'expectedProjectSha256': before, 'operations': [
-            {'command': 'native.command', 'params': {'command': 'transcript.models', 'params': {}}, 'as': 'models'},
-            {'command': 'native.command', 'params': {'command': 'transcript.generate', 'params': {
-                'model': 'whisper-tiny', 'language': 'en', 'items': [delivered['bindings']['voice']['item']]}}, 'as': 'recognized'},
-            {'command': 'native.command', 'params': {'command': 'transcript.inspect', 'params': {}}, 'as': 'transcript'},
-            {'command': 'native.command', 'params': {'command': 'transcript.createCaptions', 'params': {
-                'name': 'Workflow speech', 'maxChars': 42}}}], 'frames': [str(TICKS // 2)], 'export': {'audioRequired': True}}
+        revision = json.loads((skill / 'examples/asr-captions-revision.json').read_text())
+        revision['expectedProjectSha256'] = before
         from unittest.mock import patch
         wrong = output / 'unused-environment-data'
         with patch.dict(os.environ, {'FILMCRAFT_DATA_DIR': str(wrong)}):
@@ -153,6 +148,14 @@ class NativeAsrFirstUseTests(unittest.TestCase):
         for track in ['audio', 'video']:
             self.assertEqual(workflow_native['sequence'][track], workflow.precise(baseline['sequence'][track]))
         self.assertEqual(digest(project), before)
+        caption_tracks = json.loads((output / 'workflow-asr/captions.json').read_text())['tracks']
+        visible_tracks = [track for track in caption_tracks if track['enabled'] and track['captions']]
+        self.assertEqual(len(visible_tracks), 1, 'ASR output must not display template placeholder captions')
+        self.assertEqual(visible_tracks[0]['name'], 'Workflow speech')
+        self.assertEqual(visible_tracks[0]['style']['size'], 84)
+        self.assertNotIn('First scene', (output / 'workflow-asr/captions.srt').read_text())
+        for caption in visible_tracks[0]['captions']:
+            self.assertTrue(all(len(line) <= 32 for line in caption['text'].splitlines()))
         for word in ['studio', 'captions']:
             self.assertIn(word, (output / 'workflow-asr/captions.srt').read_text().lower())
         workflow_proof = {'modelsDirCorrect': True, 'environmentOverrideUnused': True,
