@@ -261,5 +261,50 @@ class BootstrapTests(unittest.TestCase):
                 self.module.download(url, target)
             self.assertEqual(fetch.call_count, 1)
 
+    def test_wrapped_permission_and_disk_errors_are_not_network_retries(self):
+        import errno
+        import ssl
+        from urllib.error import URLError
+        url=json.loads(SOURCE.with_name('runtime.lock.json').read_text())['artifacts']['darwin-arm64']['url']
+        for cause in [PermissionError(errno.EACCES,'owned fixture'), OSError(errno.ENOSPC,'owned fixture'),
+                      OSError(errno.EROFS,'owned fixture'), OSError(errno.EDQUOT,'owned fixture'),
+                      ssl.SSLCertVerificationError('owned fixture')]:
+            for error in (cause, URLError(cause), URLError(URLError(cause))):
+                with self.subTest(cause=type(cause).__name__,wrapper=type(error).__name__), \
+                        patch.object(self.module.urllib.request,'urlopen',side_effect=error) as fetch, \
+                        patch.object(self.module.time,'sleep') as sleep:
+                    with self.assertRaises(type(error)):
+                        self.module.download(url,self.root/'nonretry.zip')
+                    self.assertEqual(fetch.call_count,1)
+                    sleep.assert_not_called()
+
+    def test_temporary_wrapped_network_and_http_errors_still_retry(self):
+        import errno
+        import ssl
+        from urllib.error import URLError, HTTPError
+        url=json.loads(SOURCE.with_name('runtime.lock.json').read_text())['artifacts']['darwin-arm64']['url']
+        class Response:
+            url='https://objects.githubusercontent.com/owned-fixture'
+            headers={'Content-Length':'8'}
+            def __init__(self): self.data=b'complete'
+            def __enter__(self): return self
+            def __exit__(self,*args): return False
+            def read(self,size):
+                value,self.data=self.data,b''
+                return value
+        errors=[TimeoutError('owned fixture'),ConnectionResetError('owned fixture'),ssl.SSLEOFError('owned fixture'),
+                URLError(TimeoutError('owned fixture')),URLError(OSError(errno.EHOSTUNREACH,'owned fixture')),
+                URLError(URLError(ConnectionResetError('owned fixture')))]
+        errors += [HTTPError(url,status,'owned fixture',{},None) for status in (408,429,500,503,599)]
+        for error in errors:
+            with self.subTest(error=type(error).__name__), \
+                    patch.object(self.module.urllib.request,'urlopen',side_effect=[error,Response()]) as fetch, \
+                    patch.object(self.module.time,'sleep') as sleep:
+                target=self.root/'temporary.zip'
+                self.module.download(url,target)
+                self.assertEqual(fetch.call_count,2)
+                self.assertEqual(target.read_bytes(),b'complete')
+                sleep.assert_called_once_with(1)
+
 if __name__ == '__main__':
     unittest.main()

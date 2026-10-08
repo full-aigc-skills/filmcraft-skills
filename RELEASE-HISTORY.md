@@ -85,3 +85,7 @@ Source42 validation: 4 context tests pass; full regression 212 total, 176 passed
 v0.1.0-dev.43: mandatory offline source CI, per-test environment NOT_RUN policy, metadata/link/resource/catalog/entry gates. 179 unit tests pass;36 environment tests explicitly NOT_RUN. No skill execution bytes changed and no native/full V1 qualification is implied.
 
 v0.1.0-dev.44: fixes the dev.43 Linux CI failure by validating the whole malformed lock before platform selection, preserves valid unsupported-platform refusal, and records failed subtests as explicit FAIL. 181 units pass,36 environment tests remain NOT_RUN; actual CI/fixed installation pending.
+
+## 0.1.0-dev.47
+
+Fix urllib-wrapped and nested permission/disk/quota/certificate failures without retrying. Keep bounded temporary read-only recovery and synchronize13 standalone installers. Offline184 PASS/36 environment NOT_RUN; native craft.5 unchanged. New fixed plugin/installation qualification remains open.

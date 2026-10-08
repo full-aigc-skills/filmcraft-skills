@@ -1,5 +1,9 @@
 # FilmCraft Skills
 
+[Version-bound download fault evidence](docs/evidence/source47-download-error-candidate-20261009/acceptance.json). Offline220 tests:184 PASS and36 declared native environment NOT_RUN; fixed installation of this new source remains separate.
+
+Source dev.47 fixes read-only download retry classification for urllib-wrapped permission, disk-full, read-only filesystem, quota and certificate failures, including nested wrappers. All13 self-contained installers are synchronized; temporary network/408/429/5xx recovery remains bounded. Source and fixed installation evidence remain separate.
+
 Source dev.46 defaults to maintained `0.2.0-craft.5`, repairing PCM packet timing in real-derived VFR media. All666 commands were recaptured from the new binary and13 skills synchronized. Seven candidate media cases and actual Whisper inference pass; public cold installation, fixed plugin and full V1 require separate acceptance. [Runtime record](docs/FilmCraft-PCM-Runtime.md).
 
 [Layered release checks](docs/FilmCraft-Release-Checks.md): mandatory offline CI records every native environment gap as NOT_RUN; source CI is separate from installed/native qualification.
@@ -18,7 +22,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.46`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.47`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 

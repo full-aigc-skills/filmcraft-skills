@@ -1,0 +1,60 @@
+{
+  "schema": "filmcraft-download-error-source-candidate/v1",
+  "result": "PASS",
+  "version": "0.1.0-dev.47",
+  "scope": "Controlled errors in real fixed62/source46 bootstrap expose wrapped permission/disk-full retries. New source tests verify nonretry nested wrappers and preserved temporary retries; no native editing is replayed.",
+  "red": "9 target subtest errors before implementation",
+  "greenTests": 22,
+  "temporaryCases": 11,
+  "nonretryCases": 15,
+  "synchronizedSkills": 13,
+  "bootstrapSha256": {
+    "filmcraft-cli": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-audio": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-color": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-export": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-media": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-motion": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-multicam": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-project": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-setup": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-subtitles": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-timeline": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-cli-transcript": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a",
+    "filmcraft-use": "ec5e9509faf7bc8ede1ebd194406a8ca6514ba55c6ea1af104cd56958e9d406a"
+  },
+  "files": {
+    "red.txt": {
+      "originalPrivateSha256": "7c00cddcdbca0fe3cfecd0669f1e52a4a7170513d3be56d12ee8203d32d1babc",
+      "publicProjectionSha256": "9c702faaa3a2b86706587f38d4c55db88b10443b95f32e194ae040fc8f5801bf"
+    },
+    "green.txt": {
+      "originalPrivateSha256": "a989a83d30e2f9ee6b82e23fa4507434dc30cf406608b66efcfd8020a65c1195",
+      "publicProjectionSha256": "a989a83d30e2f9ee6b82e23fa4507434dc30cf406608b66efcfd8020a65c1195"
+    },
+    "fixed62-fault-audit.json": {
+      "originalPrivateSha256": "df65038ac6834dbeb55afd3b191ec72b6bdc27725fb0826071cac08f4b6760c5",
+      "publicProjectionSha256": "df65038ac6834dbeb55afd3b191ec72b6bdc27725fb0826071cac08f4b6760c5"
+    },
+    "offline-report.json": {
+      "originalPrivateSha256": "9bafc6c4bdad2a799700cc57ec0a612c7c0ae411aa49180f5c14d65dd778b82e",
+      "publicProjectionSha256": "9bafc6c4bdad2a799700cc57ec0a612c7c0ae411aa49180f5c14d65dd778b82e"
+    },
+    "offline-resources.txt": {
+      "originalPrivateSha256": "d512f0e8d9c62f17783121b909dd5470eedf6cd3c9205620ae373e1f565201eb",
+      "publicProjectionSha256": "d512f0e8d9c62f17783121b909dd5470eedf6cd3c9205620ae373e1f565201eb"
+    },
+    "offline-unittest.txt": {
+      "originalPrivateSha256": "aa7c527d094f26a5ee4352b2e0bab3e60ca6fa5ae20bdf5827ed888eba21257a",
+      "publicProjectionSha256": "aa7c527d094f26a5ee4352b2e0bab3e60ca6fa5ae20bdf5827ed888eba21257a"
+    }
+  },
+  "fixedNewSourceInstallation": "NOT_RUN",
+  "fullV1": "INCOMPLETE",
+  "offlineCounts": {
+    "tests": 220,
+    "pass": 184,
+    "failureEvents": 0,
+    "environmentNotRun": 36
+  }
+}
