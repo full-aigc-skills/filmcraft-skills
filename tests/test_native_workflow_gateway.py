@@ -15,7 +15,7 @@ class NativeWorkflowTests(unittest.TestCase):
   m=load();identifier=m.commands.catalog()['commands'][0]['id']
   class Session:
    def request(self,method,args):
-    if args['name']==m.commands.ROUTES[m.commands.DOMAIN][0]:return {'content':[{'type':'text','text':json.dumps([{'id':r['id'],'enabled':r['id']==identifier} for r in m.commands.catalog()['commands']])}]}
+    if args['name']==m.commands.ROUTES[m.commands.DOMAIN][0]:return {'content':[{'type':'text','text':json.dumps([{**r,'enabled':r['id']==identifier} for r in m.commands.catalog()['commands']])}]}
     return {'content':[{'type':'text','text':'{"id":17}'}]}
   state={};receipts=[];result=m.execute(Session(),{'command':identifier,'params':{}},state,receipts,ROOT)
   self.assertEqual(result,{'id':17});self.assertEqual(receipts[-1]['nativeCommand'],identifier);self.assertEqual(state['lastAttempt']['phase'],'reply_received')
@@ -24,7 +24,7 @@ class NativeWorkflowTests(unittest.TestCase):
   class Session:
    enabled=False
    def request(self,method,args):
-    if args['name']==m.commands.ROUTES[m.commands.DOMAIN][0]:return {'content':[{'type':'text','text':json.dumps([{'id':r['id'],'enabled':self.enabled,'why':'needs_selection'} for r in m.commands.catalog()['commands']])}]}
+    if args['name']==m.commands.ROUTES[m.commands.DOMAIN][0]:return {'content':[{'type':'text','text':json.dumps([{**r,'enabled':self.enabled,'why':'needs_selection'} for r in m.commands.catalog()['commands']])}]}
     return {'content':[{'type':'text','text':'{"id":1,"id":2}'}]}
   s=Session();state={};receipts=[]
   with self.assertRaisesRegex(RuntimeError,'precondition_failed'):m.execute(s,{'command':identifier,'params':{}},state,receipts,ROOT)

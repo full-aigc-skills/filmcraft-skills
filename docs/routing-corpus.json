@@ -1,0 +1,132 @@
+{
+  "schema": "filmcraft-routing-corpus/v1",
+  "scope": "expected intent selection cases; structural checks only",
+  "hostRoutingAcceptance": "NOT_RUN",
+  "cases": [
+    {
+      "id": "route-01",
+      "request": "将已有镜头、配音和字幕组织为可重开的短片并交付成片",
+      "expectedSkill": "filmcraft-use",
+      "rejectSkills": [
+        "filmcraft-cli"
+      ]
+    },
+    {
+      "id": "route-02",
+      "request": "查询指定原生命令参数并在适用上下文同会话执行",
+      "expectedSkill": "filmcraft-cli",
+      "rejectSkills": [
+        "filmcraft-cli-timeline",
+        "filmcraft-use"
+      ]
+    },
+    {
+      "id": "route-03",
+      "request": "核验锁定 CLI 的版本和安装摘要",
+      "expectedSkill": "filmcraft-cli-setup",
+      "rejectSkills": [
+        "filmcraft-cli",
+        "filmcraft-cli-export"
+      ]
+    },
+    {
+      "id": "route-04",
+      "request": "新建工程与序列后另存并重新打开",
+      "expectedSkill": "filmcraft-cli-project",
+      "rejectSkills": [
+        "filmcraft-cli-media"
+      ]
+    },
+    {
+      "id": "route-05",
+      "request": "导入并登记媒体依赖，移动交付后按摘要重关联",
+      "expectedSkill": "filmcraft-cli-media",
+      "rejectSkills": [
+        "filmcraft-cli-project"
+      ]
+    },
+    {
+      "id": "route-06",
+      "request": "对指定镜头裁切或移动，保存新工程",
+      "expectedSkill": "filmcraft-cli-timeline",
+      "rejectSkills": [
+        "filmcraft-cli-multicam"
+      ]
+    },
+    {
+      "id": "route-07",
+      "request": "组织配音和音乐并调整指定轨道增益",
+      "expectedSkill": "filmcraft-cli-audio",
+      "rejectSkills": [
+        "filmcraft-cli-subtitles"
+      ]
+    },
+    {
+      "id": "route-08",
+      "request": "创建或修改指定字幕并交付原生字幕及 SRT",
+      "expectedSkill": "filmcraft-cli-subtitles",
+      "rejectSkills": [
+        "filmcraft-cli-transcript"
+      ]
+    },
+    {
+      "id": "route-09",
+      "request": "将已注册 LUT 或颜色调整应用到指定镜头",
+      "expectedSkill": "filmcraft-cli-color",
+      "rejectSkills": [
+        "filmcraft-cli-motion"
+      ]
+    },
+    {
+      "id": "route-10",
+      "request": "为指定对象设置效果参数或关键帧",
+      "expectedSkill": "filmcraft-cli-motion",
+      "rejectSkills": [
+        "filmcraft-cli-color"
+      ]
+    },
+    {
+      "id": "route-11",
+      "request": "导出成片、预览或侧车并核对输出",
+      "expectedSkill": "filmcraft-cli-export",
+      "rejectSkills": [
+        "filmcraft-cli-audio"
+      ]
+    },
+    {
+      "id": "route-12",
+      "request": "对已同步访谈切换机位并保持指定主录音",
+      "expectedSkill": "filmcraft-cli-multicam",
+      "rejectSkills": [
+        "filmcraft-cli"
+      ]
+    },
+    {
+      "id": "route-13",
+      "request": "真实识别或导入逐词时间文本，并生成可编辑字幕",
+      "expectedSkill": "filmcraft-cli-transcript",
+      "rejectSkills": [
+        "filmcraft-cli-subtitles",
+        "filmcraft-cli-setup"
+      ]
+    },
+    {
+      "id": "route-explicit-multicam-command",
+      "request": "用 commands.py describe 查询 multicam.cutToCamera 的真实参数，不编辑工程",
+      "expectedSkill": "filmcraft-cli",
+      "rejectSkills": [
+        "filmcraft-cli-multicam"
+      ],
+      "reason": "显式命令查询由 CLI 负责；多机位业务剪辑另走专项技能"
+    },
+    {
+      "id": "route-combined-goal",
+      "request": "把采访素材剪成短片，调整音乐、补字幕后导出",
+      "expectedSkill": "filmcraft-use",
+      "rejectSkills": [
+        "filmcraft-cli-export"
+      ],
+      "reason": "多个阶段由 use 协调，单一导出技能不承接全部目标"
+    }
+  ]
+}

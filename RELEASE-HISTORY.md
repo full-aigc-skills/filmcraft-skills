@@ -2,6 +2,8 @@
 
 These records were moved verbatim from the README preface. They describe their own versions and are not the current installation contract.
 
+Development snapshot `0.1.0-dev.39` adds shared exact native tick validation, task-specific routing/playbooks for 13 independent skills, and live capability/parameter/resource checks with success/failure evidence. Source regression: 201 tests, 165 passed and 36 explicit environment skips; deterministic resource synchronization passed. The fixed plugin must pin this immutable source separately. Host routing, complete command/mode/platform qualification, independent quality review and full V1 remain open. Historical candidate evidence retains its original source identities.
+
 Fixed FilmCraft plugin31/source29 first-use acceptance passes:64 host skills discovered with zero loading errors,13 Film skills each cold-install the public native runtime and query666 commands,7 installed output-guard tests and1 real installed native create/export/reopen/revise case pass. Public source ZIPs match Git archives byte for byte;all64 installed hashes remain unchanged. Art integration, other domain guards and complete task/V1 gates remain open. [Evidence / 证据](docs/evidence/filmcraft31-fixed-output-execution-first-use-20261007.json).
 
 Source dev.29 adds output execution registration before native sessions, preserving interrupted identities and fixing canonical-path agreement. Runtime stays0.2.0-craft.2;13 independent skills are synchronized. Release and fixed plugin installation are verified separately; complete task contracts remain open.

@@ -1,10 +1,16 @@
 # FilmCraft 独立技能
 
+## 能力快照候选
+
+源码候选在依赖编辑前核对实际运行时身份、原生参数契约、模式及所需编解码器、字体或模型，成功和失败均保留能力证据。headless 代表任务、拥有进程的 bridge 保存重开及不兼容命令拒绝通过；固定发行与完整模式/命令验收仍开放。[能力合同](skills/filmcraft-use/references/capabilities.md) · [绑定证据](docs/evidence/filmcraft-capability-candidate-20261008.json)。
+
+优化源码候选：已实现共享原生 tick 校验、意图路由语料及逐技能专项任务指南。固定快照和宿主实际路由仍需分别验收。[候选证据](docs/evidence/filmcraft-optimization-candidate-20261008.json)。
+
 分段首用指南已根据固定 Film40／Effect38／Art117 的原生验收更新：覆盖 HD 全帧、返工、恢复和迁移。新指南快照的插件安装验收另行记录。[证据](docs/evidence/craft-fixed-segmented-hd-refresh-20261008.json)。
 
 已有素材与剪辑需求进入，交付可重开的 `.fcproj`、素材清单、预览和成片。
 
-当前技能源快照：`0.1.0-dev.38`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
+当前技能源快照：`0.1.0-dev.39`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
 
 已验证首次使用平台：macOS arm64、Python 3.11+。固定运行时安装在用户数据目录，技能文件保留在宿主加载目录。当前为开发版本；完整首版验收及通用 Skills CLI 实际安装仍未完成。
 

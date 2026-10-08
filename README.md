@@ -1,10 +1,16 @@
 # FilmCraft Skills
 
+## Capability snapshot candidate
+
+The source candidate checks actual runtime identity, native parameter contracts, mode and required codecs, fonts or models before dependent edits. Success and failure records retain capability evidence. Headless samples and an owned bridge save/reopen plus incompatible-command rejection passed; pinned distribution and complete mode/command qualification remain open. [Contract](skills/filmcraft-use/references/capabilities.md) · [Bound evidence](docs/evidence/filmcraft-capability-candidate-20261008.json).
+
+Source optimization candidate: shared native tick validation, intent routing corpus, and task-specific local playbooks are implemented. Fixed snapshots and actual host routing remain separate gates. [Candidate evidence](docs/evidence/filmcraft-optimization-candidate-20261008.json).
+
 Segmented first-use guidance now matches native acceptance of fixed Film40 / Effect38 / Art117, including HD full frames, revision, recovery and relocation. Installation qualification of this new guide snapshot is recorded separately. [Evidence](docs/evidence/craft-fixed-segmented-hd-refresh-20261008.json).
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.38`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.39`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
