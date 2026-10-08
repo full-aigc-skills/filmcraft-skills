@@ -104,7 +104,9 @@ class TaskSkillFirstUseTests(unittest.TestCase):
 
     def cli(self, *arguments, success=True):
         result = subprocess.run([sys.executable, '-I', '-B', str(self.skill / 'scripts/cli.py'),
-                                 '--runtime-home', str(self.runtime), '--', *map(str, arguments),
+                                 '--runtime-home', str(self.runtime), '--read-root', str(self.root.resolve()),
+                                 '--read-root', str(self.fixture.resolve()), '--write-root', str(self.root.resolve()),
+                                 '--', *map(str, arguments),
                                  '--data-dir', str(self.data)], env=self.environment,
                                 capture_output=True, text=True, timeout=240)
         if success:

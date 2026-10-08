@@ -10,6 +10,8 @@ license: Apache-2.0
 
 ## 可信目录权限
 
+旧 `cli.py` 原生转发的工程读取与编辑也需要在 `--` 前提供独立根参数；仅精确版本／帮助／无工程目录查询兼容旧调用。模型下载须单独使用 `--model-maintenance`，见本技能 [执行权限](references/execution-permissions.md)。
+
 公开 `workflow.py` 和 `commands.py run` 必须显式提供 `--read-root READ_DIRECTORY --write-root WRITE_DIRECTORY`（可重复）；根须为已存在的规范真实目录，来自用户／宿主授权，不能从计划或素材元数据推导。计划、素材及源交付须位于读取根，交付及其父目录须位于写入根。`--runtime-home` 是安装维护目录，须位于独立明确授权的写入根；编辑原生进程始终禁止修改该缓存、技能、登记输入和源工程。当前根隔离执行支持macOS headless；桌面入口须同时隔离本次拥有的签名应用和MCP客户端，只开放分配的loopback控制端口。无法确认隔离的外部bridge明确拒绝。低层Python测试API不是公开授权入口。详细边界见 [执行权限](references/execution-permissions.md)。
 
 ## 首次使用

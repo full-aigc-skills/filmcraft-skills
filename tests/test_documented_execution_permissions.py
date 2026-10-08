@@ -14,7 +14,7 @@ def examples(root):
             for line in block.replace('\\\n', ' ').splitlines():
                 if ('scripts/workflow.py' in line or
                         (any('scripts/' + name + '.py' in line for name in ('commands', 'desktop'))
-                         and ' run ' in line)):
+                         and ' run ' in line) or ('scripts/cli.py' in line and ' -- exec ' in line)):
                     yield path.relative_to(root).as_posix(), line, block
 
 

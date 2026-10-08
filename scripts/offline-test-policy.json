@@ -219,7 +219,13 @@
     "test_command_model_directory.CommandModelDirectoryTests.test_command_native_argv_uses_and_protects_explicit_readonly_cache",
     "test_command_model_directory.CommandModelDirectoryTests.test_owned_desktop_uses_and_protects_same_explicit_model_cache",
     "test_documented_execution_permissions.DocumentedExecutionPermissionsTests.test_every_public_mutation_example_declares_trusted_roots_and_runtime",
-    "test_documented_execution_permissions.DocumentedExecutionPermissionsTests.test_policy_variables_are_required_before_documented_execution"
+    "test_documented_execution_permissions.DocumentedExecutionPermissionsTests.test_policy_variables_are_required_before_documented_execution",
+    "test_raw_cli_permissions.RawCliPermissionsTests.test_native_edit_refuses_missing_policy_before_installer",
+    "test_raw_cli_permissions.RawCliPermissionsTests.test_discovery_with_project_cannot_bypass_required_policy",
+    "test_raw_cli_permissions.RawCliPermissionsTests.test_exact_version_discovery_filters_environment_without_requiring_edit_roots",
+    "test_raw_cli_permissions.RawCliPermissionsTests.test_model_download_requires_separate_maintenance_before_installer",
+    "test_raw_cli_permissions.RawCliPermissionsTests.test_model_maintenance_refuses_combined_editing_and_duplicate_model_fields",
+    "test_raw_cli_permissions.RawCliPermissionsTests.test_model_maintenance_refuses_runtime_cache_as_data_directory"
   ],
   "environmentTests": [
     {
@@ -385,6 +391,10 @@
     {
       "id": "test_task_skill_first_use.TaskSkillFirstUseTests.test_setup_verifies_pinned_install_and_refuses_owned_corrupt_copy",
       "reason": "requires macOS arm64, public archives, ffmpeg, ffprobe and Pillow"
+    },
+    {
+      "id": "test_execution_permissions.ExecutionPermissionsTests.test_model_maintenance_limits_writes_and_rejects_listener_and_symlink_escape",
+      "reason": "requires actual macOS system sandbox"
     }
   ]
 }

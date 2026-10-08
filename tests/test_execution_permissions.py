@@ -108,3 +108,30 @@ print(json.dumps({'read':True,'write':True,'outsideReadDenied':True,'outsideWrit
                 out,err=child.communicate(timeout=10);self.assertEqual(child.returncode,0,err);self.assertEqual(out.strip(),'OUTSIDE_DENIED')
             finally:
                 if child.poll() is None:child.kill();child.wait(timeout=5)
+
+    @unittest.skipUnless(sys.platform=='darwin' and Path('/usr/bin/sandbox-exec').is_file(),'requires actual macOS system sandbox')
+    def test_model_maintenance_limits_writes_and_rejects_listener_and_symlink_escape(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();data=root/'models-data';data.mkdir();outside=root/'outside';outside.mkdir()
+            (data/'escape').symlink_to(outside, target_is_directory=True)
+            policy={'schema':self.module.SCHEMA,'readRoots':[str(data)],'writeRoots':[str(data)]}
+            code="""import json,socket,sys
+from pathlib import Path
+allowed,outside,linked=map(Path,sys.argv[1:]);allowed.write_text('owned');denied=[]
+for target in (outside,linked):
+ try:target.write_text('forbidden')
+ except PermissionError:denied.append(True)
+ else:denied.append(False)
+listener=socket.socket()
+try:listener.bind(('127.0.0.1',0));listener.listen();denied.append(False)
+except PermissionError:denied.append(True)
+finally:listener.close()
+print(json.dumps(denied))
+"""
+            argv=self.module.command([sys.executable,'-I','-B','-c',code,str(data/'allowed.txt'),str(outside/'denied.txt'),str(data/'escape/denied-link.txt')],policy,model_maintenance=True)
+            self.assertIn('(allow network-outbound)',argv[2])
+            result=subprocess.run(argv,env=self.module.child_environment(),capture_output=True,text=True,timeout=15)
+            self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+            self.assertEqual(json.loads(result.stdout),[True,True,True])
+            self.assertEqual((data/'allowed.txt').read_text(),'owned')
+            self.assertFalse((outside/'denied.txt').exists());self.assertFalse((outside/'denied-link.txt').exists())

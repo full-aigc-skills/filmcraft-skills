@@ -58,7 +58,10 @@ class NativeAsrFirstUseTests(unittest.TestCase):
         calls = []
 
         def cli(*arguments):
-            prefix = [sys.executable, '-I', '-B', str(skill / 'scripts/cli.py'), '--runtime-home', str(runtime)]
+            prefix = [sys.executable, '-I', '-B', str(skill / 'scripts/cli.py'), '--runtime-home', str(runtime),
+                      '--read-root', str(output.resolve()), '--write-root', str(output.resolve())]
+            if arguments[:2] == ('exec', 'transcript.downloadModel'):
+                data.mkdir(parents=True, exist_ok=True); prefix += ['--model-maintenance']
             if archive:
                 prefix += ['--archive', str(archive)]
             result = subprocess.run(prefix + ['--', *map(str, arguments), '--data-dir', str(data)],

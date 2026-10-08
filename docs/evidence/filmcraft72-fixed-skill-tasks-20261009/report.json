@@ -380,5 +380,6 @@
   "hostIntentRouting": "NOT_RUN",
   "allMarkdownCurrentPublishedSkillExamples": "FAIL_FIXED_IN_SOURCE_CANDIDATE",
   "fullTask9_9": "NOT_PROVEN",
-  "scope": "Actual independently copied thirteen installed skills; public CLI, distinct primary business assertions and non-target preservation. Not a uniform caption fixture or model dispatch acceptance."
+  "scope": "Actual independently copied thirteen installed skills; public CLI, distinct primary business assertions and non-target preservation. Not a uniform caption fixture or model dispatch acceptance.",
+  "setupCacheObservation": "Setup verifies the pinned digest before execution, then intentionally corrupts its owned cache and asserts refusal without overwrite. Its recorded final nativeBinarySha256 is the corrupted cache observation, not the successful execution identity."
 }
