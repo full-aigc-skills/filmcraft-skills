@@ -109,6 +109,38 @@ class NativeEntryParityTests(unittest.TestCase):
             self.native.execute(session, resolved, {}, [], ROOT)
         session.request.assert_not_called()
 
+    def test_resolved_parameter_container_cannot_bypass_preflight(self):
+        commands = self.commands
+        for value in ('time', 'not-a-parameter-object', True, None, 0, [], ['time']):
+            edits = []
+            class Session:
+                def __enter__(self): return self
+                def __exit__(self, *args): pass
+                def request(self, method, params):
+                    if method == 'tools/list':
+                        return {'tools': [{'name': name} for name in commands.ROUTES['filmcraft'][:2]]}
+                    if params['name'] == 'command_list':
+                        return {'content': [{'type': 'text', 'text': json.dumps([
+                            dict(row, enabled=True) for row in commands.catalog()['commands']])}]}
+                    identifier = params['arguments']['id']; edits.append(identifier)
+                    return {'content': [{'type': 'text', 'text': json.dumps({'name': value})}]}
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as directory:
+                plan = {'schema': 'craft-command-plan/v1', 'operations': [
+                    {'command': 'sequence.inspect', 'params': {}, 'as': 'before'},
+                    {'command': 'multicam.cutToCamera', 'params': {'$ref': 'before.name'}}]}
+                lock = json.loads((SCRIPTS / 'runtime.lock.json').read_text())
+                receipt = commands.execute(plan, Path(directory) / 'output',
+                    installer=lambda *args: {'executable': 'native', 'binarySha256': lock['artifacts']['darwin-arm64']['binarySha256'],
+                                            'version': lock['resolvedVersion'], 'platform': 'darwin-arm64'},
+                    session_factory=lambda *args: Session())
+                self.assertEqual(receipt['result'], 'FAIL')
+                self.assertIn('invalid_command_parameters', receipt['error'])
+                self.assertEqual(edits, ['sequence.inspect'])
+                native_session = Mock()
+                with self.assertRaises(ValueError):
+                    self.native.execute(native_session, {'command': 'multicam.cutToCamera', 'params': value}, {}, [], ROOT)
+                native_session.request.assert_not_called()
+
     def test_wrong_plan_entry_reports_the_correct_runner(self):
         with self.assertRaisesRegex(ValueError, r'invalid_command_plan.*workflow.py'):
             self.commands.validate({'operations': [{'command': 'native.command', 'params': self.operation(0)}]})

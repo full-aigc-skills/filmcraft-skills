@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+[Resolved parameter container validation](docs/FilmCraft-Parameter-Container.md): reject non-object whole-parameter references before dependent native requests.
+
 [Command catalog identity repair](docs/FilmCraft-Catalog-Identity.md): recapture from the locked CLI and synchronize actual digests across 13 skills while preserving command subsets. Pinned plugin acceptance is reported separately.
 
 ## Capability snapshot candidate
@@ -12,7 +14,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.40`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.41`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 

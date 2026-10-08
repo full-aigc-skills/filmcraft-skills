@@ -1,0 +1,48 @@
+{
+  "schema": "filmcraft-parameter-container-source/v1",
+  "result": "PASS",
+  "baseCommit": "2eb9e0f169b3cfea1bf810aa0293c51bdbed4177",
+  "sourceVersion": "0.1.0-dev.41",
+  "red": {
+    "incorrectPasses": 2,
+    "unstructuredErrors": 5,
+    "cases": 7
+  },
+  "green": {
+    "entryTests": 8,
+    "containerCases": 7,
+    "sourceTests": 208,
+    "passed": 172,
+    "skipped": 36
+  },
+  "scope": "Resolved whole parameters must be an object; structured failure before dependent native request, synchronized 13 standalone skills",
+  "notAccepted": [
+    "new fixed plugin install",
+    "actual native reference acceptance",
+    "full V1"
+  ],
+  "fileSha256": {
+    "skills/filmcraft-cli-export/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-media/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-audio/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-motion/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-color/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-setup/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-use/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-multicam/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-transcript/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-timeline/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-subtitles/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "skills/filmcraft-cli-project/scripts/commands.py": "36e05d2f6f4f3962c80a346eeb315584e7cba38bd417ac0441abacb5373edefd",
+    "tests/test_native_entry_parity.py": "50613664eb728f82d6feb7ae51a21102a20b0fd791609226086292e2f40a3c7a",
+    ".claude-plugin/plugin.json": "4bc740241997489480aa937f676073f37f1ad4f567f3b5f941c342dbb354f033",
+    "skill-suite.json": "5e0392d6fc905bb2d0583ec66c2e579e1c44312e4af91978a358cca6da5f5846"
+  },
+  "evidenceFiles": {
+    "docs/evidence/filmcraft-params-container-source-20261008/source-full.log": "d4c768b34a962dd03218f0efca4d8126115c1256c233632912eca6a698479d5e",
+    "docs/evidence/filmcraft-params-container-source-20261008/red.log": "e848b99d4c2fd614fb0b5b64f9fa3ff75ef161afa8b2e6f40cc8b60464a05b8e",
+    "docs/evidence/filmcraft-params-container-source-20261008/green.log": "d523b56cd8e14a3caf382fed93f2d14a58702461832c9d5a5e7163efd1e68e61",
+    "docs/evidence/filmcraft-params-container-source-20261008/sync.log": "4adfde60c1854f2ac0688de92024ab72d8e5330f1c6fa901ad81305b79185447"
+  }
+}

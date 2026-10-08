@@ -1,5 +1,10 @@
 # Version-bound release records
 
+## 0.1.0-dev.41
+
+Reject non-object whole-parameter references before native calls; keep structured failures and synchronize all 13 standalone command entries. Fixed plugin qualification is recorded separately.
+
+
 These records were moved verbatim from the README preface. They describe their own versions and are not the current installation contract.
 
 Development snapshot `0.1.0-dev.40` recaptures the command catalog from verified craft.4, repairs stale reference digests across 13 skills, and rejects identity/parameter/inventory drift before generation or synchronization. All 666 command rows and existing standalone subsets remain unchanged. Six identity regressions pass; source regression is 207 tests, 171 passed and 36 explicit environment skips. [Architecture and evidence](docs/FilmCraft-Catalog-Identity.md). Pinned plugin installation and per-command execution remain separately qualified.
