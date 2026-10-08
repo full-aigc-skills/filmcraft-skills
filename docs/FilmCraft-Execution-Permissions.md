@@ -13,3 +13,7 @@ flowchart LR
   Desktop <--> Bridge[Assigned loopback port]
   CLI --> Output[Authorized output and temporary files]
 ```
+
+dev.54 preserves the host-provided FILMCRAFT_DATA_DIR in complete-command and owned desktop execution. Explicit model caches must be within trusted read roots and are protected from native writes; malformed/outside references refuse before installation, input reads or output creation. Temporary screenshots remain in an independently writable directory. Four target regressions and actual CLI Whisper inference from the existing read-only cache pass; no model download is needed. Full permission, business-routing and complete-command qualification remain open.
+
+Actual signed desktop discovery confirms the explicit model cache and installed tiny model, but this official desktop build reports speech unavailable; inference is refused. CLI inference succeeds with 28 words and unchanged model digests. [Evidence](evidence/source54-readonly-model-20261009/report.json).

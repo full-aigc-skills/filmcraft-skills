@@ -213,7 +213,11 @@
     "test_workflow_permissions.WorkflowPermissionsTests.test_outside_source_refused_before_manifest_read",
     "test_workflow_permissions.WorkflowPermissionsTests.test_cli_asset_assignment_checked_before_digest_read",
     "test_workflow_permissions.WorkflowPermissionsTests.test_full_command_public_run_requires_policy_before_plan_read",
-    "test_workflow_permissions.WorkflowPermissionsTests.test_full_command_public_run_refuses_plan_outside_roots"
+    "test_workflow_permissions.WorkflowPermissionsTests.test_full_command_public_run_refuses_plan_outside_roots",
+    "test_command_model_directory.CommandModelDirectoryTests.test_outside_model_reference_refuses_before_install_or_output",
+    "test_command_model_directory.CommandModelDirectoryTests.test_invalid_model_reference_is_not_silently_ignored",
+    "test_command_model_directory.CommandModelDirectoryTests.test_command_native_argv_uses_and_protects_explicit_readonly_cache",
+    "test_command_model_directory.CommandModelDirectoryTests.test_owned_desktop_uses_and_protects_same_explicit_model_cache"
   ],
   "environmentTests": [
     {

@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+dev.54 preserves the host-provided FILMCRAFT_DATA_DIR in complete-command and owned desktop execution. Explicit model caches must be within trusted read roots and are protected from native writes; malformed/outside references refuse before installation, input reads or output creation. Temporary screenshots remain in an independently writable directory. Four target regressions and actual CLI Whisper inference from the existing read-only cache pass; no model download is needed. Full permission, business-routing and complete-command qualification remain open.
+
 Public workflow, full-command run and owned desktop execution require independently supplied canonical read/write roots. Native children run in the macOS system sandbox; inputs, skill code and runtime caches remain protected, and the owned desktop bridge has only its assigned loopback port. The desktop and MCP share an authorized temporary directory for rendered frames. Actual candidate native and signed-desktop checks pass; full FC-RL-002, fixed-host qualification and eight V1 tasks remain open.
 
 Development source52 strips host secrets, proxy credentials and interpreter injection from MCP/editor children while preserving the explicit model directory. Adds tested macOS directory-isolation primitives; public workflow root-policy enforcement is still pending. [Execution boundary](docs/FilmCraft-Execution-Permissions.md).
@@ -27,7 +29,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.53`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.54`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
@@ -231,3 +233,5 @@ Post-dev.49 test-only correction: required-audio first-use now validates existin
 dev.50 rejects undefined workflow-root and operation fields before asset reads,installation or output creation,using fixed errors without echoing names/values. Immutable plugin66/source49 copied owned synthetic canary metadata into plan.json. All26per-skill public refusals and a valid native save/reopen revision pass. Native parameters,host secret references and root permissions remain separate open gates;new fixed plugin installation is not yet qualified. [Evidence / 证据](docs/evidence/source50-plan-field-boundary-20261009/summary.json)。
 
 Source dev.51 closes undefined domain-wrapper parameter fields before asset reads or output. Native registry parameters, trusted roots and host secrets remain open. Fixed installed qualification is pending.
+
+Actual signed desktop discovery confirms the explicit model cache and installed tiny model, but this official desktop build reports speech unavailable; inference is refused. CLI inference succeeds with 28 words and unchanged model digests. [Evidence](docs/evidence/source54-readonly-model-20261009/report.json).
