@@ -1,0 +1,25 @@
+{
+  "schema": "craft-runtime-patch/v1",
+  "upstreamRepository": "https://github.com/storytold/filmcraft",
+  "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+  "upstreamVersion": "0.2.0",
+  "patch": "runtime/patches/pcm-packet-timing.patch",
+  "patchSha256": "0474c967c96f2673691dea7f77c23598cd81d8c1213d9998246fe2c512a7757a",
+  "runtimeVersion": "0.2.0-craft.5",
+  "status": "candidate-not-published",
+  "reason": "Preserve sample-exact PCM packet timing across quantized Matroska timestamps while retaining real gaps, Whisper and prior caption/sequence/sample duration fixes.",
+  "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
+  "limits": [
+    "Existing immutable runtime releases retained; no installer upgrade until candidate acceptance",
+    "Whisper weights are downloaded into a declared data directory, never bundled or committed",
+    "Native fake-transcriber unit tests are not real speech recognition acceptance",
+    "Research remains read-only"
+  ],
+  "includedSequencePatchSha256": "b73f97f8e69a66435725cd8c4aa5bf3eecefa1da417c02da8d6bbdbd87e2c793",
+  "cargoFeatures": [
+    "whisper"
+  ],
+  "includedAudioPatchSha256": "97214d5069be48ed8377a752ecaa25bddef80d8df8015101fbeb79fa968d70c3",
+  "speechDirectoryPatchSha256": "c901854deaa79c0b204eb3fba21f0d685af147d7ed1309037b695424aa76c0b3",
+  "includedWhisperPatchSha256": "7ee28f300778a9a58c9c5f332f1a1a4829742d632f144c8ed0c887ea04f540c4"
+}

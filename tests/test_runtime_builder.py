@@ -54,6 +54,19 @@ class RuntimeBuilderTests(unittest.TestCase):
                     self.module.build(root, root / 'output', manifest_name='audio-sample-patch.json', version='0.2.0-craft.3')
             self.assertFalse((root / 'output').exists())
 
+    def test_pcm_builder_isolated_entrypoint_and_cumulative_regression(self):
+        result = subprocess.run([sys.executable, '-I', '-B', str(ROOT / 'scripts/build_pcm_runtime.py'), '--help'], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        manifest = json.loads((ROOT / 'runtime/pcm-packet-timing-patch.json').read_text())
+        self.assertEqual(manifest['runtimeVersion'], '0.2.0-craft.5')
+        self.assertEqual(manifest['cargoFeatures'], ['whisper'])
+        data = (ROOT / manifest['patch']).read_bytes()
+        self.assertEqual(hashlib.sha256(data).hexdigest(), manifest['patchSha256'])
+        self.assertIn(b'pcm_packets_are_sample_exact_despite_millisecond_timestamps', data)
+        self.assertIn(b'pcm_packet_real_gap_is_not_collapsed', data)
+        self.assertIn(b'crates/engine/src/transcript.rs', data)
+        self.assertIn(b'crates/captions/src/burn.rs', data)
+
     def test_whisper_build_preserves_old_defaults_and_enables_real_feature(self):
         base=['cargo','build','--offline','--release','-p','filmcraft-cli']
         self.assertEqual(self.module.cargo_build_arguments({}),base)

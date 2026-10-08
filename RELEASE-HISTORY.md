@@ -1,5 +1,9 @@
 # Version-bound release records
 
+## 0.1.0-dev.45
+
+Adds a pinned-upstream PCM packet timing patch and isolated candidate builder, with exact continuous samples, retained real gaps and malformed-frame regressions. Default installation remains pinned to craft.4. The craft.5 candidate is not a published native runtime; the complete real-media matrix and fixed installation remain open. See [candidate record](docs/FilmCraft-PCM-Candidate.md).
+
 ## 0.1.0-dev.41
 
 Reject non-object whole-parameter references before native calls; keep structured failures and synchronize all 13 standalone command entries. Fixed plugin qualification is recorded separately.

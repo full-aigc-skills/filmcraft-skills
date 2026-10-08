@@ -1,0 +1,135 @@
+   Compiling filmcraft-codecs v0.2.0 ([PRIVATE_WORK]/media54-runtime-source/crates/codecs)
+    Finished `test` profile [optimized + debuginfo] target(s) in 4.83s
+     Running unittests src/lib.rs ([PRIVATE_WORK]/media54-cargo-target/debug/deps/filmcraft_codecs-2dbdb9ac18a3a541)
+
+running 43 tests
+test hw::tests::nal_splitting_is_bounded ... ok
+test hw::tests::hostile_records_are_errors ... ok
+test hw::tests::switch_defaults_to_auto ... ok
+test gop::tests::running_decoder_continues_through_a_nearby_sync_sample ... ok
+test gop::tests::cancelled_request_stops_decoding_and_keeps_state ... ok
+test gop::tests::frames_held_by_a_threaded_decoder_do_not_restart_it ... ok
+test gop::tests::catching_up_skips_late_non_reference_samples_only ... ok
+test gop::tests::draft_frames_are_served_to_draft_requests_only ... ok
+test mpeg::tests::damaged_timestamps_never_give_a_zero_rate ... ok
+test mxf::tests::timecode_frames_at_the_media_rate ... ok
+test gop::tests::intra_frames_decode_in_parallel_once_each ... ok
+test mpeg::tests::presentation_drops_leading_pictures_and_orders_by_key ... ok
+test tests::aiff_file_decodes ... ok
+test mp4::tests::damaged_track_headers_never_panic ... ok
+test mp4::tests::mirrored_or_scaled_matrices_are_not_mistaken_for_rotations ... ok
+test mp4::tests::display_matrix_rotates_frames_and_reported_size ... ok
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [version]:	SVT-AV1 Encoder Lib v4.2.0
+Svt[info]: SVT [build]  :	Apple LLVM 21.0.0 (clang-2100.0.123.102)	 64 bit
+Svt[info]: LIB Build date: Jul 13 2026 18:06:33
+Svt[info]: -------------------------------------------
+Svt[info]: Level of Parallelism: 5
+Svt[info]: Number of PPCS 140
+Svt[info]: [asm level on system : up to neon_i8mm]
+Svt[info]: [asm level selected : up to neon_i8mm]
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [config]: main profile	tier (auto)	level (auto)
+Svt[info]: SVT [config]: width / height / fps numerator / fps denominator 		: 320 / 240 / 25 / 1
+Svt[info]: SVT [config]: bit-depth / color format 					: 8 / YUV420
+Svt[info]: SVT [config]: preset / tune / pred struct 					: 8 / PSNR / random access
+Svt[info]: SVT [config]: gop size / mini-gop size / key-frame type 			: 16 / 32 / key frame
+Svt[info]: SVT [config]: BRC mode / rate factor 					: CRF / 40.00 
+Svt[info]: SVT [config]: AQ mode / Variance Boost 					: 2 / 0
+Svt[info]: SVT [config]: sharpness / luminance-based QP bias 				: 0 / 0
+Svt[info]: SVT [config]: QP scale compress strength 					: 0
+Svt[info]: -------------------------------------------
+test tests::mkv_vp9_rgb ... ok
+test tests::mp3_file_decodes ... ok
+test tests::mjpeg_mov_with_pcm ... ok
+test tests::aac_mp4_decodes ... ok
+test tests::matroska_prores_pcm ... ok
+test tests::matroska_h264_aac ... ok
+test tests::matroska_hevc_flac ... ok
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [version]:	SVT-AV1 Encoder Lib v4.2.0
+Svt[info]: SVT [build]  :	Apple LLVM 21.0.0 (clang-2100.0.123.102)	 64 bit
+Svt[info]: LIB Build date: Jul 13 2026 18:06:33
+Svt[info]: -------------------------------------------
+Svt[warn]: Screen-content detection and tools are disabled for all-intra coding at M8 and above; forcing NSC path
+Svt[warn]: TPL is disabled for all-intra coding
+Svt[info]: Level of Parallelism: 5
+Svt[info]: Number of PPCS 15
+Svt[info]: [asm level on system : up to neon_i8mm]
+Svt[info]: [asm level selected : up to neon_i8mm]
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [config]: main profile	tier (auto)	level (auto)
+Svt[info]: SVT [config]: width / height / fps numerator / fps denominator 		: 320 / 240 / 25 / 1
+Svt[info]: SVT [config]: bit-depth / color format 					: 8 / YUV420
+Svt[info]: SVT [config]: preset / tune / pred struct 					: 8 / PSNR / all intra
+Svt[info]: SVT [config]: gop size / mini-gop size / key-frame type 			: 1 / 4 / key frame
+Svt[info]: SVT [config]: BRC mode / CQP Assignment 					: CQP / 40.00 
+Svt[info]: SVT [config]: AQ mode / Variance Boost 					: 2 / 0
+Svt[info]: SVT [config]: sharpness / luminance-based QP bias 				: 0 / 0
+Svt[info]: SVT [config]: QP scale compress strength 					: 0
+Svt[info]: -------------------------------------------
+test tests::prores_mov_decodes ... ok
+test tests::opus_webm_stereo ... ok
+test tests::mp4_av1_intra_seeks_bit_exact ... ok
+test tests::mp4_av1_inter_gop_seeks_bit_exact ... ok
+test tests::mkv_vp9_422_seeks_bit_exact ... ok
+test tests::opus_mkv_mono_speechlike_16k ... ok
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [version]:	SVT-AV1 Encoder Lib v4.2.0
+Svt[info]: SVT [build]  :	Apple LLVM 21.0.0 (clang-2100.0.123.102)	 64 bit
+Svt[info]: LIB Build date: Jul 13 2026 18:06:33
+Svt[info]: -------------------------------------------
+Svt[warn]: Screen-content detection and tools are disabled for all-intra coding at M8 and above; forcing NSC path
+Svt[warn]: TPL is disabled for all-intra coding
+Svt[info]: Level of Parallelism: 5
+Svt[info]: Number of PPCS 15
+Svt[info]: [asm level on system : up to neon_i8mm]
+Svt[info]: [asm level selected : up to neon_i8mm]
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [config]: main profile	tier (auto)	level (auto)
+Svt[info]: SVT [config]: width / height / fps numerator / fps denominator 		: 320 / 240 / 25 / 1
+Svt[info]: SVT [config]: bit-depth / color format 					: 10 / YUV420
+Svt[info]: SVT [config]: preset / tune / pred struct 					: 8 / PSNR / all intra
+Svt[info]: SVT [config]: gop size / mini-gop size / key-frame type 			: 1 / 4 / key frame
+Svt[info]: SVT [config]: BRC mode / CQP Assignment 					: CQP / 40.00 
+Svt[info]: SVT [config]: AQ mode / Variance Boost 					: 2 / 0
+Svt[info]: SVT [config]: sharpness / luminance-based QP bias 				: 0 / 0
+Svt[info]: SVT [config]: QP scale compress strength 					: 0
+Svt[info]: -------------------------------------------
+test tests::dnxhd_and_dnxhr_movs_decode ... ok
+test video::disposable_tests::h264_non_reference_access_units ... ok
+test video::disposable_tests::hevc_sub_layer_non_reference_pictures_of_the_top_layer ... ok
+test tests::seek_backwards_and_forwards_mjpeg ... ok
+test tests::opus_mp4_stereo ... ok
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [version]:	SVT-AV1 Encoder Lib v4.2.0
+Svt[info]: SVT [build]  :	Apple LLVM 21.0.0 (clang-2100.0.123.102)	 64 bit
+Svt[info]: LIB Build date: Jul 13 2026 18:06:33
+Svt[info]: -------------------------------------------
+Svt[info]: Level of Parallelism: 5
+Svt[info]: Number of PPCS 140
+Svt[info]: [asm level on system : up to neon_i8mm]
+Svt[info]: [asm level selected : up to neon_i8mm]
+Svt[info]: -------------------------------------------
+Svt[info]: SVT [config]: main profile	tier (auto)	level (auto)
+Svt[info]: SVT [config]: width / height / fps numerator / fps denominator 		: 320 / 240 / 25 / 1
+Svt[info]: SVT [config]: bit-depth / color format 					: 10 / YUV420
+Svt[info]: SVT [config]: preset / tune / pred struct 					: 8 / PSNR / random access
+Svt[info]: SVT [config]: gop size / mini-gop size / key-frame type 			: 16 / 32 / key frame
+Svt[info]: SVT [config]: BRC mode / rate factor 					: CRF / 40.00 
+Svt[info]: SVT [config]: AQ mode / Variance Boost 					: 2 / 0
+Svt[info]: SVT [config]: sharpness / luminance-based QP bias 				: 0 / 0
+Svt[info]: SVT [config]: QP scale compress strength 					: 0
+Svt[info]: -------------------------------------------
+test tests::opus_mkv_surround_51 ... ok
+test tests::mkv_vp9_444_12bit_seeks_bit_exact ... ok
+test tests::webm_av1_intra_10bit_seeks_bit_exact ... ok
+test tests::vp9_random_access_ignores_bogus_sync_flags ... ok
+test tests::webm_av1_inter_gop_10bit_seeks_bit_exact ... ok
+test tests::mp4_vp9_10bit_seeks_bit_exact ... ok
+test tests::webm_vp9_seeks_bit_exact ... ok
+test tests::h264_mp4_decodes_and_seeks ... ok
+test tests::webm_vp9_altref_superframes_seek_bit_exact ... ok
+
+test result: ok. 43 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.03s
+

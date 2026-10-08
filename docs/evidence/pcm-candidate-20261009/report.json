@@ -1,0 +1,37 @@
+{
+  "schema": "filmcraft-pcm-candidate/v1",
+  "result": "SOURCE_REGRESSION_PASS",
+  "runtimeVersion": "0.2.0-craft.5",
+  "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+  "patchSha256": "0474c967c96f2673691dea7f77c23598cd81d8c1213d9998246fe2c512a7757a",
+  "platform": "darwin-arm64",
+  "regressions": {
+    "beforeFix": {
+      "pass": 1,
+      "fail": 1,
+      "failed": "pcm_packets_are_sample_exact_despite_millisecond_timestamps"
+    },
+    "afterFix": {
+      "pass": 3,
+      "fail": 0
+    },
+    "codecLibrary": {
+      "pass": 43,
+      "fail": 0
+    }
+  },
+  "logsSha256": {
+    "media54-pcm-red-online.log": "66ba2ffaec2c4395dbf6c73c105c4fdce0eaacee89fb2209a55022537e49d73b",
+    "media54-pcm-final.log": "194c5326ff3fb1d82ed494b5e5b198ac40455cd0495548bdeba962e8cf528430",
+    "media54-codecs-regression.log": "9e05bc49204d74b53efc339dda5373d4e4187241218546ba83faabef817a04c2"
+  },
+  "installedRuntime": "0.2.0-craft.4",
+  "candidateNativeBuild": "RECORDED_SEPARATELY",
+  "candidateRealMedia": "NOT_RUN",
+  "fixedInstallation": "NOT_RUN",
+  "fullMediaMatrix": "NOT_RUN",
+  "openSpecTasks": {
+    "9.32": "OPEN",
+    "9.33": "OPEN"
+  }
+}

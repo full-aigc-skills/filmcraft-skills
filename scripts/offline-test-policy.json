@@ -181,7 +181,8 @@
     "test_workflow_data_directory.WorkflowDataDirectoryTests.test_explicit_directory_overrides_environment_for_mcp",
     "test_workflow_data_directory.WorkflowDataDirectoryTests.test_unconfigured_auxiliary_process_preserves_original_arguments",
     "test_workflow_tool_reply.WorkflowToolReplyTests.test_bad_tool_results_are_unknown_without_python_type_errors",
-    "test_workflow_tool_reply.WorkflowToolReplyTests.test_valid_semantic_error_remains_a_known_reply"
+    "test_workflow_tool_reply.WorkflowToolReplyTests.test_valid_semantic_error_remains_a_known_reply",
+    "test_runtime_builder.RuntimeBuilderTests.test_pcm_builder_isolated_entrypoint_and_cumulative_regression"
   ],
   "environmentTests": [
     {

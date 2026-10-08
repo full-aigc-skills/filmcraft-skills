@@ -1,0 +1,11 @@
+   Compiling filmcraft-codecs v0.2.0 ([PRIVATE_WORK]/media54-runtime-source/crates/codecs)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1.13s
+     Running tests/pcm_packet_timing.rs ([PRIVATE_WORK]/media54-cargo-target/debug/deps/pcm_packet_timing-f1e461be9e25c018)
+
+running 3 tests
+test pcm_partial_frame_is_refused_without_decode_panic ... ok
+test pcm_packet_real_gap_is_not_collapsed ... ok
+test pcm_packets_are_sample_exact_despite_millisecond_timestamps ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
