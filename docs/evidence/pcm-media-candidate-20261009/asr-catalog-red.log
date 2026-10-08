@@ -1,0 +1,23 @@
+test_single_skill_downloads_recognizes_reopens_and_exports_captions (test_native_asr_first_use.NativeAsrFirstUseTests.test_single_skill_downloads_recognizes_reopens_and_exports_captions) ... ERROR
+
+======================================================================
+ERROR: test_single_skill_downloads_recognizes_reopens_and_exports_captions (test_native_asr_first_use.NativeAsrFirstUseTests.test_single_skill_downloads_recognizes_reopens_and_exports_captions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_native_asr_first_use.py", line 141, in test_single_skill_downloads_recognizes_reopens_and_exports_captions
+    workflow_delivery = workflow.execute(revision, output / 'workflow-asr', runtime_home=runtime,
+                                          source=output / 'base', data_dir=data)
+  File "[PRIVATE_WORK]/media55-asr-candidate/.agents/skills/filmcraft-cli-transcript/scripts/workflow.py", line 255, in execute
+    validate(plan)
+    ~~~~~~~~^^^^^^
+  File "[PRIVATE_WORK]/media55-asr-candidate/.agents/skills/filmcraft-cli-transcript/scripts/workflow.py", line 140, in validate
+    native_module().validate(item.get('params'), allow_references=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "[PRIVATE_WORK]/media55-asr-candidate/.agents/skills/filmcraft-cli-transcript/scripts/native_workflow.py", line 17, in validate
+    raise ValueError('native_catalog_identity_mismatch')
+ValueError: native_catalog_identity_mismatch
+
+----------------------------------------------------------------------
+Ran 1 test in 43.290s
+
+FAILED (errors=1)

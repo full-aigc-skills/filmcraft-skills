@@ -36,7 +36,7 @@ class SequenceWorkflowTests(unittest.TestCase):
             patch_sha=json.loads((ROOT/'runtime/sequence-rate-patch.json').read_text())['patchSha256']
             if public:
                 receipt=lock['artifacts']['darwin-arm64']
-                self.assertEqual(lock['resolvedVersion'],'0.2.0-craft.3')
+                self.assertEqual(receipt['versionOutput'],'filmcraft-cli '+lock['resolvedVersion'])
             else:
                 archive=Path(os.environ['CRAFT_FILM_SEQUENCE_CANDIDATE']);receipt=json.loads(archive.with_name('build-receipt.json').read_text())
                 self.assertEqual(workflow.sha(archive),receipt['archiveSha256'])
@@ -67,6 +67,10 @@ class SequenceWorkflowTests(unittest.TestCase):
                     self.assertTrue(installed['reused'])
                     self.assertEqual(installed['binarySha256'],receipt['binarySha256'])
                     self.assertEqual(delivery['runtimeSha256'],receipt['binarySha256'])
+                    provenance=json.loads((Path(installed['executable']).parent/'PROVENANCE.json').read_text())
+                    self.assertEqual(provenance['runtimeVersion'],lock['resolvedVersion'])
+                    self.assertEqual(provenance['includedSequencePatchSha256'],patch_sha)
+                    patch_sha=provenance['patchSha256']
                 self.assertEqual(delivery['assets']['overlay']['probe']['kind'],'ImageSequence')
                 self.assertEqual(delivery['assets']['overlay']['probe']['duration'],str(workflow.TICKS))
                 self.assertEqual(len([x for x in delivery['files'] if '/frame_' in x]),12)

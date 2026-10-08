@@ -1,5 +1,9 @@
 # Version-bound release records
 
+## 0.1.0-dev.46
+
+Pins maintained craft.5 while retaining craft.4. All13 skills synchronize the lock and newly captured666-command identity. Seven candidate media cases pass; actual Whisper28 words/100% reference word coverage, captions and native workflow pass. Fixed plugin media qualification and full V1 remain open.
+
 ## 0.1.0-dev.45
 
 Adds a pinned-upstream PCM packet timing patch and isolated candidate builder, with exact continuous samples, retained real gaps and malformed-frame regressions. Default installation remains pinned to craft.4. The craft.5 candidate is not a published native runtime; the complete real-media matrix and fixed installation remain open. See [candidate record](docs/FilmCraft-PCM-Candidate.md).

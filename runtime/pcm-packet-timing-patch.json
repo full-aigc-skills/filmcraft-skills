@@ -6,7 +6,7 @@
   "patch": "runtime/patches/pcm-packet-timing.patch",
   "patchSha256": "0474c967c96f2673691dea7f77c23598cd81d8c1213d9998246fe2c512a7757a",
   "runtimeVersion": "0.2.0-craft.5",
-  "status": "candidate-not-published",
+  "status": "published-candidate-media-and-asr-verified",
   "reason": "Preserve sample-exact PCM packet timing across quantized Matroska timestamps while retaining real gaps, Whisper and prior caption/sequence/sample duration fixes.",
   "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
   "limits": [
