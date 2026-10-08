@@ -43,10 +43,14 @@ MCP isError and embedded error fields stop execution. Image replies are saved as
 Install one skill: `npx skills add full-aigc-skills/filmcraft-skills --skill filmcraft-cli`. Set SKILL_DIR to the directory containing the SKILL.md actually loaded by the host, including user/project .agents/skills or plugin layouts.
 
 ```bash
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
 python3 -I -B "$SKILL_DIR/scripts/commands.py" list
 python3 -I -B "$SKILL_DIR/scripts/commands.py" describe file.newProject
 python3 -I -B "$SKILL_DIR/scripts/commands.py" check "$SKILL_DIR/examples/commands-advanced.json"
-python3 -I -B "$SKILL_DIR/scripts/commands.py" run "$SKILL_DIR/examples/commands-advanced.json" --output NEW_OUTPUT_DIRECTORY
+python3 -I -B "$SKILL_DIR/scripts/commands.py" run "$SKILL_DIR/examples/commands-advanced.json" --output NEW_OUTPUT_DIRECTORY --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 In the independent source repository, run generator/suite `--check`, `test_commands.py`, and opt-in `CRAFT_NATIVE_COMMANDS=1` native tests. Native samples require the pinned macOS arm64 CLI and Pillow. They check an isolated single-skill copy, actual return references, save/reopen, persisted domain settings, rendered 96×64 images and unchanged source hashes. They reuse an installed runtime, rather than establishing cold online installation or full GUI acceptance. [Evidence](evidence/complete-commands-20261007.json).

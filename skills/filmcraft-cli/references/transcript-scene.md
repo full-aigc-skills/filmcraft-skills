@@ -26,11 +26,15 @@ Query each current parameter contract with `commands.py describe COMMAND_ID`. Wo
 ## 参数、计划与执行 / Parameters, plan and execution
 
 ```bash
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
 python3 -I -B "$SKILL_DIR/scripts/commands.py" list --filter transcript.
 python3 -I -B "$SKILL_DIR/scripts/commands.py" describe transcript.set
 python3 -I -B "$SKILL_DIR/scripts/commands.py" describe transcript.createCaptions
 python3 -I -B "$SKILL_DIR/scripts/commands.py" check /absolute/transcript-plan.json
-python3 -I -B "$SKILL_DIR/scripts/commands.py" run /absolute/transcript-plan.json --output /absolute/new-transcript-result
+python3 -I -B "$SKILL_DIR/scripts/commands.py" run /absolute/transcript-plan.json --output /absolute/new-transcript-result --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 使用本技能 command-usage.md 的计划合同，返回值通过 $ref 连接后续步骤，保存工程必须在同一会话。重新剪辑后旧词索引可能失效，必须再次 inspect。enabled 反映当前状态，不把空会话状态当作完成前置条件。失败、禁用或超时按原生回执处理；未知结果先检查原任务，不能重放删除。

@@ -49,7 +49,11 @@ flowchart LR
 ## Executable EffectCraft gateway example
 
 ```bash
-python3 -I -B "$SKILL_DIR/scripts/workflow.py"   "$SKILL_DIR/examples/native-workflow.json"   --output /absolute/new-effect-delivery   --runtime-home /absolute/empty-runtime
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
+python3 -I -B "$SKILL_DIR/scripts/workflow.py"   "$SKILL_DIR/examples/native-workflow.json"   --output /absolute/new-effect-delivery   --runtime-home /absolute/empty-runtime --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 The example creates a 32×32 composition and a shape, then calls native `layer.setBlendMode`. It delivers `.ecproj`, preview, operation records and verification files. The output directory must not exist. First use installs the public locked CLI. FilmCraft's corresponding example additionally requires `--asset still=/absolute/input.png`. PhotoCraft edits layer properties; VectorCraft edits fill; both retain native projects.
@@ -73,9 +77,13 @@ For revisions use `workflow.py PLAN --source /absolute/original-delivery --outpu
 Art skill directories use their own domain query component:
 
 ```bash
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
 python3 -I -B "$SKILL_DIR/scripts/domain_commands.py" list --domain effectcraft
 python3 -I -B "$SKILL_DIR/scripts/domain_commands.py" describe effectcraft layer.setBlendMode
-python3 -I -B "$SKILL_DIR/scripts/workflow.py" /absolute/mixed-plan.json --output /absolute/new-project --owner local-user --authorization TASK_SCOPE --asset voice=/absolute/voice.wav
+python3 -I -B "$SKILL_DIR/scripts/workflow.py" /absolute/mixed-plan.json --output /absolute/new-project --owner local-user --authorization TASK_SCOPE --asset voice=/absolute/voice.wav --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 Mixed plans declare pluginId, dependencies, domain payload.plan and artifact bindings. Put native gateways in payload.plan.operations. The public installer binds runtime identity; do not copy runtimeIdentity from another test session. Adapt the skill's brand plan to actual requirements and assets. TASK_SCOPE references the already authorized task scope.

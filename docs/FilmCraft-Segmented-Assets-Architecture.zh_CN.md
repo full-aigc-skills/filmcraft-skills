@@ -37,9 +37,13 @@ flowchart TD
 将 SKILL_DIR 设置为实际加载的技能目录，使用已有计划中的 asset.import 和 timeline.place，不新增虚构原生命令。CLI 参数会登记完整分段输入摘要。
 
 ```bash
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
 python3 -I -B "$SKILL_DIR/scripts/workflow.py" /absolute/plan.json \
   --output /absolute/film-delivery \
-  --segmented-sequence-asset overlay=/absolute/segments/segments.json
+  --segmented-sequence-asset overlay=/absolute/segments/segments.json --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 计划内也可使用 `assets.overlay = {kind: "segmented-image-sequence", path: "/absolute/segments/segments.json", sha256: "实际摘要"}`。正常安装入口按本技能的 runtime.lock 校验并安装固定维护版 Film CLI；不读取兄弟技能。首次导入后，交付 assets.overlay.kind 为 image-sequence，sequenceMetadata.schema 为 filmcraft-collected-sequence/v1，并保留原 sourceSequenceSha256。

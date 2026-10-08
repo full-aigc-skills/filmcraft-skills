@@ -1,4 +1,4 @@
-"""八类场景技能的独立首次安装与真实 CLI 操作；不把命令目录当业务验收。"""
+"""全部十三技能的独立首次安装与真实业务操作；不把命令目录当业务验收。"""
 import hashlib
 import importlib.util
 import json
@@ -96,7 +96,7 @@ class TaskSkillFirstUseTests(unittest.TestCase):
             })
 
     def install_only(self, task):
-        self.skill_name = 'filmcraft-cli-' + task
+        self.skill_name = task if task in ('filmcraft-use', 'filmcraft-cli', 'filmcraft-cli-setup') else 'filmcraft-cli-' + task
         self.skill = self.root / 'single-skill'
         shutil.copytree(SKILLS / self.skill_name, self.skill,
                         ignore=shutil.ignore_patterns('__pycache__'))
@@ -127,6 +127,87 @@ class TaskSkillFirstUseTests(unittest.TestCase):
 
     def inspect(self, project):
         return json.loads(self.cli('inspect', '--project', project).stdout)
+
+    def public_plan(self, entry, plan, output, source=None):
+        path = self.root / (output.name + '-plan.json')
+        path.write_text(json.dumps(plan))
+        argv = [sys.executable, '-I', '-B', str(self.skill / 'scripts' / (entry + '.py'))]
+        if entry != 'workflow':
+            argv.append('run')
+        argv += [str(path), '--output', str(output), '--runtime-home', str(self.runtime),
+                 '--read-root', str(self.root.resolve()), '--read-root', str(self.fixture.resolve()),
+                 '--write-root', str(self.root.resolve())]
+        if source is not None:
+            argv += ['--source', str(source)]
+        result = subprocess.run(argv, env=self.environment, capture_output=True, text=True, timeout=240)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        return json.loads(result.stdout)
+
+    def test_use_routes_composed_film_and_revises_only_requested_caption(self):
+        self.install_only('filmcraft-use')
+        plan = json.loads((self.skill / 'examples/short-film.json').read_text())
+        plan['assets'] = {name: {'path': str(self.fixture / filename),
+                                'sha256': digest(self.fixture / filename)}
+                          for name, filename in [('shot', 'red.mp4'), ('voice', 'voice.wav')]}
+        original = self.root / 'composed'; made = self.public_plan('workflow', plan, original)
+        original_hash = digest(original / 'project.fcproj')
+        before = self.inspect(original / 'project.fcproj')['sequence']
+        captions_before = json.loads(self.cli('exec', 'captions.list', '--project', original / 'project.fcproj').stdout)
+        revised = self.root / 'revised'
+        revision = {'expectedProjectSha256': original_hash,
+                    'operations': [{'command': 'captions.setText',
+                                    'params': {'caption': {'$ref': 'caption.caption'},
+                                               'text': 'Only requested caption'}}],
+                    'frames': ['127008000000'], 'export': {'audioRequired': True}}
+        self.public_plan('workflow', revision, revised, source=original)
+        after = self.inspect(revised / 'project.fcproj')['sequence']
+        self.assertEqual(before['video'], after['video'])
+        self.assertEqual(before['audio'], after['audio'])
+        expected_captions = json.loads(json.dumps(captions_before))
+        target_caption = made['bindings']['caption']['caption']
+        changed = 0
+        for track in expected_captions['tracks']:
+            for caption in track['captions']:
+                if caption['id'] == target_caption:
+                    caption['text'] = 'Only requested caption'; changed += 1
+        self.assertEqual(changed, 1)
+        captions_after = json.loads(self.cli('exec', 'captions.list', '--project', revised / 'project.fcproj').stdout)
+        self.assertEqual(captions_after, expected_captions)
+        self.assertEqual(digest(original / 'project.fcproj'), original_hash)
+        self.assertIn('Only requested caption', (revised / 'captions.srt').read_text())
+        self.assertIn('First scene', (original / 'captions.srt').read_text())
+        self.assertTrue(made['runtimeSha256'])
+
+    def test_cli_executes_explicit_native_plan_and_reopens_unchanged_sequence(self):
+        self.install_only('filmcraft-cli')
+        plan = json.loads((self.skill / 'examples/commands-advanced.json').read_text())
+        plan['operations'] += [
+            {'command': 'file.open', 'params': {'path': {'$output': 'project.fcproj'}}},
+            {'command': 'sequence.inspect', 'params': {}, 'as': 'reopened'}]
+        made = self.public_plan('commands', plan, self.root / 'native-plan')
+        inspections = [row['result'] for row in made['steps'] if row.get('command') == 'sequence.inspect']
+        self.assertEqual(len(inspections), 2)
+        # 现有合同明确重开不恢复界面选择；只比较原生持久工程内容。
+        self.assertTrue(inspections[0]['selection'])
+        self.assertEqual(inspections[1]['selection'], [])
+        self.assertEqual({k: v for k, v in inspections[0].items() if k != 'selection'},
+                         {k: v for k, v in inspections[1].items() if k != 'selection'})
+        self.assertEqual(made['result'], 'PASS')
+        self.assertGreater(len(made['steps']), 10)
+
+    def test_setup_verifies_pinned_install_and_refuses_owned_corrupt_copy(self):
+        self.install_only('filmcraft-cli-setup')
+        self.assertIn(self.runtime_version, self.cli('--version').stdout)
+        executable = self.runtime / 'filmcraft' / self.runtime_version / 'filmcraft-cli'
+        lock = json.loads((self.skill / 'scripts/runtime.lock.json').read_text())
+        self.assertEqual(digest(executable), lock['artifacts']['darwin-arm64']['binarySha256'])
+        # 只破坏本用例拥有的独立缓存，不改共享运行时或用户安装。
+        payload = bytearray(executable.read_bytes()); payload[-1] ^= 1; executable.write_bytes(payload)
+        changed = digest(executable)
+        refused = self.cli('--version', success=False)
+        diagnostic = json.loads(refused.stdout)
+        self.assertIn('filmcraft-cli-setup', json.dumps(diagnostic))
+        self.assertEqual(digest(executable), changed)
 
     def test_project_creates_and_reopens_sequence_and_bin(self):
         self.install_only('project')

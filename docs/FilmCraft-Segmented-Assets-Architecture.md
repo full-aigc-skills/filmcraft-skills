@@ -37,9 +37,13 @@ The native engine imports consecutive global filenames. Actual ImageSequence pro
 Set SKILL_DIR to the actual loaded skill directory. Existing asset.import and timeline.place operations remain the editing interface.
 
 ```bash
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
 python3 -I -B "$SKILL_DIR/scripts/workflow.py" /absolute/plan.json \
   --output /absolute/film-delivery \
-  --segmented-sequence-asset overlay=/absolute/segments/segments.json
+  --segmented-sequence-asset overlay=/absolute/segments/segments.json --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 A plan may register assets.overlay with kind segmented-image-sequence, an absolute segments.json path and its actual SHA. The entry installs and verifies the fixed maintained CLI from its own runtime lock without sibling skills. Delivery stores kind image-sequence, sequenceMetadata.schema filmcraft-collected-sequence/v1 and the original sourceSequenceSha256.

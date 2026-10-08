@@ -66,7 +66,11 @@ Vector 候选源码 bridge 模式把 `file.export` 映射到原生 `document.exp
 48 个领域技能现均提供自有 `desktop_session.py`、`desktop.py run` 入口与 `examples/desktop-first-use.json`。设置当前技能真实目录 SKILL_DIR，执行：
 
 ```bash
-python3 -I -B "$SKILL_DIR/scripts/desktop.py" run "$SKILL_DIR/examples/desktop-first-use.json" --output "$OUTPUT"
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
+python3 -I -B "$SKILL_DIR/scripts/desktop.py" run "$SKILL_DIR/examples/desktop-first-use.json" --output "$OUTPUT" --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 OUTPUT 必须尚不存在且父目录已存在；可用 `--runtime-home` 选择隔离缓存和 `--input NAME=PATH` 导入素材。结构、命令、引用、输入文件和平台先校验，然后由同一工作流安装固定桌面与 CLI。应用配置隔离在输出目录中，本地 listener 必须经 lsof 确认属于本次应用 PID 才连接 MCP。Photo 使用私有 0600 token 文件，GUI/CLI 读写根相同。工作流结束或失败，只关闭本次应用及 MCP；未知编辑不重试。

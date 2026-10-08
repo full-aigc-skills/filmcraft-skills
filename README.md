@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+dev.55 corrects executable documentation to require independent read/write/runtime roots and fail on empty directory variables. Adds primary business checks for use, generic CLI and setup, completing thirteen independently copied skill task observations against fixed plugin72/source54. A UI-selection fixture assertion was corrected under the existing reopen contract; original failure and scoped rechecks are retained. Host intent routing, full FC-RL-002, all-command acceptance and eight full V1 tasks remain open. [Evidence](docs/evidence/filmcraft72-fixed-skill-tasks-20261009/report.json).
+
 dev.54 preserves the host-provided FILMCRAFT_DATA_DIR in complete-command and owned desktop execution. Explicit model caches must be within trusted read roots and are protected from native writes; malformed/outside references refuse before installation, input reads or output creation. Temporary screenshots remain in an independently writable directory. Four target regressions and actual CLI Whisper inference from the existing read-only cache pass; no model download is needed. Full permission, business-routing and complete-command qualification remain open.
 
 Public workflow, full-command run and owned desktop execution require independently supplied canonical read/write roots. Native children run in the macOS system sandbox; inputs, skill code and runtime caches remain protected, and the owned desktop bridge has only its assigned loopback port. The desktop and MCP share an authorized temporary directory for rendered frames. Actual candidate native and signed-desktop checks pass; full FC-RL-002, fixed-host qualification and eight V1 tasks remain open.
@@ -29,7 +31,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.54`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.55`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 

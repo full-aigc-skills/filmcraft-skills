@@ -57,7 +57,11 @@ The actual desktop case completed six steps: create, rectangle, SVG export, nati
 All 48 domain skills include their own `desktop_session.py`, `desktop.py run` and `examples/desktop-first-use.json`. Set SKILL_DIR to the actually loaded skill:
 
 ```bash
-python3 -I -B "$SKILL_DIR/scripts/desktop.py" run "$SKILL_DIR/examples/desktop-first-use.json" --output "$OUTPUT"
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
+python3 -I -B "$SKILL_DIR/scripts/desktop.py" run "$SKILL_DIR/examples/desktop-first-use.json" --output "$OUTPUT" --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 OUTPUT must be new and its parent must exist. `--runtime-home` selects an isolated cache; `--input NAME=PATH` imports explicit assets. Plan/catalog/reference/input/platform checks precede installation. The workflow installs both pinned runtimes, starts an isolated desktop, and uses lsof to verify the loopback listener belongs to its own application PID before MCP connection. Photo uses a private 0600 token file and the same authorized root for GUI/CLI. Only owned GUI/MCP processes are closed. Unknown edits are not retried.

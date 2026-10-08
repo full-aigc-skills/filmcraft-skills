@@ -57,10 +57,14 @@ flowchart TD
 安装单技能：`npx skills add full-aigc-skills/filmcraft-skills --skill filmcraft-cli`。`SKILL_DIR` 设置为宿主本次实际加载的 SKILL.md 所在绝对目录，适用于 `.agents/skills` 或插件内目录。
 
 ```bash
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
+: "${WRITE_ROOT:?Set WRITE_ROOT to an existing independently authorized directory}"
 python3 -I -B "$SKILL_DIR/scripts/commands.py" list
 python3 -I -B "$SKILL_DIR/scripts/commands.py" describe file.newProject
 python3 -I -B "$SKILL_DIR/scripts/commands.py" check "$SKILL_DIR/examples/commands-advanced.json"
-python3 -I -B "$SKILL_DIR/scripts/commands.py" run "$SKILL_DIR/examples/commands-advanced.json" --output NEW_OUTPUT_DIRECTORY
+python3 -I -B "$SKILL_DIR/scripts/commands.py" run "$SKILL_DIR/examples/commands-advanced.json" --output NEW_OUTPUT_DIRECTORY --runtime-home "$RUNTIME_HOME" --read-root "$SKILL_DIR" --read-root "$READ_ROOT" --write-root "$WRITE_ROOT" --write-root "$RUNTIME_HOME"
 ```
 
 四个领域具体 ID 不完全相同，其他命令应从 list 选择。可直接运行本技能自带的 `commands-advanced.json`，无需猜测对象 ID。

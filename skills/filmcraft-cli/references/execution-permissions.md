@@ -5,6 +5,10 @@
 Public workflow and full-command run require independent --read-root / --write-root grants before reading the plan. Existing canonical directories only; symlink and disk-wide grants are rejected. Plan and asset paths cannot grant access themselves.
 
 ```bash
+: "${PROJECT_ROOT:?Set PROJECT_ROOT to an existing independently authorized directory}"
+: "${READ_ROOT:?Set READ_ROOT to an existing independently authorized directory}"
+: "${RUNTIME_HOME:?Set RUNTIME_HOME to an existing independently authorized directory}"
+: "${SKILL_DIR:?Set SKILL_DIR to an existing independently authorized directory}"
 python3 -I -B "$SKILL_DIR/scripts/workflow.py" "$PLAN" --output "$OUTPUT" \
   --runtime-home "$RUNTIME_HOME" --read-root "$READ_ROOT" \
   --write-root "$PROJECT_ROOT" --write-root "$RUNTIME_HOME"
