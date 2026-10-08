@@ -23,7 +23,7 @@
 
 已有素材与剪辑需求进入，交付可重开的 `.fcproj`、素材清单、预览和成片。
 
-当前技能源快照：`0.1.0-dev.49`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
+当前技能源快照：`0.1.0-dev.50`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
 
 已验证首次使用平台：macOS arm64、Python 3.11+。固定运行时安装在用户数据目录，技能文件保留在宿主加载目录。当前为开发版本；完整首版验收及通用 Skills CLI 实际安装仍未完成。
 
@@ -217,3 +217,5 @@ Evidence: `docs/evidence/source48-asset-issues-candidate-20261009/acceptance.jso
 [版本绑定候选检查](docs/evidence/source49-timeline-candidate-20261009/report.json)：195项通过、36项原生环境未运行；新固定宿主验收仍待完成。
 
 dev.49发布后仅修正测试：缺音轨首用核验现有craft-failed-stage/v1、原暂存工程文件摘要及重复不覆盖诊断。固定插件66/source49生产字节保持不变；修正后实际安装首用通过，源码回归195通过／36项原生环境未运行。[检查](docs/evidence/source49-postrelease-missing-audio-test-20261009/report.json)。
+
+dev.50拒绝工作流顶层及操作对象中的未定义字段，在素材读取／安装／输出创建前返回固定代码，不回显字段名或值。固定插件66/source49曾将测试metadata中的自建假凭据标记写入plan.json；26项逐技能公开拒绝及合法原生另存回归通过。本修复不等于原生参数、宿主秘密引用和根目录权限已验收；新插件固定安装另行验证。 [Evidence / 证据](docs/evidence/source50-plan-field-boundary-20261009/summary.json)。

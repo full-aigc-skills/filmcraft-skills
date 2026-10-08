@@ -1,0 +1,52 @@
+{
+  "schema": "filmcraft-plan-field-candidate/v1",
+  "result": "PASS",
+  "sourceCandidate": "v0.1.0-dev.50",
+  "previousFixedPlugin": "v0.1.0-dev.66",
+  "previousSource": "v0.1.0-dev.49",
+  "previousActualOutcome": "SUCCESS but synthetic metadata canary copied into delivery plan.json",
+  "candidateOutcome": "26 public root/operation-field refusals across13skills before output/runtime; valid native source revision passes and preserves prior delivery",
+  "boundaryTests": {
+    "required": 5,
+    "PASS": 5
+  },
+  "scope": "Source candidate and real native public workflow; fixed new plugin remains NOT_RUN",
+  "notes": "Original initial red lacked a document and produced document_required after accepting unknown roots; corrected valid document fixture against immutable66 reaches asset preflight and fails target boundary. Both preserved. Metadata instructions were never executed; no real credentials were used.",
+  "artifactHashes": [
+    {
+      "path": "fixed66-actual-leak.json",
+      "originalSha256": "4aff3b01ecbc64683cfd1ad20c179cc6e2ca36b30b787ea3e992973284dccbea",
+      "projectionSha256": "4aff3b01ecbc64683cfd1ad20c179cc6e2ca36b30b787ea3e992973284dccbea"
+    },
+    {
+      "path": "initial-red.txt",
+      "originalSha256": "4ae05a27b82f17533a94d76c0e18721b90e5dfcc5c0a11d3d94feb636fcd201f",
+      "projectionSha256": "49b397754a862422ac51f79be3281ce4d49bee8e4f2e8dd24fb559fd2705a73d"
+    },
+    {
+      "path": "target-behavior-red.txt",
+      "originalSha256": "ddf21d8c563ae623b6565944c2b6bfa6e47cce9ca039d516760b30a7f84bceca",
+      "projectionSha256": "e99f7c7f85d671da4a7787ef215f60a91a6cce71d0abc66122a272adccd477fe"
+    },
+    {
+      "path": "candidate-public-native.json",
+      "originalSha256": "d15a3792c593c4ed577e41c0d1b057f801c235f0b0da1b1c55fe533d5e7facde",
+      "projectionSha256": "d15a3792c593c4ed577e41c0d1b057f801c235f0b0da1b1c55fe533d5e7facde"
+    }
+  ],
+  "remaining": [
+    "native parameter metadata boundary",
+    "trusted read/write roots",
+    "host secret reference handling",
+    "immutable new plugin install",
+    "full V1"
+  ],
+  "sourceGate": {
+    "tests": 236,
+    "pass": 200,
+    "fail": 0,
+    "failureEvents": 0,
+    "environmentNotRun": 36
+  },
+  "sourceGateSha256": "0f89ad159d829ea213aa3aaae983450ac39b1a606ee6285b508cd7da1ae64acb"
+}

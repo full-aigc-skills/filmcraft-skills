@@ -1,0 +1,94 @@
+test_command_plan_keeps_its_existing_entry_hint (test_plan_field_boundary.PlanFieldBoundaryTests.test_command_plan_keeps_its_existing_entry_hint) ... ok
+test_documented_workflow_fields_keep_existing_contract (test_plan_field_boundary.PlanFieldBoundaryTests.test_documented_workflow_fields_keep_existing_contract) ... ok
+test_public_entry_returns_safe_refusal_and_preserves_existing_files (test_plan_field_boundary.PlanFieldBoundaryTests.test_public_entry_returns_safe_refusal_and_preserves_existing_files) ... FAIL
+test_unknown_operation_fields_refuse_without_echoing_field_or_value (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_operation_fields_refuse_without_echoing_field_or_value) ... 
+  test_unknown_operation_fields_refuse_without_echoing_field_or_value (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_operation_fields_refuse_without_echoing_field_or_value) (field='metadata') ... FAIL
+  test_unknown_operation_fields_refuse_without_echoing_field_or_value (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_operation_fields_refuse_without_echoing_field_or_value) (field='instructions') ... FAIL
+  test_unknown_operation_fields_refuse_without_echoing_field_or_value (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_operation_fields_refuse_without_echoing_field_or_value) (field='OWNED_TEST_CANARY_NO_REAL_SECRET') ... FAIL
+test_unknown_root_fields_refuse_before_any_asset_or_runtime_read (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_root_fields_refuse_before_any_asset_or_runtime_read) ... 
+  test_unknown_root_fields_refuse_before_any_asset_or_runtime_read (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_root_fields_refuse_before_any_asset_or_runtime_read) (field='metadata') ... FAIL
+  test_unknown_root_fields_refuse_before_any_asset_or_runtime_read (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_root_fields_refuse_before_any_asset_or_runtime_read) (field='apiKey') ... FAIL
+  test_unknown_root_fields_refuse_before_any_asset_or_runtime_read (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_root_fields_refuse_before_any_asset_or_runtime_read) (field='OWNED_TEST_CANARY_NO_REAL_SECRET') ... FAIL
+
+======================================================================
+FAIL: test_public_entry_returns_safe_refusal_and_preserves_existing_files (test_plan_field_boundary.PlanFieldBoundaryTests.test_public_entry_returns_safe_refusal_and_preserves_existing_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[SOURCE_ROOT]/tests/test_plan_field_boundary.py", line 46, in test_public_entry_returns_safe_refusal_and_preserves_existing_files
+    self.assertEqual(json.loads(result.stdout)['error'], 'invalid_workflow_fields')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'document_required' != 'invalid_workflow_fields'
+- document_required
++ invalid_workflow_fields
+
+
+======================================================================
+FAIL: test_unknown_operation_fields_refuse_without_echoing_field_or_value (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_operation_fields_refuse_without_echoing_field_or_value) (field='metadata')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[SOURCE_ROOT]/tests/test_plan_field_boundary.py", line 34, in test_unknown_operation_fields_refuse_without_echoing_field_or_value
+    with self.assertRaisesRegex(ValueError, '^invalid_operation_fields$') as caught:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unknown_operation_fields_refuse_without_echoing_field_or_value (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_operation_fields_refuse_without_echoing_field_or_value) (field='instructions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[SOURCE_ROOT]/tests/test_plan_field_boundary.py", line 34, in test_unknown_operation_fields_refuse_without_echoing_field_or_value
+    with self.assertRaisesRegex(ValueError, '^invalid_operation_fields$') as caught:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unknown_operation_fields_refuse_without_echoing_field_or_value (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_operation_fields_refuse_without_echoing_field_or_value) (field='OWNED_TEST_CANARY_NO_REAL_SECRET')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[SOURCE_ROOT]/tests/test_plan_field_boundary.py", line 34, in test_unknown_operation_fields_refuse_without_echoing_field_or_value
+    with self.assertRaisesRegex(ValueError, '^invalid_operation_fields$') as caught:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unknown_root_fields_refuse_before_any_asset_or_runtime_read (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_root_fields_refuse_before_any_asset_or_runtime_read) (field='metadata')
+----------------------------------------------------------------------
+ValueError: document_required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "[SOURCE_ROOT]/tests/test_plan_field_boundary.py", line 26, in test_unknown_root_fields_refuse_before_any_asset_or_runtime_read
+    with self.assertRaisesRegex(ValueError, '^invalid_workflow_fields$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^invalid_workflow_fields$" does not match "document_required"
+
+======================================================================
+FAIL: test_unknown_root_fields_refuse_before_any_asset_or_runtime_read (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_root_fields_refuse_before_any_asset_or_runtime_read) (field='apiKey')
+----------------------------------------------------------------------
+ValueError: document_required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "[SOURCE_ROOT]/tests/test_plan_field_boundary.py", line 26, in test_unknown_root_fields_refuse_before_any_asset_or_runtime_read
+    with self.assertRaisesRegex(ValueError, '^invalid_workflow_fields$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^invalid_workflow_fields$" does not match "document_required"
+
+======================================================================
+FAIL: test_unknown_root_fields_refuse_before_any_asset_or_runtime_read (test_plan_field_boundary.PlanFieldBoundaryTests.test_unknown_root_fields_refuse_before_any_asset_or_runtime_read) (field='OWNED_TEST_CANARY_NO_REAL_SECRET')
+----------------------------------------------------------------------
+ValueError: document_required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "[SOURCE_ROOT]/tests/test_plan_field_boundary.py", line 26, in test_unknown_root_fields_refuse_before_any_asset_or_runtime_read
+    with self.assertRaisesRegex(ValueError, '^invalid_workflow_fields$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^invalid_workflow_fields$" does not match "document_required"
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.073s
+
+FAILED (failures=7)

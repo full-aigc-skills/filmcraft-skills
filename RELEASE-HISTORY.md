@@ -1,5 +1,9 @@
 # Version-bound release records
 
+## 0.1.0-dev.50
+
+dev.50 rejects undefined workflow-root and operation fields before asset reads,installation or output creation,using fixed errors without echoing names/values. Immutable plugin66/source49 copied owned synthetic canary metadata into plan.json. All26per-skill public refusals and a valid native save/reopen revision pass. Native parameters,host secret references and root permissions remain separate open gates;new fixed plugin installation is not yet qualified.
+
 ## 0.1.0-dev.46
 
 Pins maintained craft.5 while retaining craft.4. All13 skills synchronize the lock and newly captured666-command identity. Seven candidate media cases pass; actual Whisper28 words/100% reference word coverage, captions and native workflow pass. Fixed plugin media qualification and full V1 remain open.

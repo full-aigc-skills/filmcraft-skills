@@ -23,7 +23,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.49`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.50`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
@@ -223,3 +223,5 @@ Current dev.49 candidate rejects explicitly out-of-source trim requests before n
 [Version-bound candidate checks](docs/evidence/source49-timeline-candidate-20261009/report.json): 195 PASS,36 declared native NOT_RUN; immutable host qualification remains pending.
 
 Post-dev.49 test-only correction: required-audio first-use now validates existing craft-failed-stage/v1,original checkpoint file hashes and refusal to overwrite diagnostics. Actual installed plugin66/source49 production bytes remain unchanged. Corrected native case passes; source regression195PASS/36declared nativeNOT_RUN. [Checks](docs/evidence/source49-postrelease-missing-audio-test-20261009/report.json).
+
+dev.50 rejects undefined workflow-root and operation fields before asset reads,installation or output creation,using fixed errors without echoing names/values. Immutable plugin66/source49 copied owned synthetic canary metadata into plan.json. All26per-skill public refusals and a valid native save/reopen revision pass. Native parameters,host secret references and root permissions remain separate open gates;new fixed plugin installation is not yet qualified. [Evidence / 证据](docs/evidence/source50-plan-field-boundary-20261009/summary.json)。
