@@ -1,0 +1,19 @@
+test_all_asset_issues_reported_without_installation_or_output (test_workflow.WorkflowTests.test_all_asset_issues_reported_without_installation_or_output) ... ok
+test_audio_tail_accepts_only_exact_native_frame_padding (test_workflow.WorkflowTests.test_audio_tail_accepts_only_exact_native_frame_padding) ... ok
+test_duplicate_alias_rejected (test_workflow.WorkflowTests.test_duplicate_alias_rejected) ... ok
+test_export_flags_require_real_booleans (test_workflow.WorkflowTests.test_export_flags_require_real_booleans) ... ok
+test_invalid_source_asset_fails_before_install_or_recovery_directory (test_workflow.WorkflowTests.test_invalid_source_asset_fails_before_install_or_recovery_directory) ... ok
+test_public_workflow_reports_asset_list_before_runtime_creation (test_workflow.WorkflowTests.test_public_workflow_reports_asset_list_before_runtime_creation) ... ok
+test_revision_output_preserves_existing_directory (test_workflow.WorkflowTests.test_revision_output_preserves_existing_directory) ... ok
+test_short_audio_native_minimum_frame_and_invalid_speed (test_workflow.WorkflowTests.test_short_audio_native_minimum_frame_and_invalid_speed) ... ok
+test_side_effect_command_rejected (test_workflow.WorkflowTests.test_side_effect_command_rejected) ... ok
+test_source_and_new_asset_issues_keep_origin_without_local_paths (test_workflow.WorkflowTests.test_source_and_new_asset_issues_keep_origin_without_local_paths) ... ok
+test_static_track_gain_is_supported_and_rejects_invalid_values (test_workflow.WorkflowTests.test_static_track_gain_is_supported_and_rejects_invalid_values) ... ok
+test_ticks_are_decimal_strings (test_workflow.WorkflowTests.test_ticks_are_decimal_strings) ... ok
+test_unresolved_reference_rejected (test_workflow.WorkflowTests.test_unresolved_reference_rejected) ... ok
+test_visible_captions_are_burned_unless_explicitly_disabled (test_workflow.WorkflowTests.test_visible_captions_are_burned_unless_explicitly_disabled) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.108s
+
+OK

@@ -1,5 +1,6 @@
 # FilmCraft Skills
 
+Source dev.48 adds a safe aggregate asset issue list for registered ordinary media before installation/output. Public workflow failures retain compatible error prefixes and optionally return alias/origin/reason; no local paths or filename substitution. Full FC-DM-001 sequence/HD/relink acceptance remains separate.
 [Version-bound download fault evidence](docs/evidence/source47-download-error-candidate-20261009/acceptance.json). Offline220 tests:184 PASS and36 declared native environment NOT_RUN; fixed installation of this new source remains separate.
 
 Source dev.47 fixes read-only download retry classification for urllib-wrapped permission, disk-full, read-only filesystem, quota and certificate failures, including nested wrappers. All13 self-contained installers are synchronized; temporary network/408/429/5xx recovery remains bounded. Source and fixed installation evidence remain separate.
@@ -22,7 +23,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.47`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.48`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
@@ -214,3 +215,5 @@ Fixed Film41/source38 and Art118/source90 first use passes: all64 installation i
 A controlled Harness may supply internal FILMCRAFT_EXECUTION_CONTEXT with taskId, attemptId, source revision and content digest. Malformed context fails before installation or writes. Output-execution v1 adds optional context; standalone calls remain compatible and do not invent identity. Context is not authorization; fixed plugin acceptance is separate.
 
 Source42 validation: 4 context tests pass; full regression 212 total, 176 passed, 36 explicit environment skips. All 13 standalone resources synchronize. [Evidence](docs/evidence/filmcraft-source42-execution-context-20261008.json). Fixed plugin acceptance is separate.
+
+Evidence: `docs/evidence/source48-asset-issues-candidate-20261009/acceptance.json`.

@@ -13,6 +13,63 @@ class WorkflowTests(unittest.TestCase):
         self.module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.module)
 
+    def test_all_asset_issues_reported_without_installation_or_output(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            changed = root / 'changed.png'; changed.write_bytes(b'owned changed fixture')
+            plan = {'document': {'name': 'Test', 'width': 32, 'height': 32, 'frameRate': {'num': 12, 'den': 1}},
+                    'assets': {'missingOne': {'path': str(root/'one.png'), 'sha256': 'a'*64},
+                               'missingTwo': {'path': str(root/'two.wav'), 'sha256': 'b'*64},
+                               'changed': {'path': str(changed), 'sha256': 'c'*64}}, 'operations': []}
+            with patch.object(self.module, 'load_module', side_effect=AssertionError('runtime reached')):
+                with self.assertRaisesRegex(ValueError, 'asset_digest_mismatch: missingOne') as caught:
+                    self.module.execute(plan, root/'delivery', root/'runtime')
+            self.assertEqual(getattr(caught.exception, 'asset_issues', None), [
+                {'alias':'missingOne','origin':'plan','reason':'missing_file'},
+                {'alias':'missingTwo','origin':'plan','reason':'missing_file'},
+                {'alias':'changed','origin':'plan','reason':'digest_mismatch'}])
+            self.assertFalse((root/'delivery').exists()); self.assertFalse((root/'runtime').exists())
+            self.assertEqual(changed.read_bytes(), b'owned changed fixture')
+
+    def test_source_and_new_asset_issues_keep_origin_without_local_paths(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            with self.assertRaises(ValueError) as caught:
+                self.module.preflight_assets({'new': {'path':str(root/'new.wav'),'sha256':'a'*64}},
+                    {'prior':{'path':'assets/old.png','sha256':'b'*64}}, root)
+            self.assertEqual(getattr(caught.exception, 'asset_issues', None), [
+                {'alias':'prior','origin':'source','reason':'missing_file'},
+                {'alias':'new','origin':'plan','reason':'missing_file'}])
+            self.assertNotIn(str(root), str(caught.exception))
+
+    def test_public_workflow_reports_asset_list_before_runtime_creation(self):
+        import json, subprocess, sys
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary); plan=root/'plan.json'
+            plan.write_text(json.dumps({'document':{'name':'Test','width':32,'height':32,'frameRate':{'num':12,'den':1}},
+                'operations':[], 'assets':{'first':{'path':str(root/'first.png'),'sha256':'a'*64},
+                                          'second':{'path':str(root/'second.wav'),'sha256':'b'*64}}}))
+            result=subprocess.run([sys.executable,'-I','-B',str(SOURCE),str(plan),'--output',str(root/'delivery'),
+                                   '--runtime-home',str(root/'runtime')],capture_output=True,text=True,timeout=20)
+            self.assertEqual(result.returncode,1)
+            body=json.loads(result.stdout)
+            self.assertEqual(body.get('assetIssues'),[{'alias':'first','origin':'plan','reason':'missing_file'},
+                                                     {'alias':'second','origin':'plan','reason':'missing_file'}])
+            self.assertNotIn(str(root),result.stdout)
+            self.assertFalse((root/'runtime').exists());self.assertFalse((root/'delivery').exists())
+
+    def test_symlink_issues_are_aggregated_without_reading_target(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve(); link=root/'link.png'; link.symlink_to(root/'absent-private.png')
+            with patch.object(self.module, 'sha', side_effect=AssertionError('symlink target read')):
+                with self.assertRaises(ValueError) as caught:
+                    self.module.preflight_assets({'new':{'path':str(link),'sha256':'a'*64}},
+                                                 {'prior':{'path':'link.png','sha256':'b'*64}},root)
+            self.assertEqual(getattr(caught.exception,'asset_issues',None),[
+                {'alias':'prior','origin':'source','reason':'invalid_path'},
+                {'alias':'new','origin':'plan','reason':'invalid_path'}])
+            self.assertNotIn('absent-private',str(caught.exception))
+
     def test_invalid_source_asset_fails_before_install_or_recovery_directory(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
