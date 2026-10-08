@@ -1,0 +1,42 @@
+{
+  "schema": "filmcraft-catalog-identity-verification/v1",
+  "status": "PASS",
+  "sourceBase": "6c29e50b5fe85f98a1c5f77977158bb1b00bde5a",
+  "runtimeVersion": "0.2.0-craft.4",
+  "oldReferenceSha256": "cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433",
+  "capturedRuntimeSha256": "80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893",
+  "nativeCaptureCommands": 666,
+  "referenceRowsUnchanged": true,
+  "standaloneReferences": 13,
+  "unitTests": {
+    "tests": 6,
+    "passed": 6
+  },
+  "sourceRegression": {
+    "tests": 207,
+    "passed": 171,
+    "skipped": 36
+  },
+  "scope": "current source candidate actual native capture and deterministic self-contained references; not pinned plugin installation or command execution acceptance",
+  "files": {
+    "scripts/build_command_coverage.py": "daa6ff13c8ce6263d6b422239d317b0e8ba9c75ffad25c8c5b7bab6d9c148256",
+    "scripts/sync_skill_suite.py": "ef48aa8f77112c053ab68c704c1246a4e56a7ad80f7c8a88b5e283b09e32b1c9",
+    "tests/test_catalog_identity.py": "db3bb15f237a2818267ef3178fc34b24d7cb2614154075ecf8227fd51bd0aefe",
+    "skills/filmcraft-use/references/commands.json": "56d9b84e43a270135d92180d7b3cb91468a538f48fe7f31b744262845c7755ad",
+    "skills/filmcraft-use/references/native-command-snapshot.json": "4abb9b5405bbea4d67abcbd9570ee6aab3a1943c105b7c7c85fa5ad73da9bbda"
+  },
+  "notAccepted": [
+    "new immutable skill/plugin distribution",
+    "fixed installation",
+    "per-command execution",
+    "host routing",
+    "full V1"
+  ],
+  "evidenceFiles": {
+    "docs/evidence/filmcraft-catalog-identity-candidate-20261008/identity-red.log": "6f2766bd8a06c5ab73ca97a83ac6fdf542e2764de7137f70a3f66ea77931657d",
+    "docs/evidence/filmcraft-catalog-identity-candidate-20261008/standalone-red.log": "8e33733011d192672ae8c8bd58b8d534e20ec1be325b7275330513b9c2887dfa",
+    "docs/evidence/filmcraft-catalog-identity-candidate-20261008/native-capture.log": "bb0a768ee5d5e07bfad470a8b1c230b51dc66bef6bd0a2414b21cd92aa61ec96",
+    "docs/evidence/filmcraft-catalog-identity-candidate-20261008/identity-green.log": "864a074692aa1c53c555fc08f151f4e30e4dc9d3b5e16af3dba437ed1c0fe48f",
+    "docs/evidence/filmcraft-catalog-identity-candidate-20261008/source-regression.log": "676e4784a7535ae8849825181c53dc16d72e564d79fc87262543585e0b63bd54"
+  }
+}

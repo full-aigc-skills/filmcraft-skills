@@ -1,0 +1,11 @@
+test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) ... ok
+test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims (test_catalog_identity.CatalogIdentityTests.test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims) ... ok
+test_current_reference_binds_the_captured_binary_not_an_older_runtime (test_catalog_identity.CatalogIdentityTests.test_current_reference_binds_the_captured_binary_not_an_older_runtime) ... ok
+test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) ... ok
+test_generation_rejects_same_identity_with_changed_parameters_or_inventory (test_catalog_identity.CatalogIdentityTests.test_generation_rejects_same_identity_with_changed_parameters_or_inventory) ... ok
+test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.016s
+
+OK

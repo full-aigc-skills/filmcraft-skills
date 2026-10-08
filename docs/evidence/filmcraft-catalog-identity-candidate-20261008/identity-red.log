@@ -1,0 +1,150 @@
+test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) ... 
+  test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[]) ... ERROR
+  test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': 'file.saveAs', 'label': 'Save As', 'params': '{"path":str}', 'enabled': True}, {'id': 'file.saveAs', 'label': 'Save As', 'params': '{"path":str}', 'enabled': True}]) ... ERROR
+  test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[None]) ... ERROR
+  test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': 'file.saveAs', 'label': 'Save As', 'params': '{"path":str}', 'enabled': 'true'}]) ... ERROR
+  test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': 'file.saveAs', 'label': 'Save As', 'params': None, 'enabled': True}]) ... ERROR
+  test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': '', 'label': 'Save As', 'params': '{"path":str}', 'enabled': True}]) ... ERROR
+test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims (test_catalog_identity.CatalogIdentityTests.test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims) ... ERROR
+test_current_reference_binds_the_captured_binary_not_an_older_runtime (test_catalog_identity.CatalogIdentityTests.test_current_reference_binds_the_captured_binary_not_an_older_runtime) ... FAIL
+test_generation_rejects_same_identity_with_changed_parameters_or_inventory (test_catalog_identity.CatalogIdentityTests.test_generation_rejects_same_identity_with_changed_parameters_or_inventory) ... ERROR
+test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) ... 
+  test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='runtimeSha256') ... ERROR
+  test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='runtimeVersion') ... ERROR
+  test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='platform') ... ERROR
+  test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='pluginId') ... ERROR
+  test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='mode') ... ERROR
+
+======================================================================
+ERROR: test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 57, in test_ambiguous_or_malformed_rows_are_rejected_before_generation
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': 'file.saveAs', 'label': 'Save As', 'params': '{"path":str}', 'enabled': True}, {'id': 'file.saveAs', 'label': 'Save As', 'params': '{"path":str}', 'enabled': True}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 57, in test_ambiguous_or_malformed_rows_are_rejected_before_generation
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[None])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 57, in test_ambiguous_or_malformed_rows_are_rejected_before_generation
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': 'file.saveAs', 'label': 'Save As', 'params': '{"path":str}', 'enabled': 'true'}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 57, in test_ambiguous_or_malformed_rows_are_rejected_before_generation
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': 'file.saveAs', 'label': 'Save As', 'params': None, 'enabled': True}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 57, in test_ambiguous_or_malformed_rows_are_rejected_before_generation
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) (rows=[{'id': '', 'label': 'Save As', 'params': '{"path":str}', 'enabled': True}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 57, in test_ambiguous_or_malformed_rows_are_rejected_before_generation
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims (test_catalog_identity.CatalogIdentityTests.test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 34, in test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims
+    result = self.builder.reflection_from_snapshot(self.snapshot, self.lock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_generation_rejects_same_identity_with_changed_parameters_or_inventory (test_catalog_identity.CatalogIdentityTests.test_generation_rejects_same_identity_with_changed_parameters_or_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 60, in test_generation_rejects_same_identity_with_changed_parameters_or_inventory
+    reflection = self.builder.reflection_from_snapshot(self.snapshot, self.lock)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='runtimeSha256')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 49, in test_unverified_identity_or_execution_mode_cannot_be_relabelled
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='runtimeVersion')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 49, in test_unverified_identity_or_execution_mode_cannot_be_relabelled
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='platform')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 49, in test_unverified_identity_or_execution_mode_cannot_be_relabelled
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='pluginId')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 49, in test_unverified_identity_or_execution_mode_cannot_be_relabelled
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+ERROR: test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) (field='mode')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 49, in test_unverified_identity_or_execution_mode_cannot_be_relabelled
+    self.builder.reflection_from_snapshot(changed, self.lock)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'catalog_identity_builder' has no attribute 'reflection_from_snapshot'
+
+======================================================================
+FAIL: test_current_reference_binds_the_captured_binary_not_an_older_runtime (test_catalog_identity.CatalogIdentityTests.test_current_reference_binds_the_captured_binary_not_an_older_runtime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 30, in test_current_reference_binds_the_captured_binary_not_an_older_runtime
+    self.assertEqual(reference['runtimeSha256'], snapshot['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.014s
+
+FAILED (failures=1, errors=13)

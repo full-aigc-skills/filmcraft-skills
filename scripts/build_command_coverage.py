@@ -12,6 +12,40 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = json.loads((ROOT / "skill-suite.json").read_text())["pluginId"]
 BASE = ROOT / "skills" / (DOMAIN + "-use")
 
+def reflection_from_snapshot(snapshot, lock):
+    """仅从已核验身份的原生命令行构建参考，不继承旧版本说明字段。"""
+    platform = snapshot.get('platform')
+    artifact = lock.get('artifacts', {}).get(platform)
+    if (snapshot.get('schema') != 'craft-native-command-snapshot/v1'
+            or snapshot.get('pluginId') != DOMAIN or snapshot.get('mode') != 'headless-empty'
+            or snapshot.get('runtimeVersion') != lock.get('resolvedVersion')
+            or not isinstance(artifact, dict)
+            or snapshot.get('runtimeSha256') != artifact.get('binarySha256')):
+        raise ValueError('native_snapshot_identity_mismatch')
+    records = snapshot.get('commands')
+    if not isinstance(records, list) or not records:
+        raise ValueError('native_command_rows_invalid')
+    seen, rows = set(), []
+    for row in records:
+        if (not isinstance(row, dict) or not isinstance(row.get('id'), str) or not row['id']
+                or row['id'] in seen or not isinstance(row.get('label'), str)
+                or not isinstance(row.get('params'), str) or type(row.get('enabled')) is not bool):
+            raise ValueError('native_command_rows_invalid')
+        seen.add(row['id'])
+        rows.append({'id': row['id'], 'label': row['label'], 'params': row['params'],
+                     'enabledAtEmptySession': row['enabled']})
+    return {'schema': 'craft-skill-command-evidence/v1', 'pluginId': DOMAIN,
+            'runtimeVersion': snapshot['runtimeVersion'], 'runtimeSha256': snapshot['runtimeSha256'],
+            'upstreamRepository': lock['upstreamRepository'], 'upstreamCommit': lock['upstreamCommit'],
+            'scope': 'observed command catalogue, not capability or creative acceptance', 'commands': rows}
+
+
+def verify_reflection(reflection, snapshot, lock):
+    """生成前拒绝目录身份、参数或清单漂移，不用新摘要给旧行重新贴标。"""
+    if reflection != reflection_from_snapshot(snapshot, lock):
+        raise ValueError('reference_snapshot_mismatch')
+
+
 def capture():
     def load(name):
         spec = importlib.util.spec_from_file_location("capture_" + name, BASE / "scripts" / (name + ".py"))
@@ -27,18 +61,23 @@ def capture():
         reply = session.request("tools/call", {"name": name, "arguments": {}})
         if reply.get("isError"):
             raise ValueError("registry_query_failed")
-        data = json.loads(next(c["text"] for c in reply["content"] if c["type"] == "text"))
+        data = load("commands").parse_reply(reply)
         rows = data["commands"] if isinstance(data, dict) else data
     snapshot = {"schema":"craft-native-command-snapshot/v1", "pluginId":DOMAIN,
+                "runtimeVersion":installed["version"], "platform":installed["platform"],
                 "runtimeSha256":installed["binarySha256"], "mode":"headless-empty",
                 "scope":"registered commands and empty-session state only; no command execution acceptance",
                 "tools":tools, "commands":rows}
-    (BASE / "references/native-command-snapshot.json").write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
+    reflection = reflection_from_snapshot(snapshot, lock)
+    for name, value in [('native-command-snapshot.json', snapshot), ('commands.json', reflection)]:
+        (BASE / 'references' / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
 
 def build(check=False):
     suite = json.loads((ROOT / "skill-suite.json").read_text())
     reflection = json.loads((BASE / "references/commands.json").read_text())
     snapshot = json.loads((BASE / "references/native-command-snapshot.json").read_text())
+    lock = json.loads((BASE / 'scripts/runtime.lock.json').read_text())
+    verify_reflection(reflection, snapshot, lock)
     current = {r["id"]:r for r in snapshot["commands"]}
     node = ast.parse((BASE / "scripts/workflow.py").read_text())
     mapped = set()
@@ -105,4 +144,3 @@ if __name__ == "__main__":
             parser.error("--check is read-only")
         capture()
     build(args.check)
-

@@ -9,11 +9,25 @@ ROOT=Path(__file__).resolve().parents[1]
 def sync(check=False):
  # 完整归属清单独立于共享参考，同步前先验证，避免发布过期的场景列表。
  import subprocess
+ subprocess.run([sys.executable,'-I','-B',str(ROOT/'scripts/build_command_coverage.py'),'--check'],check=True)
  subprocess.run([sys.executable,'-I','-B',str(ROOT/'scripts/build_scenario_catalog.py'),'--check'],check=True)
  suite=json.loads((ROOT/'skill-suite.json').read_text());base=ROOT/'skills'/(suite['pluginId']+'-use');errors=[]
  for entry in suite['skills']:
   if entry['name']==base.name:continue
   target=ROOT/'skills'/entry['name']
+  # 场景目录保留已有命令子集；参数与身份只能取自同一已核验的完整目录。
+  master=json.loads((base/'references/commands.json').read_text())
+  reference=target/'references/commands.json'
+  selected=json.loads(reference.read_text())['commands']
+  known={row['id']:row for row in master['commands']}
+  identifiers=[row['id'] for row in selected]
+  if len(set(identifiers))!=len(identifiers) or any(identifier not in known for identifier in identifiers):
+   raise ValueError('skill_command_reference_unknown: '+entry['name'])
+  updated={**master,'commands':[known[identifier] for identifier in identifiers]}
+  data=(json.dumps(updated,ensure_ascii=False,indent=2)+'\n').encode()
+  if check:
+   if reference.read_bytes()!=data:errors.append(str(reference.relative_to(ROOT)))
+  else:reference.write_bytes(data)
   for folder in ['scripts','examples']:
    for source in sorted((base/folder).rglob('*')):
     if not source.is_file() or '__pycache__' in source.parts:continue

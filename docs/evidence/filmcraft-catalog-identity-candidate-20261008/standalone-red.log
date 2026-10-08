@@ -1,0 +1,167 @@
+test_ambiguous_or_malformed_rows_are_rejected_before_generation (test_catalog_identity.CatalogIdentityTests.test_ambiguous_or_malformed_rows_are_rejected_before_generation) ... ok
+test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims (test_catalog_identity.CatalogIdentityTests.test_capture_uses_actual_rows_and_lock_provenance_without_execution_claims) ... ok
+test_current_reference_binds_the_captured_binary_not_an_older_runtime (test_catalog_identity.CatalogIdentityTests.test_current_reference_binds_the_captured_binary_not_an_older_runtime) ... ok
+test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) ... 
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-audio') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-color') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-export') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-media') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-motion') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-multicam') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-project') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-setup') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-subtitles') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-timeline') ... FAIL
+  test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-transcript') ... FAIL
+test_generation_rejects_same_identity_with_changed_parameters_or_inventory (test_catalog_identity.CatalogIdentityTests.test_generation_rejects_same_identity_with_changed_parameters_or_inventory) ... ok
+test_unverified_identity_or_execution_mode_cannot_be_relabelled (test_catalog_identity.CatalogIdentityTests.test_unverified_identity_or_execution_mode_cannot_be_relabelled) ... ok
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-audio')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-color')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-export')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-media')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-motion')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-multicam')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-project')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-setup')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-subtitles')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-timeline')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+======================================================================
+FAIL: test_each_standalone_reference_retains_its_inventory_with_current_parameters (test_catalog_identity.CatalogIdentityTests.test_each_standalone_reference_retains_its_inventory_with_current_parameters) (skill='filmcraft-cli-transcript')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[USER_HOME]/workspaces/workspace-agent-skills/full-aigc-skills-repositories/filmcraft-skills/tests/test_catalog_identity.py", line 43, in test_each_standalone_reference_retains_its_inventory_with_current_parameters
+    self.assertEqual(value['runtimeSha256'], master['runtimeSha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433' != '80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893'
+- cd30e5bbcdfb7cdc510752de8451600636f926263e83510c619c7b0741b20433
++ 80dfc579f7639dc1d182c4dc9ab9cd834beaa234e6144e664757d40632f36893
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.023s
+
+FAILED (failures=12)
