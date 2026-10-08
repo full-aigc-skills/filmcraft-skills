@@ -1,0 +1,192 @@
+test_documented_examples_and_creative_text_remain_accepted (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_documented_examples_and_creative_text_remain_accepted) ... ERROR
+test_domain_parameter_metadata_refused_before_asset_read (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_domain_parameter_metadata_refused_before_asset_read) ... FAIL
+test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) ... 
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.setText') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.delete') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='clip.replaceFromBin') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='caption.add') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='asset.import') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.trim') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.newTrack') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.setTrack') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.select') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.move') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.place') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.setTrack') ... FAIL
+  test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.setStyle') ... FAIL
+test_nested_move_metadata_is_refused_without_echo (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_nested_move_metadata_is_refused_without_echo) ... FAIL
+test_public_entry_refuses_canary_without_install_or_output (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_public_entry_refuses_canary_without_install_or_output) ... FAIL
+
+======================================================================
+ERROR: test_documented_examples_and_creative_text_remain_accepted (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_documented_examples_and_creative_text_remain_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 45, in test_documented_examples_and_creative_text_remain_accepted
+    if isinstance(plan,dict) and 'operations' in plan and 'schema' not in plan:self.workflow.validate(plan)
+                                                                               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/skills/filmcraft-use/scripts/workflow.py", line 256, in validate
+    raise ValueError('registered_lut_required')
+ValueError: registered_lut_required
+
+======================================================================
+FAIL: test_domain_parameter_metadata_refused_before_asset_read (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_domain_parameter_metadata_refused_before_asset_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 27, in test_domain_parameter_metadata_refused_before_asset_read
+    self.workflow.execute(plan,root/'output',root/'runtime')
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/skills/filmcraft-use/scripts/workflow.py", line 374, in execute
+    preflight_assets(plan.get('assets', {}), prior.get('assets', {}), source)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/unittest/mock.py", line 1228, in _execute_mock_call
+    raise effect
+AssertionError: asset read reached
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.setText')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='clip.replaceFromBin')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='caption.add')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='asset.import')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.trim')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.newTrack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.setTrack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.select')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.place')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='timeline.setTrack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_each_domain_wrapper_has_a_closed_field_boundary (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary) (command='captions.setStyle')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 34, in test_each_domain_wrapper_has_a_closed_field_boundary
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nested_move_metadata_is_refused_without_echo (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_nested_move_metadata_is_refused_without_echo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 39, in test_nested_move_metadata_is_refused_without_echo
+    with self.assertRaisesRegex(ValueError,'^invalid_workflow_parameters$') as caught:self.workflow.validate(plan)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_public_entry_refuses_canary_without_install_or_output (test_workflow_parameter_fields.WorkflowParameterFieldTests.test_public_entry_refuses_canary_without_install_or_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/full-aigc-skills-repositories/filmcraft-skills/tests/test_workflow_parameter_fields.py", line 54, in test_public_entry_refuses_canary_without_install_or_output
+    self.assertEqual(r.returncode,1);self.assertEqual(json.loads(r.stdout)['error'],'invalid_workflow_parameters')
+                                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'document_required' != 'invalid_workflow_parameters'
+- document_required
++ invalid_workflow_parameters
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.168s
+
+FAILED (failures=16, errors=1)

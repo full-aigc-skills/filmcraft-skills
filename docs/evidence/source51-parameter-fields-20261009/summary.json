@@ -1,0 +1,30 @@
+{
+  "schema": "filmcraft-domain-parameter-candidate/v1",
+  "sourceCandidate": "v0.1.0-dev.51",
+  "result": "PASS",
+  "previousFixedRef": "v0.1.0-dev.67",
+  "actualRed": "Native captions.setText accepts metadata and copies the owned synthetic canary into plan.json; no genuine secret, no metadata instruction executed.",
+  "candidateResult": "Five required regressions; 26 public unknown parameter/nested move refusals across13skills; valid native revision/save/reopen preserves creative text containing metadata and apiKey, original delivery and all13 source directories.",
+  "initialFixtureCorrection": "Initial example test omitted required injected LUT registration; corrected before target red, without implementation changes. Initial log retained, not counted as behavioral red.",
+  "fixedInstall": "NOT_RUN",
+  "remaining": [
+    "full native.command parameter qualification",
+    "trusted read/write roots",
+    "host secret references",
+    "full V1"
+  ],
+  "artifacts": {
+    "initial-red.txt": "40df824884e6d21e3958b8c2f20a2797ceb62ad4a117e7d5ec7a44c8f6bdb4fc",
+    "candidate-public-native.json": "b08d849908a6ff5685b378f9b6b4a49d18707005f324784b181423aacbb8b6bd",
+    "green.txt": "c91835053e942edf24dffd977fa6c510f42af545d465f054f679a1d9afbccd4e",
+    "fixed67-actual-leak.json": "da145c20ab9b136e6bbc09193070516c14423d0c18d6ba68a732f00ee23a1afd",
+    "target-red.txt": "9b77a1604ffe5fffe3165e8d1b0c01d39b12dfa9ee76236f37bb5f5f128142bb"
+  },
+  "sourceGate": {
+    "tests": 241,
+    "pass": 205,
+    "fail": 0,
+    "failureEvents": 0,
+    "environmentNotRun": 36
+  }
+}

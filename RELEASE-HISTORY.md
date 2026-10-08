@@ -1,5 +1,9 @@
 # Version-bound release records
 
+## 0.1.0-dev.51
+
+Reject undefined domain-wrapper parameter and nested timeline-move fields before asset reads, installation or output. Preserve creative text, documented examples and dedicated motion/LUT/gain errors. Full native registry parameter, trusted-root and host-secret acceptance remains open.
+
 ## 0.1.0-dev.50
 
 dev.50 rejects undefined workflow-root and operation fields before asset reads,installation or output creation,using fixed errors without echoing names/values. Immutable plugin66/source49 copied owned synthetic canary metadata into plan.json. All26per-skill public refusals and a valid native save/reopen revision pass. Native parameters,host secret references and root permissions remain separate open gates;new fixed plugin installation is not yet qualified.

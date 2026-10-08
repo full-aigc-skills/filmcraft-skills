@@ -193,6 +193,11 @@
     "test_workflow_data_directory.WorkflowDataDirectoryTests.test_environment_directory_reaches_mcp_without_explicit_option",
     "test_workflow_data_directory.WorkflowDataDirectoryTests.test_explicit_directory_overrides_environment_for_mcp",
     "test_workflow_data_directory.WorkflowDataDirectoryTests.test_unconfigured_auxiliary_process_preserves_original_arguments",
+    "test_workflow_parameter_fields.WorkflowParameterFieldTests.test_documented_examples_and_creative_text_remain_accepted",
+    "test_workflow_parameter_fields.WorkflowParameterFieldTests.test_domain_parameter_metadata_refused_before_asset_read",
+    "test_workflow_parameter_fields.WorkflowParameterFieldTests.test_each_domain_wrapper_has_a_closed_field_boundary",
+    "test_workflow_parameter_fields.WorkflowParameterFieldTests.test_nested_move_metadata_is_refused_without_echo",
+    "test_workflow_parameter_fields.WorkflowParameterFieldTests.test_public_entry_refuses_canary_without_install_or_output",
     "test_workflow_tool_reply.WorkflowToolReplyTests.test_bad_tool_results_are_unknown_without_python_type_errors",
     "test_workflow_tool_reply.WorkflowToolReplyTests.test_valid_semantic_error_remains_a_known_reply"
   ],
