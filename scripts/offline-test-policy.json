@@ -232,7 +232,20 @@
     "test_native_parameter_fields.NativeParameterFieldTests.test_nested_fields_do_not_become_top_level_permissions",
     "test_native_parameter_fields.NativeParameterFieldTests.test_parameter_object_reference_validates_again_after_resolution",
     "test_native_parameter_fields.NativeParameterFieldTests.test_domain_native_wrapper_rejects_unknown_parameter_before_session",
-    "test_native_parameter_fields.NativeParameterFieldTests.test_raw_exec_rejects_unknown_parameter_before_installer_and_output"
+    "test_native_parameter_fields.NativeParameterFieldTests.test_raw_exec_rejects_unknown_parameter_before_installer_and_output",
+    "test_task_session.TaskSessionTests.test_two_plans_share_state_process_and_single_install_until_task_end",
+    "test_task_session.TaskSessionTests.test_unknown_stops_next_plan_without_restart_or_replay",
+    "test_task_session.TaskSessionTests.test_invalid_later_plan_never_starts_or_creates_stage",
+    "test_task_session.TaskSessionTests.test_process_exit_does_not_start_replacement",
+    "test_task_session.TaskSessionTests.test_model_identity_change_stops_before_later_stage",
+    "test_task_session.TaskSessionTests.test_external_input_requires_startup_protection",
+    "test_task_session.TaskSessionTests.test_interrupt_preserves_unknown_journal_and_stops_later_edits",
+    "test_task_session.TaskSessionTests.test_binary_change_stops_before_new_stage",
+    "test_task_session.TaskSessionTests.test_permission_change_stops_without_widening_live_process",
+    "test_task_session.TaskSessionTests.test_eof_closes_and_task_cannot_be_reentered",
+    "test_task_session.TaskSessionTests.test_source_protection_cannot_include_task_output",
+    "test_task_session.TaskSessionTests.test_line_protocol_keeps_one_instance_until_explicit_close",
+    "test_task_session.TaskSessionTests.test_malformed_line_stops_without_edit_or_restarting"
   ],
   "environmentTests": [
     {

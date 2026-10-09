@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+dev.58 adds task-level instance reuse across command plans; single-run APIs remain compatible. The public JSONL foreground entry keeps one owned MCP and optional signed desktop, freezes runtime/permission/model identity, and stops on failure or unknown without restart. Interruption now preserves unknown per-plan receipts. Fixed-release evidence remains separate.
+
 dev.57 makes complete-command, domain native.command and raw exec share fixed native top-level parameter validation. Undefined fields refuse before input reads, installation and output, with a fixed diagnostic and no echoed fields/values.666 contracts, aliases, unions, match options and whole-object references are covered; creative text remains data.241 source tests,39 public refusal cases,39 native root cases and thirteen real candidate business tasks pass. New fixed installation and full permissions/command/host-routing qualification remain open. [Evidence](docs/evidence/filmcraft-native-parameter-fields-20261009/report.json).
 
 dev.56 applies trusted roots and native isolation to the legacy raw cli.py launcher. Only four exact metadata queries retain root-free compatibility; all children filter host environments. Model download requires a separate validated maintenance flag, an existing authorized data directory, writes limited to that directory and outbound-only network permission. Three target reds become six passes;39 actual raw entry cases, cached model maintenance and real sandbox write/symlink/listener refusals pass. Cold public model download, actual 28-word recognition/reopen/SRT and all thirteen candidate primary tasks pass. New fixed-host and full V1 qualification remain open. [Evidence](docs/evidence/filmcraft56-raw-launcher-candidate-20261009/report.json).
@@ -35,7 +37,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.57`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.58`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
@@ -241,3 +243,5 @@ dev.50 rejects undefined workflow-root and operation fields before asset reads,i
 Source dev.51 closes undefined domain-wrapper parameter fields before asset reads or output. Native registry parameters, trusted roots and host secrets remain open. Fixed installed qualification is pending.
 
 Actual signed desktop discovery confirms the explicit model cache and installed tiny model, but this official desktop build reports speech unavailable; inference is refused. CLI inference succeeds with 28 words and unchanged model digests. [Evidence](docs/evidence/source54-readonly-model-20261009/report.json).
+
+Continuous editing now has a public `task_session.py` entry: keep one foreground handle, MCP and optional owned signed desktop across plans; receipts remain per-plan and failures stop without restart. See [task sessions](skills/filmcraft-use/references/task-session.md). Fixed-release acceptance is recorded separately.
