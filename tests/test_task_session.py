@@ -60,6 +60,59 @@ class TaskSessionTests(unittest.TestCase):
     def plan(self):
         return {'schema':'craft-command-plan/v1','operations':[{'command':'state.inspect','params':{}}]}
 
+    def test_workflow_borrows_same_owner_as_adjacent_command_plans(self):
+        m=module()
+        with tempfile.TemporaryDirectory() as d:
+            s=self.setup_session(m,Path(d).resolve());seen=[]
+            workflow=m.load('workflow')
+            def execute(plan,output,**kwargs):
+                kwargs['installer']({},s.runtime)
+                with kwargs['session_factory'](['native','--data-dir',str(output), 'mcp']) as native:
+                    seen.append(native.process.pid)
+                return {'schema':'filmcraft-delivery/v1','files':{}}
+            old=s.commands.load
+            with patch.object(workflow,'execute',side_effect=execute), patch.object(s.commands,'load',side_effect=lambda n: workflow if n=='workflow' else old(n)),s:
+                s.execute(self.plan(),'before')
+                result=s.execute_workflow({'document':{},'assets':{},'operations':[]},'delivery')
+                s.execute(self.plan(),'after')
+                self.assertEqual(result['result'],'PASS');self.assertEqual(seen,[s.owner.process.pid])
+                self.assertEqual(len(self.starts),1);self.assertEqual(self.closes,[])
+            self.assertEqual(len(self.closes),1)
+
+    def test_workflow_failure_stops_task_without_replay(self):
+        m=module()
+        with tempfile.TemporaryDirectory() as d:
+            s=self.setup_session(m,Path(d).resolve());workflow=m.load('workflow');old=s.commands.load
+            with patch.object(workflow,'execute',side_effect=TimeoutError('outcome_unknown')) as run, patch.object(s.commands,'load',side_effect=lambda n: workflow if n=='workflow' else old(n)),s:
+                with self.assertRaises(TimeoutError):s.execute_workflow({'assets':{}},'delivery')
+                with self.assertRaisesRegex(RuntimeError,'task_session_stopped'):s.execute_workflow({'assets':{}},'again')
+                with self.assertRaisesRegex(RuntimeError,'task_session_stopped'):s.execute(self.plan(),'after')
+                self.assertEqual(run.call_count,1);self.assertTrue(s.stopped)
+
+    def test_bridge_workflow_refuses_before_native_or_output(self):
+        m=module()
+        with tempfile.TemporaryDirectory() as d:
+            s=self.setup_session(m,Path(d).resolve(),mode='bridge')
+            with s,self.assertRaisesRegex(ValueError,'workflow_requires_headless_task'):
+                s.execute_workflow({'assets':{}},'delivery')
+            self.assertFalse((s.work/'delivery').exists());self.assertEqual(self.starts,[])
+
+    def test_jsonl_workflow_action_preserves_foreground_session(self):
+        m=module();session=unittest.mock.Mock();session.commands.reply_json.side_effect=json.loads;session.execute_workflow.return_value={'result':'PASS','kind':'workflow','manifest':{}}
+        incoming=io.StringIO(json.dumps({'action':'workflow','name':'delivery','plan':{'assets':{}},'source':'owned-source'})+'\n'+json.dumps({'action':'close'})+'\n');out=io.StringIO()
+        self.assertEqual(m.serve(session,incoming,out),0)
+        session.execute_workflow.assert_called_once_with({'assets':{}},'delivery','owned-source')
+        session.execute.assert_not_called();session.close.assert_called_once()
+        self.assertEqual([json.loads(line)['result'] for line in out.getvalue().splitlines()],['PASS','CLOSED'])
+
+    def test_external_workflow_asset_must_be_protected_before_native(self):
+        m=module()
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d).resolve();s=self.setup_session(m,root);asset=root/'external.png';asset.write_bytes(b'owned')
+            with s,self.assertRaisesRegex(ValueError,'task_input_not_protected'):
+                s.execute_workflow({'assets':{'still':{'path':str(asset),'sha256':m.sha(asset)}}},'delivery')
+            self.assertEqual(self.starts,[]);self.assertTrue(s.stopped)
+
     def test_two_plans_share_state_process_and_single_install_until_task_end(self):
         m=module()
         with tempfile.TemporaryDirectory() as d:
