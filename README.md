@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+dev.60 fixes saved-project comparison after setting the playhead: only top-level selection and playhead are transient; persistent and nested fields remain strictly compared. Fixed-release native delivery is verified separately.
+
 dev.59 fixes the declared scopes.read frame/seconds/timecode shorthand aliases at the shared parameter guard. Other commands and unknown fields remain restricted. Target red/green evidence is separate from immutable plugin/native acceptance.
 
 dev.58 adds task-level instance reuse across command plans; single-run APIs remain compatible. The public JSONL foreground entry keeps one owned MCP and optional signed desktop, freezes runtime/permission/model identity, and stops on failure or unknown without restart. Interruption now preserves unknown per-plan receipts. Fixed-release evidence remains separate.
@@ -39,7 +41,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.59`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.60`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
