@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+dev.59 fixes the declared scopes.read frame/seconds/timecode shorthand aliases at the shared parameter guard. Other commands and unknown fields remain restricted. Target red/green evidence is separate from immutable plugin/native acceptance.
+
 dev.58 adds task-level instance reuse across command plans; single-run APIs remain compatible. The public JSONL foreground entry keeps one owned MCP and optional signed desktop, freezes runtime/permission/model identity, and stops on failure or unknown without restart. Interruption now preserves unknown per-plan receipts. Fixed-release evidence remains separate.
 
 dev.57 makes complete-command, domain native.command and raw exec share fixed native top-level parameter validation. Undefined fields refuse before input reads, installation and output, with a fixed diagnostic and no echoed fields/values.666 contracts, aliases, unions, match options and whole-object references are covered; creative text remains data.241 source tests,39 public refusal cases,39 native root cases and thirteen real candidate business tasks pass. New fixed installation and full permissions/command/host-routing qualification remain open. [Evidence](docs/evidence/filmcraft-native-parameter-fields-20261009/report.json).
@@ -37,7 +39,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.58`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.59`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 

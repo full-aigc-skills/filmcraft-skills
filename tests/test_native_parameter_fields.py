@@ -62,3 +62,17 @@ class NativeParameterFieldTests(unittest.TestCase):
     '{"name":"Owned","OWNED_UNKNOWN_FIELD":"OWNED_CREDENTIAL_CANARY"}','--save-as',str(target)],capture_output=True,text=True)
    self.assertEqual(result.returncode,1);self.assertEqual(json.loads(result.stdout)['error'],'invalid_native_parameters')
    self.assertFalse(cache.exists());self.assertFalse(target.exists());self.assertNotIn('OWNED_',result.stdout+result.stderr)
+
+class ScopeTimeAliasTests(unittest.TestCase):
+ def test_documented_scopes_time_aliases_are_valid_at_both_entries(self):
+  m=module()
+  spec=importlib.util.spec_from_file_location('scope_native_wrapper',ROOT/'skills/filmcraft-use/scripts/native_workflow.py');wrapper=importlib.util.module_from_spec(spec);spec.loader.exec_module(wrapper)
+  for params in [{'frame':204},{'seconds':8.5},{'timecode':'00:00:08:12'}]:
+   with self.subTest(params=params):
+    plan={'schema':'craft-command-plan/v1','operations':[{'command':'scopes.read','params':params}]}
+    m.validate(plan);wrapper.validate({'command':'scopes.read','params':params})
+ def test_aliases_do_not_expand_other_commands_or_unknown_scope_fields(self):
+  m=module()
+  for name,params in [('effects.list',{'seconds':8.5}),('scopes.read',{'owned_extra':'OWNED_CANARY'}),('scopes.read',{'waveformType':'rgb','owned_extra':True})]:
+   with self.subTest(command=name),self.assertRaisesRegex(ValueError,'^invalid_native_parameters$'):
+    m.validate_native_parameters(name,params)
