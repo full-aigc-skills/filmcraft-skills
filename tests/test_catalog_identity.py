@@ -14,7 +14,8 @@ class CatalogIdentityTests(unittest.TestCase):
         self.builder = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.builder)
         base = ROOT / 'skills/filmcraft-use'
-        self.lock = json.loads((base / 'scripts/runtime.lock.json').read_text())
+        harness = ROOT / 'skills/filmcraft-harness'
+        self.lock = json.loads((harness / 'scripts/runtime.lock.json').read_text())
         self.snapshot = {
             'schema': 'craft-native-command-snapshot/v1', 'pluginId': 'filmcraft',
             'runtimeVersion': self.lock['resolvedVersion'], 'platform': 'darwin-arm64',

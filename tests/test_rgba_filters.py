@@ -7,7 +7,7 @@ import tempfile
 import unittest
 import zlib
 ROOT=Path(__file__).resolve().parents[1]
-spec=importlib.util.spec_from_file_location('rgba_test',ROOT/'skills/filmcraft-use/scripts/sequence_assets.py')
+spec=importlib.util.spec_from_file_location('rgba_test',ROOT/'skills/filmcraft-harness/scripts/sequence_assets.py')
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 def paeth(a,b,c):
     p=a+b-c; distances=[abs(p-a),abs(p-b),abs(p-c)]

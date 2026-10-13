@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / 'skills/filmcraft-use/scripts/workflow.py'
+SCRIPT = ROOT / 'skills/filmcraft-harness/scripts/workflow.py'
 CANARY = 'OWNED_TEST_CANARY_NO_REAL_SECRET'
 
 class PlanFieldBoundaryTests(unittest.TestCase):

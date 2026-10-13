@@ -8,7 +8,7 @@ import sys
 import tempfile
 import unittest
 
-SCRIPT=Path(__file__).resolve().parents[1]/'skills/filmcraft-use/scripts/execution_permissions.py'
+SCRIPT=Path(__file__).resolve().parents[1]/'skills/filmcraft-harness/scripts/execution_permissions.py'
 
 class ExecutionPermissionsTests(unittest.TestCase):
     def setUp(self):

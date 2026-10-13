@@ -1,5 +1,10 @@
 # 版本绑定的历史发行记录
 
+## 0.1.0-dev.62
+
+dev.62将重复执行实现收敛为内置 filmcraft-harness 技能：六个文档化入口（bootstrap/cli/commands/workflow/desktop/task_session）、运行时锁与执行契约 JSON 只在 harness 保存；13 个领域技能删除各自 scripts/ 副本并按名称经 HARNESS_DIR 路由。同步与命令目录生成脚本按 harness 布局读取。入口与动态依赖闭包不变；目标平台与宿主验收仍开放。
+
+
 ## 0.1.0-dev.57
 
 dev.57使完整命令、领域native.command与旧exec共用固定原生顶层参数校验；未知字段在素材读取、安装和创建输出前以固定诊断拒绝，不回显字段和值。覆盖666份合同、别名、联合参数、匹配选项与整体结果引用，创作文本保留数据语义。241项源码、39项公开拒绝、39项原生根边界与十三候选真实业务通过；新固定安装及完整权限／全命令／宿主路由仍待验收。 [Evidence](docs/evidence/filmcraft-native-parameter-fields-20261009/report.json).

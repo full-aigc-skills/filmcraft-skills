@@ -1,5 +1,10 @@
 # Version-bound release records
 
+## 0.1.0-dev.62
+
+dev.62 converges duplicated execution payloads into one built-in filmcraft-harness skill: six documented entries (bootstrap/cli/commands/workflow/desktop/task_session), runtime locks and execution-contract JSON are kept only in the harness; the 13 domain skills drop their per-skill scripts/ copies and route by name via HARNESS_DIR. Sync and command-coverage generators read the harness layout. Entry and dynamic-dependency closure is unchanged; target-platform and host acceptance remain open.
+
+
 ## 0.1.0-dev.57
 
 dev.57 makes complete-command, domain native.command and raw exec share fixed native top-level parameter validation. Undefined fields refuse before input reads, installation and output, with a fixed diagnostic and no echoed fields/values.666 contracts, aliases, unions, match options and whole-object references are covered; creative text remains data.241 source tests,39 public refusal cases,39 native root cases and thirteen real candidate business tasks pass. New fixed installation and full permissions/command/host-routing qualification remain open. [Evidence](docs/evidence/filmcraft-native-parameter-fields-20261009/report.json).

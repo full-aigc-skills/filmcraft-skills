@@ -16,8 +16,9 @@ import unittest
 import wave
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL = Path(os.environ['CRAFT_INSTALLED_SKILL_ROOT']).resolve() if os.environ.get('CRAFT_INSTALLED_SKILL_ROOT') else ROOT / 'skills/filmcraft-use'
-spec = importlib.util.spec_from_file_location('workflow', SKILL / 'scripts/workflow.py')
+# 执行实现收敛在 filmcraft-harness；领域示例与参考仍取自 filmcraft-use。
+HARNESS = Path(os.environ.get('CRAFT_INSTALLED_HARNESS_ROOT', ROOT / 'skills/filmcraft-harness'))
+spec = importlib.util.spec_from_file_location('workflow', HARNESS / 'scripts/workflow.py')
 workflow = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(workflow)
 

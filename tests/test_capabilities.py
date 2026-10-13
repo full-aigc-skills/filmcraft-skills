@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import Mock
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPTS = ROOT / 'skills/filmcraft-use/scripts'
+SCRIPTS = ROOT / 'skills/filmcraft-harness/scripts'
 
 
 def load(name):

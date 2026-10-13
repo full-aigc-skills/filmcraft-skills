@@ -1,5 +1,7 @@
 # FilmCraft 独立技能
 
+dev.62将重复执行实现收敛为内置 **filmcraft-harness** 技能：六个文档化入口（bootstrap/cli/commands/workflow/desktop/task_session）及运行时锁与执行契约 JSON 只在该技能保存；13 个领域技能删除各自 scripts/ 并按名称经 `HARNESS_DIR` 路由。入口与动态依赖闭包不变。固定发布验收另行记录。
+
 dev.61将连续领域交付接入任务会话，保存重开、PNG渲染及导出复用所属编辑器；独立媒体探测／解码工具另行计数。固定发布验收另行记录。
 
 dev.60 修复显式设置播放头后的工程保存重开误拒绝：只排除顶层selection与playhead临时状态，持久字段和嵌套字段继续严格比较。固定发布副本的原生交付另行验收。
@@ -43,7 +45,7 @@ dev.54在完整命令与所属桌面执行中保留宿主提供的FILMCRAFT_DATA
 
 已有素材与剪辑需求进入，交付可重开的 `.fcproj`、素材清单、预览和成片。
 
-当前技能源快照：`0.1.0-dev.61`；场景安装示例使用当前技能自身目录。既有固定插件证据保留原身份，新插件安装另行验证。
+当前技能源快照：`0.1.0-dev.62`；执行经由内置 **filmcraft-harness** 技能（`HARNESS_DIR`），计划示例与参考文档仍从各领域技能自身目录（`SKILL_DIR`）读取。既有固定插件证据保留原身份，新插件安装另行验证。
 
 已验证首次使用平台：macOS arm64、Python 3.11+。固定运行时安装在用户数据目录，技能文件保留在宿主加载目录。当前为开发版本；完整首版验收及通用 Skills CLI 实际安装仍未完成。
 
@@ -53,13 +55,14 @@ dev.54在完整命令与所属桌面执行中保留宿主提供的FILMCRAFT_DATA
 
 ## 首次使用
 
-在宿主中调用 **`filmcraft-use`**。直接使用 CLI 时，将 `SKILL_DIR` 设为宿主实际加载的 `SKILL.md` 所在绝对目录；可能位于用户／项目 `.agents/skills`、插件内部或宿主缓存，以实际路径为准。以下入口在调用前安装并核验固定运行时。
+在宿主中调用 **`filmcraft-use`**。所有执行经由内置 **filmcraft-harness** 技能：将 `HARNESS_DIR` 设为其实际加载的绝对目录，`SKILL_DIR` 设为领域技能目录（例如 filmcraft-use）以读取其示例与参考。两者可能位于用户／项目 `.agents/skills`、插件内部或宿主缓存，以实际路径为准。以下入口在调用前安装并核验固定运行时。
 
 <!-- CRAFT_FIRST_USE_START -->
 ```bash
-: "${SKILL_DIR:?Set to the actual loaded skill directory}"
-python3 -I -B "$SKILL_DIR/scripts/cli.py" -- --version
-python3 -I -B "$SKILL_DIR/scripts/cli.py" -- commands --json
+: "${HARNESS_DIR:?Set to the actually loaded filmcraft-harness skill directory}"
+python3 -I -B "$HARNESS_DIR/scripts/bootstrap.py"
+python3 -I -B "$HARNESS_DIR/scripts/cli.py" -- --version
+python3 -I -B "$HARNESS_DIR/scripts/cli.py" -- commands --json
 ```
 <!-- CRAFT_FIRST_USE_END -->
 

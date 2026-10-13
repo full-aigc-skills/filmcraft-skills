@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import Mock
 
 ROOT=Path(__file__).resolve().parents[1]
-spec=importlib.util.spec_from_file_location('workflow_reuse',ROOT/'skills/filmcraft-use/scripts/workflow.py')
+spec=importlib.util.spec_from_file_location('workflow_reuse',ROOT/'skills/filmcraft-harness/scripts/workflow.py')
 workflow=importlib.util.module_from_spec(spec);spec.loader.exec_module(workflow)
 
 

@@ -13,25 +13,32 @@ class SkillSuiteTests(unittest.TestCase):
  def test_suite_contains_separate_cli_setup_and_task_skills(self):
   suite=json.loads((ROOT/'skill-suite.json').read_text())
   names={entry['name'] for entry in suite['skills']}
-  domain=suite['pluginId']
-  for entry in suite['skills']:
-   lock=json.loads((ROOT/'skills'/entry['name']/'scripts/runtime.lock.json').read_text())
-   self.assertEqual(suite['runtimeVersion'],lock['resolvedVersion'])
+  domain=suite['pluginId'];harness=ROOT/'skills'/(domain+'-harness')
+  # 执行实现收敛在 harness：运行时锁与 CLI 入口只在 harness 技能。
+  lock=json.loads((harness/'scripts/runtime.lock.json').read_text())
+  self.assertEqual(suite['runtimeVersion'],lock['resolvedVersion'])
   self.assertTrue({domain+'-use',domain+'-cli',domain+'-cli-setup'}.issubset(names))
   self.assertGreater(len(names),3)
   for name in names:
    with tempfile.TemporaryDirectory() as temporary:
     isolated=Path(temporary)/'only-skill';shutil.copytree(ROOT/'skills'/name,isolated,ignore=shutil.ignore_patterns('__pycache__'))
-    result=subprocess.run([sys.executable,'-I','-B',str(isolated/'scripts/cli.py'),'--help'],capture_output=True,text=True)
+    if name==harness.name:entry=harness
+    else:
+     entry=Path(temporary)/harness.name;shutil.copytree(harness,entry,ignore=shutil.ignore_patterns('__pycache__'))
+    result=subprocess.run([sys.executable,'-I','-B',str(entry/'scripts/cli.py'),'--help'],capture_output=True,text=True)
     self.assertEqual(result.returncode,0,result.stderr)
-    self.assertFalse(any(isolated.rglob('*.pyc')))
+    self.assertFalse(any(Path(temporary).rglob('*.pyc')))
  def test_unknown_command_is_refused_before_installation(self):
   suite=json.loads((ROOT/'skill-suite.json').read_text())
+  harness=ROOT/'skills'/(suite['pluginId']+'-harness')
   for entry in suite['skills']:
    with tempfile.TemporaryDirectory() as temporary:
     isolated=Path(temporary)/'only-skill';shutil.copytree(ROOT/'skills'/entry['name'],isolated,ignore=shutil.ignore_patterns('__pycache__'))
+    if entry['name']==harness.name:target=harness
+    else:
+     target=Path(temporary)/harness.name;shutil.copytree(harness,target,ignore=shutil.ignore_patterns('__pycache__'))
     runtime=Path(temporary)/'runtime'
-    result=subprocess.run([sys.executable,'-I','-B',str(isolated/'scripts/cli.py'),'--runtime-home',str(runtime),'--','invented-subcommand'],capture_output=True,text=True)
+    result=subprocess.run([sys.executable,'-I','-B',str(target/'scripts/cli.py'),'--runtime-home',str(runtime),'--','invented-subcommand'],capture_output=True,text=True)
     self.assertNotEqual(result.returncode,0)
     self.assertFalse(runtime.exists())
 

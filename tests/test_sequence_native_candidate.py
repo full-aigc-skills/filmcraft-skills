@@ -30,7 +30,7 @@ class NativeSequenceCandidateTests(unittest.TestCase):
             binary.chmod(0o700)
             self.assertEqual(sha(binary), receipt['binarySha256'])
             self.assertEqual(subprocess.check_output([str(binary),'--version'], text=True).strip(), 'filmcraft-cli 0.2.0-craft.2')
-            spec = importlib.util.spec_from_file_location('candidate_mcp', ROOT/'skills/filmcraft-use/scripts/mcp_session.py')
+            spec = importlib.util.spec_from_file_location('candidate_mcp', ROOT/'skills/filmcraft-harness/scripts/mcp_session.py')
             mcp = importlib.util.module_from_spec(spec); spec.loader.exec_module(mcp)
             inputs = root/'inputs'; inputs.mkdir()
             background = inputs/'background.png'; Image.new('RGB',(32,18),(0,128,0)).save(background)

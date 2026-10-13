@@ -15,7 +15,7 @@ class RawCliPermissionsTests(unittest.TestCase):
     def fixture(self, root):
         scripts = root / 'one-skill/scripts'; scripts.mkdir(parents=True)
         for name in ('cli.py', 'execution_permissions.py', 'runtime.lock.json'):
-            shutil.copyfile(ROOT / 'skills/filmcraft-use/scripts' / name, scripts / name)
+            shutil.copyfile(ROOT / 'skills/filmcraft-harness/scripts' / name, scripts / name)
         (scripts / 'bootstrap.py').write_text("def install(*args): raise ValueError('owned_installer_would_run')\n")
         return scripts / 'cli.py'
 

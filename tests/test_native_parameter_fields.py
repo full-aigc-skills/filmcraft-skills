@@ -6,7 +6,7 @@ import tempfile
 import unittest
 ROOT=Path(__file__).resolve().parents[1]
 def module():
- spec=importlib.util.spec_from_file_location('native_field_commands',ROOT/'skills/filmcraft-use/scripts/commands.py')
+ spec=importlib.util.spec_from_file_location('native_field_commands',ROOT/'skills/filmcraft-harness/scripts/commands.py')
  m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
 class NativeParameterFieldTests(unittest.TestCase):
  def plan(self,command,params):return {'schema':'craft-command-plan/v1','operations':[{'command':command,'params':params}]}
@@ -46,7 +46,7 @@ class NativeParameterFieldTests(unittest.TestCase):
    m.validate_native_parameters('file.newProject',None)
  def test_domain_native_wrapper_rejects_unknown_parameter_before_session(self):
   from unittest.mock import Mock
-  spec=importlib.util.spec_from_file_location('native_fields_wrapper',ROOT/'skills/filmcraft-use/scripts/native_workflow.py');n=importlib.util.module_from_spec(spec);spec.loader.exec_module(n)
+  spec=importlib.util.spec_from_file_location('native_fields_wrapper',ROOT/'skills/filmcraft-harness/scripts/native_workflow.py');n=importlib.util.module_from_spec(spec);spec.loader.exec_module(n)
   session=Mock()
   with self.assertRaisesRegex(ValueError,'^invalid_native_parameters$'):
    n.execute(session,{'command':'file.newProject','params':{'OWNED_UNKNOWN_FIELD':'OWNED_CREDENTIAL_CANARY'}},{},[],ROOT)
@@ -56,8 +56,9 @@ class NativeParameterFieldTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as temporary:
    root=Path(temporary).resolve();cache=root/'runtime';target=root/'project.fcproj'
    skill=root/'owned-skill';shutil.copytree(ROOT/'skills/filmcraft-use',skill)
-   (skill/'scripts/bootstrap.py').write_text("def install(*args): raise ValueError('owned_installer_would_run')\n")
-   result=subprocess.run([sys.executable,'-I','-B',str(skill/'scripts/cli.py'),
+   harness=root/'owned-harness';shutil.copytree(ROOT/'skills/filmcraft-harness',harness)
+   (harness/'scripts/bootstrap.py').write_text("def install(*args): raise ValueError('owned_installer_would_run')\n")
+   result=subprocess.run([sys.executable,'-I','-B',str(harness/'scripts/cli.py'),
     '--runtime-home',str(cache),'--read-root',str(root),'--write-root',str(root),'--','exec','file.newProject',
     '{"name":"Owned","OWNED_UNKNOWN_FIELD":"OWNED_CREDENTIAL_CANARY"}','--save-as',str(target)],capture_output=True,text=True)
    self.assertEqual(result.returncode,1);self.assertEqual(json.loads(result.stdout)['error'],'invalid_native_parameters')
@@ -66,7 +67,7 @@ class NativeParameterFieldTests(unittest.TestCase):
 class ScopeTimeAliasTests(unittest.TestCase):
  def test_documented_scopes_time_aliases_are_valid_at_both_entries(self):
   m=module()
-  spec=importlib.util.spec_from_file_location('scope_native_wrapper',ROOT/'skills/filmcraft-use/scripts/native_workflow.py');wrapper=importlib.util.module_from_spec(spec);spec.loader.exec_module(wrapper)
+  spec=importlib.util.spec_from_file_location('scope_native_wrapper',ROOT/'skills/filmcraft-harness/scripts/native_workflow.py');wrapper=importlib.util.module_from_spec(spec);spec.loader.exec_module(wrapper)
   for params in [{'frame':204},{'seconds':8.5},{'timecode':'00:00:08:12'}]:
    with self.subTest(params=params):
     plan={'schema':'craft-command-plan/v1','operations':[{'command':'scopes.read','params':params}]}

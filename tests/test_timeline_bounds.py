@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class TimelineBoundsTests(unittest.TestCase):
     def setUp(self):
-        spec = importlib.util.spec_from_file_location('timeline_bounds_workflow', ROOT/'skills/filmcraft-use/scripts/workflow.py')
+        spec = importlib.util.spec_from_file_location('timeline_bounds_workflow', ROOT/'skills/filmcraft-harness/scripts/workflow.py')
         self.workflow = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.workflow)
 

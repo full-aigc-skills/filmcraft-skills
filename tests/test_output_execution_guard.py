@@ -8,7 +8,7 @@ import sys
 import tempfile
 import unittest
 
-SCRIPT = Path(os.environ.get('CRAFT_INSTALLED_OUTPUT_GUARD_SKILL', Path(__file__).resolve().parents[1] / 'skills/filmcraft-use')) / 'scripts/output_guard.py'
+SCRIPT = Path(os.environ.get('CRAFT_INSTALLED_OUTPUT_GUARD_SKILL', Path(__file__).resolve().parents[1] / 'skills/filmcraft-harness')) / 'scripts/output_guard.py'
 
 
 class OutputGuardTests(unittest.TestCase):

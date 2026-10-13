@@ -10,7 +10,7 @@ import unittest
 import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE = ROOT/'skills/filmcraft-use/scripts/sequence_assets.py'
+MODULE = ROOT/'skills/filmcraft-harness/scripts/sequence_assets.py'
 
 
 def png(path):
@@ -65,10 +65,12 @@ class SequenceAssetTests(unittest.TestCase):
 
     def test_single_installed_skill_has_no_sibling_resource_dependency(self):
         with tempfile.TemporaryDirectory() as temporary:
-            root=Path(temporary);installed=root/'.agents/skills/filmcraft-cli-media'
+            # 执行实现收敛在 harness：独立安装的领域技能不含脚本，模块从 harness 副本加载且不回写技能目录。
+            root=Path(temporary);installed=root/'.agents/skills/filmcraft-cli-media';harness=root/'.agents/skills/filmcraft-harness'
             shutil.copytree(ROOT/'skills/filmcraft-cli-media',installed,ignore=shutil.ignore_patterns('__pycache__'))
+            shutil.copytree(ROOT/'skills/filmcraft-harness',harness,ignore=shutil.ignore_patterns('__pycache__'))
             original={str(p.relative_to(installed)):hashlib.sha256(p.read_bytes()).hexdigest() for p in installed.rglob('*') if p.is_file()}
-            spec=importlib.util.spec_from_file_location('installed_sequence_assets',installed/'scripts/sequence_assets.py')
+            spec=importlib.util.spec_from_file_location('installed_sequence_assets',harness/'scripts/sequence_assets.py')
             module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
             source=root/'source';source.mkdir();path,value=fixture(source)
             self.assertEqual(module.validate_sequence(path,hashlib.sha256(path.read_bytes()).hexdigest()),value)

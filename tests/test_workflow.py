@@ -5,7 +5,7 @@ import unittest
 import tempfile
 from unittest.mock import patch
 
-SOURCE = Path(__file__).resolve().parents[1] / 'skills/filmcraft-use/scripts/workflow.py'
+SOURCE = Path(__file__).resolve().parents[1] / 'skills/filmcraft-harness/scripts/workflow.py'
 
 class WorkflowTests(unittest.TestCase):
     def setUp(self):

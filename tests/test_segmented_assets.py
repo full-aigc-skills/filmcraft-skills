@@ -22,7 +22,7 @@ def segmented(root):
 class SegmentedAssetTests(unittest.TestCase):
     def setUp(self):
         import importlib.util
-        path=Path(__file__).resolve().parents[1]/'skills/filmcraft-use/scripts/sequence_assets.py'
+        path=Path(__file__).resolve().parents[1]/'skills/filmcraft-harness/scripts/sequence_assets.py'
         spec=importlib.util.spec_from_file_location('segment_assets',path);self.module=importlib.util.module_from_spec(spec);spec.loader.exec_module(self.module)
     def verify(self,path):return self.module.validate_sequence(path,self.module.digest(path))
     def test_copy_segments_normalizes_global_frames_and_preserves_source(self):

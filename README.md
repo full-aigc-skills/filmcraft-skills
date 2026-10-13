@@ -1,5 +1,7 @@
 # FilmCraft Skills
 
+dev.62 converges the duplicated execution payloads into one built-in **filmcraft-harness** skill: six documented entries (bootstrap/cli/commands/workflow/desktop/task_session) plus the runtime locks and execution-contract JSON live only there; the 13 domain skills drop their per-skill scripts/ and route by name via `HARNESS_DIR`. Entry and dynamic-dependency closure is unchanged. Fixed-release qualification remains separate.
+
 dev.61 routes continuous domain workflows through the task session. Save/reopen, PNG render and export reuse the owned editor; standalone media probe/decode helpers are counted separately. Fixed-release qualification remains separate.
 
 dev.60 fixes saved-project comparison after setting the playhead: only top-level selection and playhead are transient; persistent and nested fields remain strictly compared. Fixed-release native delivery is verified separately.
@@ -43,7 +45,7 @@ Segmented first-use guidance now matches native acceptance of fixed Film40 / Eff
 
 Edit existing media into a reopenable `.fcproj`, asset inventory, previews and a finished video.
 
-Current source snapshot: `0.1.0-dev.61`; scenario installation examples use each loaded skill’s own directory. Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
+Current source snapshot: `0.1.0-dev.62`; execution goes through the built-in **filmcraft-harness** skill (`HARNESS_DIR`), while plan examples and reference documents are read from each loaded domain skill's own directory (`SKILL_DIR`). Previous fixed plugin evidence retains its original identity; updated plugin installation is verified separately.
 
 Verified first-use platform: macOS arm64 and Python 3.11+. Pinned runtimes install into the user data directory; skill files stay in their host-loaded directory. These are development releases; complete V1 acceptance and generic Skills CLI installation remain open.
 
@@ -53,13 +55,14 @@ Maintained `0.2.0-craft.4` is published and passes independent public CLI/model 
 
 ## First use
 
-Invoke **`filmcraft-use`** in your host. For direct CLI use, set `SKILL_DIR` to the absolute directory of the `SKILL.md` actually loaded by that host. It may be under user/project `.agents/skills`, the plugin, or a host cache; use the actual path. Each entry below installs/verifies its locked runtime before invoking it.
+Invoke **`filmcraft-use`** in your host. All execution goes through the built-in **filmcraft-harness** skill: set `HARNESS_DIR` to its actually loaded absolute directory, and `SKILL_DIR` to the domain skill directory (for example filmcraft-use) for its examples and references. They may be under user/project `.agents/skills`, the plugin, or a host cache; use the actual paths. Each entry below installs/verifies its locked runtime before invoking it.
 
 <!-- CRAFT_FIRST_USE_START -->
 ```bash
-: "${SKILL_DIR:?Set to the actual loaded skill directory}"
-python3 -I -B "$SKILL_DIR/scripts/cli.py" -- --version
-python3 -I -B "$SKILL_DIR/scripts/cli.py" -- commands --json
+: "${HARNESS_DIR:?Set to the actually loaded filmcraft-harness skill directory}"
+python3 -I -B "$HARNESS_DIR/scripts/bootstrap.py"
+python3 -I -B "$HARNESS_DIR/scripts/cli.py" -- --version
+python3 -I -B "$HARNESS_DIR/scripts/cli.py" -- commands --json
 ```
 <!-- CRAFT_FIRST_USE_END -->
 

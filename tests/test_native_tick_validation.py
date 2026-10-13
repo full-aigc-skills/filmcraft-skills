@@ -4,7 +4,7 @@ import importlib.util
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('tick_gateway', ROOT / 'skills/filmcraft-use/scripts/commands.py')
+spec = importlib.util.spec_from_file_location('tick_gateway', ROOT / 'skills/filmcraft-harness/scripts/commands.py')
 gateway = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(gateway)
 

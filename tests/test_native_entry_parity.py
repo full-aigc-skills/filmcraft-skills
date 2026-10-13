@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import Mock
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPTS = ROOT / 'skills/filmcraft-use/scripts'
+SCRIPTS = ROOT / 'skills/filmcraft-harness/scripts'
 
 
 def load(name):
@@ -63,8 +63,15 @@ class NativeEntryParityTests(unittest.TestCase):
                 skill = root / entry['name']
                 shutil.copytree(ROOT / 'skills' / entry['name'], skill,
                                 ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+                # 执行实现收敛在 harness：领域技能独立复制后经 harness 脚本执行。
+                if entry['name'] == 'filmcraft-harness':
+                    harness = skill
+                else:
+                    harness = root / 'filmcraft-harness'
+                    shutil.copytree(ROOT / 'skills' / 'filmcraft-harness', harness,
+                                    ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
                 # 非法输入测试禁止网络及实际安装；到达安装器即暴露预检缺失。
-                (skill / 'scripts/bootstrap.py').write_text(
+                (harness / 'scripts/bootstrap.py').write_text(
                     "def install(*args, **kwargs):\n    raise RuntimeError('unexpected_runtime_install')\n")
                 for script in ('commands', 'workflow'):
                     operation = self.operation('254016000000')
@@ -75,7 +82,7 @@ class NativeEntryParityTests(unittest.TestCase):
                     plan_path = root / 'plan.json'
                     plan_path.write_text(json.dumps(plan))
                     output, runtime = root / 'output', root / 'runtime'
-                    argv = [sys.executable, '-I', '-B', str(skill / 'scripts' / (script + '.py'))]
+                    argv = [sys.executable, '-I', '-B', str(harness / 'scripts' / (script + '.py'))]
                     if script == 'commands':
                         argv.append('run')
                     argv += [str(plan_path), '--read-root', str(root.resolve()), '--write-root', str(root.resolve()), '--output', str(output), '--runtime-home', str(runtime)]
@@ -84,7 +91,7 @@ class NativeEntryParityTests(unittest.TestCase):
                     self.assertIn('invalid_tick_parameter', json.loads(result.stdout)['error'])
                     self.assertFalse(output.exists())
                     self.assertFalse(runtime.exists())
-                self.assertFalse(any(skill.rglob('*.pyc')))
+                self.assertFalse(any(root.rglob('*.pyc')))
 
     def test_reference_is_allowed_in_plan_and_rechecked_before_native_request(self):
         operation = self.operation({'$ref': 'timing.value'})

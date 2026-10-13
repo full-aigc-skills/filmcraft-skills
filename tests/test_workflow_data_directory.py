@@ -7,7 +7,7 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / 'skills/filmcraft-use/scripts/workflow.py'
+SCRIPT = ROOT / 'skills/filmcraft-harness/scripts/workflow.py'
 class WorkflowDataDirectoryTests(unittest.TestCase):
     def module(self):
         spec = importlib.util.spec_from_file_location('workflow_data_test', SCRIPT)

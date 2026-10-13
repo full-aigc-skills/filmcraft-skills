@@ -5,7 +5,7 @@ import unittest
 
 class MotionLutTests(unittest.TestCase):
     def setUp(self):
-        spec=importlib.util.spec_from_file_location('motion_workflow',Path(__file__).resolve().parents[1]/'skills/filmcraft-use/scripts/workflow.py')
+        spec=importlib.util.spec_from_file_location('motion_workflow',Path(__file__).resolve().parents[1]/'skills/filmcraft-harness/scripts/workflow.py')
         self.w=importlib.util.module_from_spec(spec);spec.loader.exec_module(self.w)
 
     def plan(self,command,params):

@@ -18,8 +18,12 @@ class MulticamSkillTests(unittest.TestCase):
         self.assertEqual(len(commands), 35)
         self.assertTrue(all(row['ownerSkill'] == name for row in commands))
         home = ROOT / 'skills' / name
-        for path in ['SKILL.md', 'scripts/bootstrap.py', 'scripts/cli.py', 'scripts/commands.py', 'scripts/runtime.lock.json', 'references/multicam-scene.md']:
+        # 执行实现收敛在 harness：领域技能保留场景知识；安装与入口脚本检查 harness。
+        harness = ROOT / 'skills' / 'filmcraft-harness'
+        for path in ['SKILL.md', 'references/multicam-scene.md']:
             self.assertTrue((home / path).is_file(), path)
+        for path in ['scripts/bootstrap.py', 'scripts/cli.py', 'scripts/commands.py', 'scripts/runtime.lock.json']:
+            self.assertTrue((harness / path).is_file(), path)
 
 
 if __name__ == '__main__':

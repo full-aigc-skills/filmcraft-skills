@@ -3,7 +3,7 @@ import hashlib,json,os,subprocess,sys,tempfile,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DOMAIN=json.loads((ROOT/'skill-suite.json').read_text())['pluginId']
-SKILL=Path(os.environ['CRAFT_INSTALLED_SKILL_ROOT']).resolve() if os.environ.get('CRAFT_INSTALLED_SKILL_ROOT') else ROOT/'skills'/(DOMAIN+'-use')
+SKILL=Path(os.environ['CRAFT_INSTALLED_SKILL_ROOT']).resolve() if os.environ.get('CRAFT_INSTALLED_SKILL_ROOT') else ROOT/'skills'/(DOMAIN+'-harness')
 INSTALLATION=os.environ.get('CRAFT_PRESERVED_STAGE_INSTALLATION')
 @unittest.skipUnless(INSTALLATION,'requires explicitly verified native runtime installation')
 class NativePreservedStageTests(unittest.TestCase):

@@ -4,7 +4,7 @@ import importlib.util
 from pathlib import Path
 import unittest
 
-SOURCE = Path(__file__).resolve().parents[1] / 'skills/filmcraft-use/scripts/workflow.py'
+SOURCE = Path(__file__).resolve().parents[1] / 'skills/filmcraft-harness/scripts/workflow.py'
 spec = importlib.util.spec_from_file_location('roundtrip_workflow', SOURCE)
 workflow = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(workflow)

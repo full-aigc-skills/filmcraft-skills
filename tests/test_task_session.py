@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-SCRIPT = Path(__file__).resolve().parents[1] / 'skills/filmcraft-use/scripts/task_session.py'
+SCRIPT = Path(__file__).resolve().parents[1] / 'skills/filmcraft-harness/scripts/task_session.py'
 
 
 def module():

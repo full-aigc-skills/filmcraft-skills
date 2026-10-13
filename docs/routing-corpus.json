@@ -17,7 +17,8 @@
       "expectedSkill": "filmcraft-cli",
       "rejectSkills": [
         "filmcraft-cli-timeline",
-        "filmcraft-use"
+        "filmcraft-use",
+        "filmcraft-harness"
       ]
     },
     {
@@ -127,6 +128,33 @@
         "filmcraft-cli-export"
       ],
       "reason": "多个阶段由 use 协调，单一导出技能不承接全部目标"
+    },
+    {
+      "id": "route-harness-01",
+      "request": "安装或更新锁定的 FilmCraft CLI 并校验制品摘要",
+      "expectedSkill": "filmcraft-harness",
+      "rejectSkills": [
+        "filmcraft-cli-setup",
+        "filmcraft-use"
+      ]
+    },
+    {
+      "id": "route-harness-02",
+      "request": "直接执行 filmcraft 原生命令计划、剪辑 workflow 或任务级会话入口",
+      "expectedSkill": "filmcraft-harness",
+      "rejectSkills": [
+        "filmcraft-cli",
+        "filmcraft-cli-timeline"
+      ]
+    },
+    {
+      "id": "route-harness-03",
+      "request": "完成固定桌面安装后在同一会话运行命令计划",
+      "expectedSkill": "filmcraft-harness",
+      "rejectSkills": [
+        "filmcraft-cli-export",
+        "filmcraft-use"
+      ]
     }
   ]
 }

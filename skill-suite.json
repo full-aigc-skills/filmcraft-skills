@@ -1,7 +1,7 @@
 {
   "schema": "craft-skill-suite/v1",
   "pluginId": "filmcraft",
-  "version": "0.1.0-dev.61",
+  "version": "0.1.0-dev.62",
   "source": {
     "repository": "https://github.com/storytold/filmcraft",
     "commit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
@@ -150,6 +150,14 @@
       "commandPrefixes": [
         "transcript."
       ]
+    },
+    {
+      "name": "filmcraft-harness",
+      "title": "内置执行 harness",
+      "description": "全部领域技能共用的统一执行通道：首次安装器、原生命令入口、剪辑工作流、桌面会话与任务级会话脚本都在本技能 scripts/ 内。",
+      "kind": "harness",
+      "commandCount": 0,
+      "commandPrefixes": []
     }
   ],
   "resourceSource": "filmcraft-use",

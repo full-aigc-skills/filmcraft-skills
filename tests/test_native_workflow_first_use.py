@@ -3,6 +3,7 @@ import hashlib,json,os,shutil,subprocess,sys,tempfile,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];DOMAIN=ROOT.name.removesuffix('-skills')
 SOURCE=Path(os.environ.get('CRAFT_INSTALLED_NATIVE_WORKFLOW_SKILL',ROOT/'skills'/(DOMAIN+'-use')))
+HARNESS=ROOT/'skills'/(DOMAIN+'-harness')
 @unittest.skipUnless(os.environ.get('CRAFT_NATIVE_WORKFLOW_FIRST_USE')=='1','explicit native opt-in')
 class NativeFirstUse(unittest.TestCase):
  def test_public_delivery_and_revision(self):
@@ -20,7 +21,7 @@ class NativeFirstUse(unittest.TestCase):
    if DOMAIN=='filmcraft':
     image=root/'still.png';Image.new('RGBA',(32,32),(239,91,54,255)).save(image);plan['assets']={'still':{'path':str(image),'sha256':hashlib.sha256(image.read_bytes()).hexdigest()}}
    def run(p,output,source=None):
-    f=root/(output.name+'.json');f.write_text(json.dumps(p));argv=[sys.executable,'-I','-B',str(skill/'scripts/workflow.py'),str(f),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(output),'--runtime-home',str(runtime)]
+    f=root/(output.name+'.json');f.write_text(json.dumps(p));argv=[sys.executable,'-I','-B',str(HARNESS/'scripts/workflow.py'),str(f),'--read-root',str(root.resolve()),'--write-root',str(root.resolve()),'--output',str(output),'--runtime-home',str(runtime)]
     if source:argv+=['--source',str(source)]
     result=subprocess.run(argv,capture_output=True,text=True,timeout=300,env=environment);self.assertEqual(result.returncode,0,result.stdout+result.stderr)
     manifest=json.loads((output/'manifest.json').read_text());self.assertEqual(manifest['schema'],DOMAIN+'-delivery/v1')
@@ -40,4 +41,4 @@ class NativeFirstUse(unittest.TestCase):
    self.assertEqual(before,{str(p.relative_to(original)):hashlib.sha256(p.read_bytes()).hexdigest() for p in original.rglob('*') if p.is_file()})
    records=[json.loads(p.read_text()) for p in root.glob('.filmcraft-execution-*.json')]
    self.assertEqual(len(records),2);self.assertTrue(all(r['state']=='finished' and r['identity']['runtimeSha256']==manifest['runtimeSha256'] for r in records))
-   if os.environ.get('CRAFT_NATIVE_WORKFLOW_REPORT'):Path(os.environ['CRAFT_NATIVE_WORKFLOW_REPORT']).write_text(json.dumps({'domain':DOMAIN,'result':'PASS','pathCase':{'unicodeAndSpaces':path_case,'skillName':skill.name,'parentName':root.name,'runtimeInitiallyAbsent':True,'offlineOverridesExcluded':True},'guardRecords':records,'workflowSha256':hashlib.sha256((skill/'scripts/workflow.py').read_bytes()).hexdigest(),'guardSha256':hashlib.sha256((skill/'scripts/output_guard.py').read_bytes()).hexdigest(),'entrySha256':hashlib.sha256((skill/'scripts/native_workflow.py').read_bytes()).hexdigest(),'projectSha256':manifest['files'][project],'revisionSha256':revised['files'][project],'scope':('fixed installed' if os.environ.get('CRAFT_INSTALLED_NATIVE_WORKFLOW_SKILL') else 'source candidate')+' single-skill cold native workflow delivery/revision; no full DAG acceptance'},indent=2)+'\n')
+   if os.environ.get('CRAFT_NATIVE_WORKFLOW_REPORT'):Path(os.environ['CRAFT_NATIVE_WORKFLOW_REPORT']).write_text(json.dumps({'domain':DOMAIN,'result':'PASS','pathCase':{'unicodeAndSpaces':path_case,'skillName':skill.name,'parentName':root.name,'runtimeInitiallyAbsent':True,'offlineOverridesExcluded':True},'guardRecords':records,'workflowSha256':hashlib.sha256((HARNESS/'scripts/workflow.py').read_bytes()).hexdigest(),'guardSha256':hashlib.sha256((HARNESS/'scripts/output_guard.py').read_bytes()).hexdigest(),'entrySha256':hashlib.sha256((HARNESS/'scripts/native_workflow.py').read_bytes()).hexdigest(),'projectSha256':manifest['files'][project],'revisionSha256':revised['files'][project],'scope':('fixed installed' if os.environ.get('CRAFT_INSTALLED_NATIVE_WORKFLOW_SKILL') else 'source candidate')+' single-skill cold native workflow delivery/revision; no full DAG acceptance'},indent=2)+'\n')
