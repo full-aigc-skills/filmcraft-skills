@@ -254,3 +254,7 @@ Source dev.51 closes undefined domain-wrapper parameter fields before asset read
 Actual signed desktop discovery confirms the explicit model cache and installed tiny model, but this official desktop build reports speech unavailable; inference is refused. CLI inference succeeds with 28 words and unchanged model digests. [Evidence](docs/evidence/source54-readonly-model-20261009/report.json).
 
 Continuous editing now has a public `task_session.py` entry: keep one foreground handle, MCP and optional owned signed desktop across plans; receipts remain per-plan and failures stop without restart. See [task sessions](skills/filmcraft-use/references/task-session.md). Fixed-release acceptance is recorded separately.
+
+## 场景技能开发候选
+
+已增加 6 个领域场景技能及 1 个内嵌编辑器入口。详见 [场景目录](docs/scene-skills.md)。本地未发布候选，不代表全部场景的创作质量已验收。
