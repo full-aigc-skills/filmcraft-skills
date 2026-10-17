@@ -41,3 +41,16 @@ class ReleaseChecksTests(unittest.TestCase):
   result=unittest.TextTestRunner(stream=io.StringIO(),resultclass=EvidenceResult).run(unittest.defaultTestLoader.loadTestsFromTestCase(Example))
   self.assertEqual(result.rows,[{'id':Example('test_failure').id(),'status':'FAIL','failedSubtests':2}])
   self.assertEqual(len(result.failures),2)
+
+ def test_declared_scene_inventory_is_checked_without_changing_base_suite(self):
+  import tempfile,json,hashlib
+  from check_release import skill_inventory
+  with tempfile.TemporaryDirectory() as directory:
+   root=Path(directory)
+   for name in ['base','scene']:
+    path=root/'skills'/name;path.mkdir(parents=True);(path/'SKILL.md').write_text('name: '+name)
+   scene=root/'skills/scene/SKILL.md';manifest=root/'scenario-candidates.json'
+   manifest.write_text(json.dumps({'skills':[{'name':'scene','sha256':hashlib.sha256(scene.read_bytes()).hexdigest()}]}))
+   self.assertEqual(skill_inventory(root,['base']),['base','scene'])
+   scene.write_text('changed')
+   with self.assertRaisesRegex(ValueError,'candidate_skill_digest'):skill_inventory(root,['base'])

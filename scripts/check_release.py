@@ -44,12 +44,24 @@ def validate_workflow(text):
  if any(line.strip()!='if: always()' for line in text.splitlines() if re.match(r'^\s*if:',line)):raise ValueError('required_workflow_conditional')
 
 
+def skill_inventory(root, baseline):
+ root=Path(root);names=list(baseline);candidate=root/'scenario-candidates.json'
+ if candidate.exists():
+  for row in json.loads(candidate.read_text())['skills']:
+   name=row['name']
+   if not re.fullmatch('[a-z0-9]+(?:-[a-z0-9]+)*',name) or name in names:raise ValueError('candidate_skill_name')
+   entry=root/'skills'/name/'SKILL.md'
+   if not entry.is_file() or hashlib.sha256(entry.read_bytes()).hexdigest()!=row['sha256']:raise ValueError('candidate_skill_digest: '+name)
+   names.append(name)
+ if len(names)!=len(set(names)) or set(names)!={p.name for p in (root/'skills').iterdir() if p.is_dir()}:raise ValueError('skill_inventory_mismatch')
+ return names
+
+
 def metadata(root):
  validate_workflow((root/'.github/workflows/offline.yml').read_text())
  suite=json.loads((root/'skill-suite.json').read_text());manifest=json.loads((root/'.claude-plugin/plugin.json').read_text())
  if suite['version']!=manifest['version'] or manifest['name']!='filmcraft-skills':raise ValueError('metadata_identity_mismatch')
- names=[r['name'] for r in suite['skills']]
- if len(names)!=len(set(names)) or set(names)!={p.name for p in (root/'skills').iterdir() if p.is_dir()}:raise ValueError('skill_inventory_mismatch')
+ names=skill_inventory(root,[r['name'] for r in suite['skills']])
  for name in names:
   text=(root/'skills'/name/'SKILL.md').read_text()
   if len(text.splitlines())>=500 or not re.search(r'^name: '+re.escape(name)+r'\s*$',text,re.M) or not re.search(r'^description: .+',text,re.M):raise ValueError('skill_entry_invalid: '+name)
