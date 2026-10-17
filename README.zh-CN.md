@@ -248,3 +248,13 @@ dev.50拒绝工作流顶层及操作对象中的未定义字段，在素材读�
 真实签名桌面已发现显式缓存和已安装 tiny 模型，但该官方桌面构建报告语音识别不可用，推理被拒绝；CLI 真实识别 28 个词且模型摘要不变。[证据](docs/evidence/source54-readonly-model-20261009/report.json)。
 
 连续编辑新增公开任务入口 `task_session.py`：保持一个前台句柄、同一MCP及可选签名桌面，逐计划回执，失败后停止而不重启。参见[任务会话](skills/filmcraft-use/references/task-session.md)。固定发布验收另行记录。
+
+## 场景技能开发候选
+
+已增加 6 个领域场景技能及 1 个内嵌编辑器入口。详见 [场景目录](docs/scene-skills.md)。本地未发布候选，不代表全部场景的创作质量已验收。
+
+## main选择参数补充 / main selection parameter
+
+新增[关联音视频单侧选择](skills/filmcraft-interview-edit/references/main-selection.md)：timeline.select的linked:false只影响本次选择，不改变全局开关。Windows main内置演示工程已验证单侧删除、伙伴保护与撤销重开；显式edit.clear目标仍会展开关联伙伴，单侧删除必须按当前精确选择执行。真实媒体试听与宿主同步未验收。
+
+The main guide distinguishes per-selection linked:false from the global linked-selection preference. Windows main demo-project checks pass for isolated deletion, partner preservation, undo and native reopen. Explicit deletion targets still expand linked partners; use the precise current selection for single-side deletion. Real-media listening and host synchronization remain unverified.
