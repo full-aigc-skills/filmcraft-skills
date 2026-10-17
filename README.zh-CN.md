@@ -252,3 +252,9 @@ dev.50拒绝工作流顶层及操作对象中的未定义字段，在素材读�
 ## 场景技能开发候选
 
 已增加 6 个领域场景技能及 1 个内嵌编辑器入口。详见 [场景目录](docs/scene-skills.md)。本地未发布候选，不代表全部场景的创作质量已验收。
+
+## main选择参数补充 / main selection parameter
+
+新增[关联音视频单侧选择](skills/filmcraft-interview-edit/references/main-selection.md)：timeline.select的linked:false只影响本次选择，不改变全局开关。旧纯视频回归不能证明新关联素材场景通过，专例仍待执行。
+
+The main guide distinguishes per-selection linked:false from the global linked-selection preference. Paired audio/video behavior and host synchronization still need their own runtime case.
