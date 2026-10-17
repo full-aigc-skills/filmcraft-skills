@@ -9,7 +9,9 @@ class DesktopInstallContract(unittest.TestCase):
   # 执行实现收敛在 harness：安装器与桌面锁只在 filmcraft-harness；各领域技能保留安装指南。
   harness=ROOT/'skills/filmcraft-harness';m=load(harness)
   lock=json.loads((harness/'scripts/desktop.lock.json').read_text());self.assertEqual(m.validate(lock)['version'],'0.2.0')
-  for s in (ROOT/'skills').iterdir():
+  # 基础桌面技能验证保留；场景扩展另验其实际CLI/MCP入口，不要求复制安装器。
+  for row in json.loads((ROOT/'skill-suite.json').read_text())['skills']:
+   s=ROOT/'skills'/row['name']
    if not (s/'SKILL.md').exists() or s==harness:continue
    self.assertIn('references/desktop-install.md',(s/'SKILL.md').read_text());self.assertTrue((s/'references/desktop-install.md').exists())
  def test_untrusted_url_and_platform_are_rejected(self):

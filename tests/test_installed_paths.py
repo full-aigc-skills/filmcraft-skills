@@ -1,5 +1,6 @@
 """真实技能目录调用合同；覆盖用户、项目和插件布局以及空格路径。"""
 import os
+import json
 from pathlib import Path
 import re
 import shutil
@@ -13,14 +14,16 @@ class InstalledPathTests(unittest.TestCase):
    with self.subTest(file=str(path.relative_to(ROOT))):
     content = path.read_text()
     self.assertNotIn('/mnt/skills/user/', content)
-    if path.name == 'SKILL.md':
+    baseline={row['name'] for row in json.loads((ROOT/'skill-suite.json').read_text())['skills']}
+    if path.name == 'SKILL.md' and path.parent.name in baseline:
      self.assertIn('SKILL_DIR', content)
      self.assertIn('实际加载', content)
      locations = re.findall(r'(?:~/.agents/skills/|`\.agents/skills/|其 `skills/)('+re.escape(path.parent.name.split('-')[0])+r'-[a-z-]+)', content)
      self.assertEqual(set(locations), {path.parent.name}, '安装位置示例必须只引用当前技能自身')
  def test_documented_script_paths_run_in_installation_layouts(self):
   harness = ROOT / 'skills' / 'filmcraft-harness'
-  for skill in sorted((ROOT / 'skills').iterdir()):
+  for row in json.loads((ROOT/'skill-suite.json').read_text())['skills']:
+   skill=ROOT/'skills'/row['name']
    content = (skill / 'SKILL.md').read_text()
    # 执行实现收敛在 filmcraft-harness；领域技能文档经由 HARNESS_DIR 引用共享入口。
    scripts = set(re.findall(r'"\$HARNESS_DIR/(scripts/[^"\s]+\.py)"', content))

@@ -54,3 +54,12 @@ class ReleaseChecksTests(unittest.TestCase):
    self.assertEqual(skill_inventory(root,['base']),['base','scene'])
    scene.write_text('changed')
    with self.assertRaisesRegex(ValueError,'candidate_skill_digest'):skill_inventory(root,['base'])
+
+ def test_scene_scripts_are_self_contained_and_help_has_no_install_side_effect(self):
+  import json,subprocess
+  root=Path(__file__).resolve().parents[1]
+  for entry in json.loads((root/'scenario-candidates.json').read_text())['skills']:
+   home=root/'skills'/entry['name']
+   for script in (home/'scripts').glob('*.py'):
+    result=subprocess.run([sys.executable,'-I','-B',str(script),'--help'],cwd=root.parent,capture_output=True,text=True,timeout=30)
+    self.assertEqual(result.returncode,0,result.stderr)
