@@ -264,3 +264,12 @@ Continuous editing now has a public `task_session.py` entry: keep one foreground
 新增[关联音视频单侧选择](skills/filmcraft-interview-edit/references/main-selection.md)：timeline.select的linked:false只影响本次选择，不改变全局开关。Windows main内置演示工程已验证单侧删除、伙伴保护与撤销重开；显式edit.clear目标仍会展开关联伙伴，单侧删除必须按当前精确选择执行。真实媒体试听与宿主同步未验收。
 
 The main guide distinguishes per-selection linked:false from the global linked-selection preference. Windows main demo-project checks pass for isolated deletion, partner preservation, undo and native reopen. Explicit deletion targets still expand linked partners; use the precise current selection for single-side deletion. Real-media listening and host synchronization remain unverified.
+
+
+## 具体剪辑场景候选 / Editing workflow candidates
+
+新增教学关键步骤定格、讲者画中画、声音先入J-cut三个独立技能，内含明确素材前提、真实方法和参数、时间单位、返回ID绑定、工程重开及实际编码检查。源于固定Kdenlive官方帮助的流程事实，正文、配方与夹具原创；技术样本不等于真实讲话语义、音质或宿主同步通过。冻结基础技能源和运行时锁不变。
+
+- [filmcraft-freeze-explainer](skills/filmcraft-freeze-explainer/SKILL.md)
+- [filmcraft-presenter-inset](skills/filmcraft-presenter-inset/SKILL.md)
+- [filmcraft-jcut-dialogue](skills/filmcraft-jcut-dialogue/SKILL.md)
