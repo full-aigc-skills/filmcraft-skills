@@ -1,0 +1,26 @@
+{
+  "schema": "craft-runtime-patch/v1",
+  "upstreamRepository": "https://github.com/storytold/filmcraft",
+  "upstreamCommit": "adfd9a66de2bebc764c7f57435ccdf0f1d2e1df6",
+  "upstreamVersion": "0.2.0",
+  "patch": "runtime/patches/audio-resample-edit-list.patch",
+  "patchSha256": "84c927432192818145c660852cc3dbbbba3fbe9666a43a3f5b873c10deac0612",
+  "runtimeVersion": "0.2.0-craft.6",
+  "status": "candidate-not-published",
+  "reason": "Backport upstream 5bf2203bb89d1415450b0d69f0f40c7927c73860: separate MP4 audio edit-list offset from local resampling phase, retaining PCM packet timing, Whisper and all prior maintenance fixes.",
+  "includedCaptionPatchSha256": "d2926845dd713275dca62e51897b6becb49edc728cde8727d93c2915225dd2f8",
+  "limits": [
+    "Candidate recipe only; immutable releases and installer locks are unchanged",
+    "Build and regression tests retain the Whisper feature without downloading model weights",
+    "Synthetic native regressions do not qualify private-media delivery, real speech recognition, listening, installed hosts or release publication"
+  ],
+  "includedSequencePatchSha256": "b73f97f8e69a66435725cd8c4aa5bf3eecefa1da417c02da8d6bbdbd87e2c793",
+  "cargoFeatures": [
+    "whisper"
+  ],
+  "includedAudioPatchSha256": "97214d5069be48ed8377a752ecaa25bddef80d8df8015101fbeb79fa968d70c3",
+  "speechDirectoryPatchSha256": "c901854deaa79c0b204eb3fba21f0d685af147d7ed1309037b695424aa76c0b3",
+  "includedWhisperPatchSha256": "7ee28f300778a9a58c9c5f332f1a1a4829742d632f144c8ed0c887ea04f540c4",
+  "includedPcmPacketTimingPatchSha256": "0474c967c96f2673691dea7f77c23598cd81d8c1213d9998246fe2c512a7757a",
+  "upstreamFixCommit": "5bf2203bb89d1415450b0d69f0f40c7927c73860"
+}

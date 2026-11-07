@@ -245,7 +245,9 @@
     "test_task_session.TaskSessionTests.test_eof_closes_and_task_cannot_be_reentered",
     "test_task_session.TaskSessionTests.test_source_protection_cannot_include_task_output",
     "test_task_session.TaskSessionTests.test_line_protocol_keeps_one_instance_until_explicit_close",
-    "test_task_session.TaskSessionTests.test_malformed_line_stops_without_edit_or_restarting"
+    "test_task_session.TaskSessionTests.test_malformed_line_stops_without_edit_or_restarting",
+    "test_runtime_builder.RuntimeBuilderTests.test_resample_builder_isolated_entrypoint_and_cumulative_regression",
+    "test_runtime_builder.RuntimeBuilderTests.test_resample_build_executes_all_inherited_regressions_before_packaging"
   ],
   "environmentTests": [
     {

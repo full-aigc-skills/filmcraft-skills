@@ -61,18 +61,22 @@ def build(repository, output, manifest_name="caption-font-patch.json", version=V
             raise ValueError('workspace_version_mismatch')
         cargo.write_text(text.replace(original, 'version = "' + version + '"'))
         env = dict(os.environ, RUSTFLAGS='--remap-path-prefix=' + str(source) + '=/craft-source')
+        if manifest_name == 'audio-resample-edit-list-patch.json':
+            env['FILMCRAFT_REQUIRE_ORACLES'] = '1'
         if target_directory is not None:
             env['CARGO_TARGET_DIR'] = str(Path(target_directory).absolute())
         subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-captions'], cwd=source, env=env, check=True)
-        if manifest_name in {'sequence-rate-patch.json', 'audio-sample-patch.json', 'whisper-runtime-patch.json', 'pcm-packet-timing-patch.json'}:
+        if manifest_name in {'sequence-rate-patch.json', 'audio-sample-patch.json', 'whisper-runtime-patch.json', 'pcm-packet-timing-patch.json', 'audio-resample-edit-list-patch.json'}:
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-engine', 'image_sequence_tests'], cwd=source, env=env, check=True)
-        if manifest_name in {'audio-sample-patch.json', 'whisper-runtime-patch.json', 'pcm-packet-timing-patch.json'}:
+        if manifest_name in {'audio-sample-patch.json', 'whisper-runtime-patch.json', 'pcm-packet-timing-patch.json', 'audio-resample-edit-list-patch.json'}:
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-project'], cwd=source, env=env, check=True)
         if 'whisper' in manifest.get('cargoFeatures', []):
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-speech', '--features', 'whisper,download', '--lib'], cwd=source, env=env, check=True)
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-engine', '--features', 'whisper,speech-download', 'transcript'], cwd=source, env=env, check=True)
-        if manifest_name == 'pcm-packet-timing-patch.json':
+        if manifest_name in {'pcm-packet-timing-patch.json', 'audio-resample-edit-list-patch.json'}:
             subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-codecs', '--test', 'pcm_packet_timing'], cwd=source, env=env, check=True)
+        if manifest_name == 'audio-resample-edit-list-patch.json':
+            subprocess.run(['cargo', 'test', '--offline', '-p', 'filmcraft-codecs', '--test', 'mp4_audio_edit_resample'], cwd=source, env=env, check=True)
         subprocess.run(build_arguments, cwd=source, env=env, check=True)
         binary = (Path(target_directory).absolute() if target_directory is not None else source / 'target') / 'release/filmcraft-cli'
         version_output = subprocess.check_output([str(binary), '--version'], text=True).strip()
